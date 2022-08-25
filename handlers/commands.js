@@ -1,8 +1,9 @@
 const { getFiles } = require('../util/functions')
 const fs = require('fs')
-// command handler
 
+// command handler
 // load all commands within commands subfolders
+
 module.exports = (bot, reload) => {
     const {client} = bot
 

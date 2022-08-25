@@ -1,7 +1,7 @@
+const Discord = require('discord.js')
+
 // event handler for messageCreate event
 // messageCreate happens whenever a message is sent in the guild
-
-const Discord = require('discord.js')
 
 module.exports = {
     name: 'messageCreate', //must match file name
@@ -29,7 +29,7 @@ module.exports = {
         // permissions checking
         let member = message.member
 
-        if (command.devOnly && !owners.includeds(member.id)) {
+        if (command.devOnly && !owners.includes(member.id)) {
             return message.reply('This command is only available to the bot owners')
         }
 

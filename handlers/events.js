@@ -1,8 +1,10 @@
 const { getFiles } = require('../util/functions')
 
-// event handler
-// @param {Object} bot - The bot object from index.js
-// @param {Boolean} reload - true if we are reloading, false if we are loading this in for the first time
+/**
+ * event handler
+ * @param {Object} bot - The bot object from index.js
+ * @param {Boolean} reload - true if we are reloading, false if we are loading this in for the first time
+ */
 module.exports = (bot, reload) => {
     const {client} = bot
 
@@ -36,10 +38,12 @@ module.exports = (bot, reload) => {
     }
 }
 
-// helper function for initEvents that tries to get event and if unsuccessful, throws an error
-// @param {Object} bot - The bot object from index.js
-// @param {String} event - The name of the event
-// @param {Array} args - The arguments of the command
+/**
+ * helper function for initEvents that tries to get event and if unsuccessful, throws an error
+ * @param {Object} bot - The bot object from index.js
+ * @param {String} event - The name of the event
+ * @param {Array} args - The arguments of the command
+ */
 function triggerEventHandler(bot, event, ...args) {
     const {client} = bot
     try {

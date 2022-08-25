@@ -1,11 +1,7 @@
 const fs = require('fs')
+const { getFiles } = require('../util/functions')
 
 // loads in all commands in slashcommands/
-
-const getFiles = (path, ending) => {
-    return fs.readdirSync(path).filter(file => file.endsWith(ending))
-}
-
 module.exports = (bot, reload) => {
     const { client } = bot
 

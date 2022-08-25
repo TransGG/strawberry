@@ -68,7 +68,7 @@ module.exports = bot
 // })
 
 // client.on('messageCreate', message => {
-//     console.log('msg content: ', message.content)
+//     console.log('msg content:', message.content)
 //     if (message.content.toLocaleLowerCase() === 'hi'){
 //         message.reply(`U/n: ${message.author.username} ID: <@${message.author.id}> Tag: ${message.author.tag}`)
 //     }
