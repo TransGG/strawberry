@@ -1,6 +1,6 @@
-// ban slash command handler
-
 const Discord = require("discord.js")
+
+// ban slash command handler
 
 const run = async (client, interaction) => {
     // fetch options

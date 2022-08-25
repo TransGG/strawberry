@@ -1,6 +1,6 @@
-// timeout slash command handler
-
 const Discord = require("discord.js")
+
+// timeout slash command handler
 
 // values for the choices of the timeout choices, in milliseconds
 const durations = [

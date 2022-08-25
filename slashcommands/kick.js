@@ -1,6 +1,6 @@
-// kick slash command handler
-
 const Discord = require("discord.js")
+
+// kick slash command handler
 
 const run = async (client, interaction) => {
     // fetch options

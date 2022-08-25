@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 require('dotenv').config()
 
-// loads all slash commands into discord when the bot is ran
+// loads all slash commands into the given server when the bot is ran
 
 const client = new Discord.Client({
     intents: [
@@ -12,8 +12,6 @@ const client = new Discord.Client({
 let bot = {
     client
 }
-
-
 
 const guildId = '987229949041725520'
 
@@ -27,7 +25,7 @@ client.loadSlashCommands(bot, false)
 client.on('ready', async () => {
     // get the guild that matches the guildId
     const guild = client.guilds.cache.get(guildId)
-    // bot doesn't see guild or doesn't login
+    // check if bot doesn't see guild or doesn't login
     if(!guild) {
         return console.error('Target guild not found')
     }
@@ -39,7 +37,5 @@ client.on('ready', async () => {
     console.log(`Successfully loaded in ${client.slashcommands.size} slash commands`)
     process.exit(0)
 })
-
-
 
 client.login(process.env.TOKEN)
