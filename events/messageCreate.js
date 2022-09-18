@@ -1,54 +1,31 @@
-const Discord = require('discord.js')
+import Event from '../classes/Event.js'
 
-// event handler for messageCreate event
-// messageCreate happens whenever a message is sent in the guild
+/**
+ * Handler for messageCreate event. Runs a command if the message
+ * starts with the correct prefix and the remaining message is a
+ * valid name of a command.
+ */
+class MessageCreate extends Event {
 
-module.exports = {
-    name: 'messageCreate', //must match file name
-    run: async function runAll(bot, message) {
-        const {client, prefix, owners} = bot
-
-        // ignore the following message types:
-        // if message was not sent as part of a guild
-        if (!message.guild) return
-
-        // if message was sent by bot
-        if (message.author.bot) return
-
-        // if message doesn't start with the prefix
-        if (!message.content.startsWith(prefix)) return
-
-
-        // get command and args
-        const args = message.content.slice(prefix.length).trim().split(/ +/g) // remove the prefix, cut out spaces, then split along spaces
-        const cmdstr = args.shift().toLowerCase() // shift pops the first element of args
-
-        let command = client.commands.get(cmdstr) // using cmdstr, get the command from the client.commands collection
-        if (!command) return // if command is empty, it wasn't a valid command so ignore
-
-        // permissions checking
-        let member = message.member
-
-        if (command.devOnly && !owners.includes(member.id)) {
-            return message.reply('This command is only available to the bot owners')
+    /**
+     * @param {Message} message The message whose creation triggered this event
+     */
+    async run(message) {
+        // check for prefix
+        if (!message.content.startsWith(this.client.prefix)) {
+            return
         }
 
-        if (command.permissions && member.permissions.missing(command.permissions).length !== 0) {
-            return message.reply('You do not have permission to use this command')
-        }
+        // get the command that has a name consisting of the message without the prefix
+        let command = this.client.getCommand(
+            message.content.replace(this.client.prefix, '')
+        )
 
-        // call the command
-        try {
-            await command.run({...bot, message, args})
-        } catch (error) {
-            let errMsg = error.toString()
-
-            if(errMsg.startsWith('?')) { // convention of the person who wrote the tutorial is that errors with '?' are errors that are triggered manually
-                errMsg = errMsg.slice(1)
-                await message.reply(errMsg)
-            } else {
-                console.error(error)
-            }
+        // check if the command exists then run it
+        if (command) {
+            command.run(message)
         }
     }
 }
+
+export default MessageCreate

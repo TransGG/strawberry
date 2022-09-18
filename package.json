@@ -10,6 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/elise32/elsie.git"
   },
+  "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -17,7 +19,7 @@
   },
   "homepage": "https://github.com/elise32/elsie#readme",
   "dependencies": {
-    "discord.js": "^14.0.3",
-    "dotenv": "^16.0.1"
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2"
   }
 }

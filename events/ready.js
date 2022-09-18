@@ -1,9 +1,13 @@
-// event handler for ready event
-// ready is triggered when the bot turns on
+import Event from '../classes/Event.js'
 
-module.exports = {
-    name: 'ready', //must match file name
-    run: async (bot) => {
-        console.log(`Logged in as ${bot.client.user.tag}`)
+/**
+ * Handler for the ready event. Simply displays a log in message. A ready
+ * event is emitted after the bot is finished loading and logging in
+ */
+class Ready extends Event {
+    async run() {
+        console.log(`Logged in as ${this.client.user.tag}`)
     }
 }
+
+export default Ready
