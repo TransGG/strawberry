@@ -13,8 +13,7 @@ class interactionCreate extends Event {
         if(interaction.isChatInputCommand()) {
             const commandName = interaction.commandName
             let command = this.client.getSlashCommand(commandName)
-            console.log(commandName)
-            // command.run(interaction)
+            command.run(interaction)
         }
 
         // buttons

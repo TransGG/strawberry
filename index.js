@@ -8,11 +8,13 @@ const client = new Bot({
         Discord.GatewayIntentBits.GuildMessages,
         Discord.GatewayIntentBits.MessageContent
     ],
-    prefix: '.'
+    // prefix: '.'
 })
 
-// // if ran with argument '1', then slash commands will be registered
-// if(process.argv.slice(2)[0] == 1) {
-//     const registerSlashCommands = true
-// }
-client.start(process.env.TOKEN)
+var registerSlashCommands = false
+// if ran with argument '1', then slash commands will be registered
+if(process.argv.slice(2)[0] == 1) {
+    registerSlashCommands = true
+}
+
+client.start(process.env.TOKEN, registerSlashCommands)

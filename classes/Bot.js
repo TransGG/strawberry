@@ -1,13 +1,15 @@
 import path from 'path'
 import { fileURLToPath, pathToFileURL } from 'url'
 import fs from 'fs'
-import { Client, Collection } from 'discord.js'
+import { REST } from '@discordjs/rest'
+import 'dotenv/config'
+import { Client, Collection, Routes } from 'discord.js'
 
 // the absolute path to this file
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /**
- * Helper function that gets the JavaScript files directly within the specified directory
+ * Helper function that gets all JavaScript files directly within the specified directory
  * 
  * @param {string|Buffer|URL} directory The directory to search
  * @returns All files that end with '.js' within the given directory
@@ -21,13 +23,13 @@ class Bot extends Client {
     /**
      * Constructor for class Bot. Initializes the class members.
      * 
-     * @param {*} args 
+     * @param {*} args The arguments to be passed up to the Client constructor (such as intents)
      */
     constructor(args) {
         super(args)
 
         // initialize class members
-        this.prefix = args.prefix
+        // this.prefix = args.prefix
 
         // these collections are populated as a map with the name of the event/slash command/etc.
         // as the key and the content as the value
@@ -43,15 +45,14 @@ class Bot extends Client {
      * @param {string} token The OAuth2 token to use to log in to the bot (see https://discord.com/developers/docs/topics/oauth2#bots)
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
-    async start(token, doRegisterSlashCommands = true) {
+    async start(token, doRegisterSlashCommands) {
         this.loadEvents()
         // this.loadCommands()
         this.loadSlashCommands().then(() => {
-            if(doRegisterSlashCommands) {
+            if (doRegisterSlashCommands) {
                 this.registerSlashCommands() // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
             }
         })
-
 
         await super.login(token)
     }
@@ -95,8 +96,32 @@ class Bot extends Client {
         return this.slashCommands.get(slashCommandName)
     }
 
+    /**
+     * Registers the slash commands with all of the bot's guilds. Must be used when updating properties of slash commands for the change to be
+     * reflected in the guilds but unnecessary for normal operation.
+     */
     registerSlashCommands() {
-        console.log(this.slashCommands)
+        // courtesy of https://discordjs.guide/interactions/slash-commands.html
+        const slashCommandsToRegister = []
+        this.slashCommands.forEach((slashCommand) => {
+            slashCommandsToRegister.push(slashCommand.data.toJSON())
+        })
+        const clientId = '999892254808350811' // elsie bot id
+        const rest = new REST({ version: '10' }).setToken(process.env.token);
+        (async () => {
+            try {
+                console.log(`Started refreshing ${slashCommandsToRegister.length} application (/) commands.`);
+
+                const data = await rest.put(
+                    Routes.applicationCommands(clientId),
+                    { body: slashCommandsToRegister },
+                );
+
+                console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
     }
 
     // methods for using text commands, which Discord doesn't want us to use anymore

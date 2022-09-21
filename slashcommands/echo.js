@@ -2,11 +2,11 @@ import { SlashCommandBuilder } from 'discord.js'
 import SlashCommand from '../classes/SlashCommand.js'
 
 /**
- * Handler for ping slash command. Replies to the given message with 'pong!'. Can be used to test if the bot is working.
+ * Handler for echo slash command. Repeats the message back to the user. For the purpose of demonstrating simple parameter handling
  */
-class Ping extends SlashCommand {
+class Echo extends SlashCommand {
     /**
-     * Constructor for Ping class and instantiates this.data
+     * Constructor for Echo class and instantiates this.data
      * 
      * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
@@ -16,7 +16,12 @@ class Ping extends SlashCommand {
 
         this.data = new SlashCommandBuilder()
             .setName(name)
-            .setDescription('Replies with Pong!')
+            .setDescription('Repeats the input back at you!')
+            .addStringOption(option =>
+                option.setName('message')
+                    .setDescription('The message to echo')
+                    .setRequired(true)
+            )
     }
 
     /**
@@ -25,8 +30,9 @@ class Ping extends SlashCommand {
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {
-        await interaction.reply({ content: 'Pong!', ephemeral: true })
+        const message = interaction.options.getString('message')
+        await interaction.reply({ content: message, ephemeral: true })
     }
 }
 
-export default Ping
+export default Echo
