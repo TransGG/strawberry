@@ -19,23 +19,17 @@ function getFiles(directory) {
 }
 
 class Bot extends Client {
+    // private fields
+    #events = new Collection()          // these collections are populated as a map with the name of the event/slash command/etc.
+    #slashCommands = new Collection()   // as the key and the content as the value
 
     /**
-     * Constructor for class Bot. Initializes the class members.
+     * Constructor for class Bot.
      * 
      * @param {*} args The arguments to be passed up to the Client constructor (such as intents)
      */
     constructor(args) {
         super(args)
-
-        // initialize class members
-        // this.prefix = args.prefix
-
-        // these collections are populated as a map with the name of the event/slash command/etc.
-        // as the key and the content as the value
-        // this.commands = new Collection()
-        this.events = new Collection()
-        this.slashCommands = new Collection()
     }
 
     /**
@@ -46,11 +40,10 @@ class Bot extends Client {
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
     async start(token, doRegisterSlashCommands) {
-        this.loadEvents()
-        // this.loadCommands()
-        this.loadSlashCommands().then(() => {
+        this.#loadEvents()
+        this.#loadSlashCommands().then(() => {
             if (doRegisterSlashCommands) {
-                this.registerSlashCommands() // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
+                this.#registerSlashCommands() // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
             }
         })
 
@@ -61,27 +54,27 @@ class Bot extends Client {
      * Get and load the events. Loads all events within .js files within ../events/
      * and adds them to the corresponding collection member of this class
      */
-    loadEvents() {
+    #loadEvents() {
         const eventsDirectory = `${(this, __dirname)}/../events/`
         return Promise.all(getFiles(eventsDirectory).map(async (eventFileName) => {
             const eventName = eventFileName.split('.js')[0] // event name is the filename sans the .js
             const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`).toString())).default // import the specific .js file for the event e.g. messageCreate.js
             const event = new Event(this, eventName) // create an Event
             event.startListener() // initalize the listener
-            this.events.set(eventName, event) // add the Event to the collection in this bot
+            this.#events.set(eventName, event) // add the Event to the collection in this bot
         }))
     }
 
     /**
      * Get and load the slash commands. Same flow as this.loadEvents() without initalizing the listener
      */
-    loadSlashCommands() {
+    #loadSlashCommands() {
         const slashCommandsDirectory = `${(this, __dirname)}/../slashcommands/`
         return Promise.all(getFiles(slashCommandsDirectory).map(async (slashCommandFileName) => {
             const slashCommandName = slashCommandFileName.split('.js')[0]
             const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`).toString())).default
             const slashCommand = new SlashCommand(this, slashCommandName)
-            this.slashCommands.set(slashCommandName, slashCommand)
+            this.#slashCommands.set(slashCommandName, slashCommand)
         }))
     }
 
@@ -93,17 +86,17 @@ class Bot extends Client {
      * @returns The slash command that has the same file name as the name given
      */
     getSlashCommand(slashCommandName) {
-        return this.slashCommands.get(slashCommandName)
+        return this.#slashCommands.get(slashCommandName)
     }
 
     /**
      * Registers the slash commands with all of the bot's guilds. Must be used when updating properties of slash commands for the change to be
      * reflected in the guilds but unnecessary for normal operation.
      */
-    registerSlashCommands() {
+    #registerSlashCommands() {
         // courtesy of https://discordjs.guide/interactions/slash-commands.html
         const slashCommandsToRegister = []
-        this.slashCommands.forEach((slashCommand) => {
+        this.#slashCommands.forEach((slashCommand) => {
             slashCommandsToRegister.push(slashCommand.data.toJSON())
         })
         const clientId = '999892254808350811' // elsie bot id
@@ -123,31 +116,6 @@ class Bot extends Client {
             }
         })();
     }
-
-    // methods for using text commands, which Discord doesn't want us to use anymore
-
-    // /**
-    //  * Get and load the commands. Same flow as this.loadEvents() minus the initialization of a listener.
-    //  */
-    //  loadCommands() {
-    //     const commandsDirectory = `${(this, __dirname)}/../commands/`
-    //     getFiles(commandsDirectory).forEach(async (commandFileName) => {
-    //         const commandName = commandFileName.split('.js')[0]
-    //         const Command = (await import(pathToFileURL(`${commandsDirectory}${commandFileName}`).toString())).default
-    //         const command = new Command(this, commandName)
-    //         this.commands.set(commandName, command)
-    //     })
-    // }
-
-    // /**
-    //  * Retrieves the command that matches the given name.
-    //  * 
-    //  * @param {string} commandName 
-    //  * @returns The matching command
-    //  */
-    // getCommand(commandName) {
-    //     return this.commands.get(commandName)
-    // }
 }
 
 export default Bot

@@ -12,15 +12,15 @@ class Event {
     constructor(client, name) {
         this.client = client
         this.name = name
-        this._listener = this._run.bind(this)
+        this._listener = this.#run.bind(this)
     }
 
     /**
-     * Run the run function (passed to the Event) with given arguments as well as catch errors and log them
+     * Run the run function (should be implemented in subclasses) with given arguments as well as catch and log errors
      * 
      * @param  {...any} args The arguments of the event
      */
-    async _run(...args) {
+    async #run(...args) {
         try {
             await this.run(...args)
         } catch (error) {
