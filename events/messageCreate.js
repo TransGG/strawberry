@@ -11,20 +11,23 @@ class MessageCreate extends Event {
      * @param {Message} message The message whose creation triggered this event
      */
     async run(message) {
-        // check for prefix
-        if (!message.content.startsWith(this.client.prefix)) {
-            return
-        }
+        // do nothing...
 
-        // get the command that has a name consisting of the message without the prefix
-        let command = this.client.getCommand(
-            message.content.replace(this.client.prefix, '')
-        )
+        // unused chat command code
+        // // check for prefix
+        // if (!message.content.startsWith(this.client.prefix)) {
+        //     return
+        // }
 
-        // check if the command exists then run it
-        if (command) {
-            command.run(message)
-        }
+        // // get the command that has a name consisting of the message without the prefix
+        // let command = this.client.getCommand(
+        //     message.content.replace(this.client.prefix, '')
+        // )
+
+        // // check if the command exists then run it
+        // if (command) {
+        //     command.run(message)
+        // }
     }
 }
 
