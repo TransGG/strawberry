@@ -1,4 +1,4 @@
-import Interaction from '../classes/Interaction.js'
+import Interaction from '../classes/Interaction.js';
 
 /**
  * Parent class for commands. Subclasses should have a run() function, which is called when
@@ -6,7 +6,7 @@ import Interaction from '../classes/Interaction.js'
  */
 class SlashCommand extends Interaction {
     // fields
-    data // the data used to register a slash command
+    data; // the data used to register a slash command
 
     /**
      * Constructor for class SlashCommand
@@ -15,8 +15,8 @@ class SlashCommand extends Interaction {
      * @param {string} name The name of the slash command
      */
      constructor(client, name) {
-        super(client, name)
+        super(client, name);
     }
 }
 
-export default SlashCommand
+export default SlashCommand;

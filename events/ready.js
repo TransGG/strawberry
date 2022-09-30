@@ -1,4 +1,4 @@
-import Event from '../classes/Event.js'
+import Event from '../classes/Event.js';
 
 /**
  * Handler for the ready event. Simply displays a log in message. A ready
@@ -6,8 +6,8 @@ import Event from '../classes/Event.js'
  */
 class Ready extends Event {
     async run() {
-        console.log(`Logged in as ${this.client.user.tag}`)
+        console.log(`Logged in as ${this.client.user.tag}`);
     }
 }
 
-export default Ready
+export default Ready;

@@ -10,9 +10,9 @@
      * @param {string} name The name of the interaction
      */
     constructor(client, name) {
-        this.client = client
-        this.name = name
+        this.client = client;
+        this.name = name;
     }
 }
 
-export default Interaction
+export default Interaction;

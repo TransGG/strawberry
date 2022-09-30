@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js'
-import SlashCommand from '../classes/SlashCommand.js'
+import { SlashCommandBuilder } from 'discord.js';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for coolping slash command. Simple responses to a command in the same vein as ping, but demonstrates
@@ -13,7 +13,7 @@ class CoolPing extends SlashCommand {
      * @param {string} name The name of this slash command
      */
     constructor(client, name) {
-        super(client, name)
+        super(client, name);
 
         this.data = new SlashCommandBuilder()
             .setName(name)
@@ -39,7 +39,7 @@ class CoolPing extends SlashCommand {
                         { name: 'Choice 2', value: 'You chose choice 2' },
                         { name: 'Choice the third', value: 'You chose choice the third' },
                     )
-            )
+            );
     }
 
     /**
@@ -49,33 +49,33 @@ class CoolPing extends SlashCommand {
      */
     async run(interaction) {
         // get options (options can only be retrieved once)
-        const ephemeralChoice = interaction.options.getBoolean('ephemeral')
-        const deferTime = interaction.options.getInteger('defer-time')
-        const editText = interaction.options.getString('edit-text')
-        const followUpText = interaction.options.getString('follow-up-text')
+        const ephemeralChoice = interaction.options.getBoolean('ephemeral');
+        const deferTime = interaction.options.getInteger('defer-time');
+        const editText = interaction.options.getString('edit-text');
+        const followUpText = interaction.options.getString('follow-up-text');
 
         // defer causes the "[bot] is thinking" message to appear and expands the window for a reply from 3 seconds to 15 minutes
         if (deferTime) {
-            await interaction.deferReply({ ephemeral: ephemeralChoice })
+            await interaction.deferReply({ ephemeral: ephemeralChoice });
 
-            await new Promise(r => setTimeout(r, deferTime))
-            await interaction.editReply({ content: 'Pong!', ephemeral: ephemeralChoice })
+            await new Promise(r => setTimeout(r, deferTime));
+            await interaction.editReply({ content: 'Pong!', ephemeral: ephemeralChoice });
         } else {
-            await interaction.reply({ content: 'Pong!', ephemeral: ephemeralChoice })
+            await interaction.reply({ content: 'Pong!', ephemeral: ephemeralChoice });
         }
 
         // edits the reply's pre-existing contents with new contents, in this case text
         if (editText) {
-            await new Promise(r => setTimeout(r, 1000))
-            await interaction.editReply(editText)
+            await new Promise(r => setTimeout(r, 1000));
+            await interaction.editReply(editText);
 
         }
 
         // sends a follow up message, which is in this case composed of text
         if (followUpText) {
-            await interaction.followUp({ content: followUpText, ephemeral: ephemeralChoice })
+            await interaction.followUp({ content: followUpText, ephemeral: ephemeralChoice });
         }
     }
 }
 
-export default CoolPing
+export default CoolPing;

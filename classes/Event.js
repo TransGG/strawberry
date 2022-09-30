@@ -10,9 +10,9 @@ class Event {
      * @param {string} name The name of the event
      */
     constructor(client, name) {
-        this.client = client
-        this.name = name
-        this._listener = this.#run.bind(this)
+        this.client = client;
+        this.name = name;
+        this._listener = this.#run.bind(this);
     }
 
     /**
@@ -22,9 +22,9 @@ class Event {
      */
     async #run(...args) {
         try {
-            await this.run(...args)
+            await this.run(...args);
         } catch (error) {
-            console.error(err)
+            console.error(err);
         }
     }
 
@@ -33,16 +33,16 @@ class Event {
      * call the _listener function specified earlier
      */
     startListener() {
-        this.client.on(this.name, this._listener)
+        this.client.on(this.name, this._listener);
     }
 
     /**
      * Same as startListener(), but with client.off
      */
     stopListener() {
-        this.client.off(this.name, this._listener)
+        this.client.off(this.name, this._listener);
     }
 
 }
 
-export default Event
+export default Event;

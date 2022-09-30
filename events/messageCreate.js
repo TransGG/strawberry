@@ -1,4 +1,4 @@
-import Event from '../classes/Event.js'
+import Event from '../classes/Event.js';
 
 /**
  * Handler for messageCreate event. Runs a command if the message
@@ -15,4 +15,4 @@ class MessageCreate extends Event {
     }
 }
 
-export default MessageCreate
+export default MessageCreate;

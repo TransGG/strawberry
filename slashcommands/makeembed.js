@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js'
-import SlashCommand from '../classes/SlashCommand.js'
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for makeembed slash command. Makes an embed to demonstrate embed creation
@@ -12,11 +12,11 @@ class MakeEmbed extends SlashCommand {
      * @param {string} name The name of this slash command
      */
     constructor(client, name) {
-        super(client, name)
+        super(client, name);
 
         this.data = new SlashCommandBuilder()
             .setName(name)
-            .setDescription('Makes an embed')
+            .setDescription('Makes an embed');
     }
 
     /**
@@ -49,4 +49,4 @@ class MakeEmbed extends SlashCommand {
     }
 }
 
-export default MakeEmbed
+export default MakeEmbed;

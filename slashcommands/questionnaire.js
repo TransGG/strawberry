@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js'
-import SlashCommand from '../classes/SlashCommand.js'
+import { SlashCommandBuilder } from 'discord.js';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for questionnaire slash command. Allows the user to fill out a questionnaire. For the purpose of demonstrating
@@ -13,7 +13,7 @@ class Questionnaire extends SlashCommand {
      * @param {string} name The name of this slash command
      */
     constructor(client, name) {
-        super(client, name)
+        super(client, name);
 
         // create a slash command with options that encompass all option types
         this.data = new SlashCommandBuilder()
@@ -27,7 +27,7 @@ class Questionnaire extends SlashCommand {
             .addIntegerOption(option => option.setName('int').setDescription('Sides to a square?'))
             .addNumberOption(option => option.setName('num').setDescription('Value of Pi?'))
             .addMentionableOption(option => option.setName('mentionable').setDescription('Mention something!'))
-            .addAttachmentOption(option => option.setName('attachment').setDescription('Best meme?'))
+            .addAttachmentOption(option => option.setName('attachment').setDescription('Best meme?'));
     }
 
     /**
@@ -37,20 +37,20 @@ class Questionnaire extends SlashCommand {
      */
     async run(interaction) {
         // parse all options
-        const string = interaction.options.getString('input')
-        const boolean = interaction.options.getBoolean('bool')
-        const user = interaction.options.getUser('target')
-        const member = interaction.options.getMember('target')
-        const channel = interaction.options.getChannel('destination')
-        const role = interaction.options.getRole('role')
-        const integer = interaction.options.getInteger('int')
-        const number = interaction.options.getNumber('num')
-        const mentionable = interaction.options.getMentionable('mentionable')
-        const attachment = interaction.options.getAttachment('attachment')
+        const string = interaction.options.getString('input');
+        const boolean = interaction.options.getBoolean('bool');
+        const user = interaction.options.getUser('target');
+        const member = interaction.options.getMember('target');
+        const channel = interaction.options.getChannel('destination');
+        const role = interaction.options.getRole('role');
+        const integer = interaction.options.getInteger('int');
+        const number = interaction.options.getNumber('num');
+        const mentionable = interaction.options.getMentionable('mentionable');
+        const attachment = interaction.options.getAttachment('attachment');
 
         // log all the parsed result of all the options that were entered
-        console.log({ string, boolean, user, member, channel, role, integer, number, mentionable, attachment })
+        console.log({ string, boolean, user, member, channel, role, integer, number, mentionable, attachment });
     }
 }
 
-export default Questionnaire
+export default Questionnaire;

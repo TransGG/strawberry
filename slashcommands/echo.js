@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js'
-import SlashCommand from '../classes/SlashCommand.js'
+import { SlashCommandBuilder } from 'discord.js';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for echo slash command. Repeats the message back to the user. For the purpose of demonstrating simple parameter handling
@@ -12,7 +12,7 @@ class Echo extends SlashCommand {
      * @param {string} name The name of this slash command
      */
     constructor(client, name) {
-        super(client, name)
+        super(client, name);
 
         this.data = new SlashCommandBuilder()
             .setName(name)
@@ -21,7 +21,7 @@ class Echo extends SlashCommand {
                 option.setName('message')
                     .setDescription('The message to echo')
                     .setRequired(true)
-            )
+            );
     }
 
     /**
@@ -30,9 +30,9 @@ class Echo extends SlashCommand {
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {
-        const message = interaction.options.getString('message')
-        await interaction.reply({ content: message, ephemeral: true })
+        const message = interaction.options.getString('message');
+        await interaction.reply({ content: message, ephemeral: true });
     }
 }
 
-export default Echo
+export default Echo;

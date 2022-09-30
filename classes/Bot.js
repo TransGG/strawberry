@@ -1,12 +1,12 @@
-import path from 'path'
-import { fileURLToPath, pathToFileURL } from 'url'
-import fs from 'fs'
-import { REST } from '@discordjs/rest'
-import 'dotenv/config'
-import { Client, Collection, Routes } from 'discord.js'
+import path from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+import fs from 'fs';
+import { REST } from '@discordjs/rest';
+import 'dotenv/config';
+import { Client, Collection, Routes } from 'discord.js';
 
 // the absolute path to this file
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Helper function that gets all JavaScript files directly within the specified directory
@@ -15,13 +15,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
  * @returns All files that end with '.js' within the given directory
  */
 function getFiles(directory) {
-    return fs.readdirSync(directory).filter((file) => file.endsWith('.js'))
+    return fs.readdirSync(directory).filter((file) => file.endsWith('.js'));
 }
 
 class Bot extends Client {
     // private fields
-    #events = new Collection()          // these collections are populated as a map with the name of the event/slash command/etc.
-    #slashCommands = new Collection()   // as the key and the content as the value
+    #events = new Collection();          // these collections are populated as a map with the name of the event/slash command/etc.
+    #slashCommands = new Collection();   // as the key and the content as the value
 
     /**
      * Constructor for class Bot.
@@ -29,7 +29,7 @@ class Bot extends Client {
      * @param {*} args The arguments to be passed up to the Client constructor (such as intents)
      */
     constructor(args) {
-        super(args)
+        super(args);
     }
 
     /**
@@ -40,14 +40,14 @@ class Bot extends Client {
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
     async start(token, doRegisterSlashCommands) {
-        this.#loadEvents()
+        this.#loadEvents();
         this.#loadSlashCommands().then(() => {
             if (doRegisterSlashCommands) {
-                this.#registerSlashCommands() // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
+                this.#registerSlashCommands(); // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
             }
-        })
+        });
 
-        await super.login(token)
+        await super.login(token);
     }
 
     /**
@@ -55,27 +55,27 @@ class Bot extends Client {
      * and adds them to the corresponding collection member of this class
      */
     #loadEvents() {
-        const eventsDirectory = `${(this, __dirname)}/../events/`
+        const eventsDirectory = `${(this, __dirname)}/../events/`;
         return Promise.all(getFiles(eventsDirectory).map(async (eventFileName) => {
-            const eventName = eventFileName.split('.js')[0] // event name is the filename sans the .js
-            const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`).toString())).default // import the specific .js file for the event e.g. messageCreate.js
-            const event = new Event(this, eventName) // create an Event
-            event.startListener() // initalize the listener
-            this.#events.set(eventName, event) // add the Event to the collection in this bot
-        }))
+            const eventName = eventFileName.split('.js')[0]; // event name is the filename sans the .js
+            const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`).toString())).default; // import the specific .js file for the event e.g. messageCreate.js
+            const event = new Event(this, eventName); // create an Event
+            event.startListener(); // initalize the listener
+            this.#events.set(eventName, event); // add the Event to the collection in this bot
+        }));
     }
 
     /**
      * Get and load the slash commands. Same flow as this.loadEvents() without initalizing the listener
      */
     #loadSlashCommands() {
-        const slashCommandsDirectory = `${(this, __dirname)}/../slashcommands/`
+        const slashCommandsDirectory = `${(this, __dirname)}/../slashcommands/`;
         return Promise.all(getFiles(slashCommandsDirectory).map(async (slashCommandFileName) => {
-            const slashCommandName = slashCommandFileName.split('.js')[0]
-            const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`).toString())).default
-            const slashCommand = new SlashCommand(this, slashCommandName)
-            this.#slashCommands.set(slashCommandName, slashCommand)
-        }))
+            const slashCommandName = slashCommandFileName.split('.js')[0];
+            const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`).toString())).default;
+            const slashCommand = new SlashCommand(this, slashCommandName);
+            this.#slashCommands.set(slashCommandName, slashCommand);
+        }));
     }
 
 
@@ -86,7 +86,7 @@ class Bot extends Client {
      * @returns The slash command that has the same file name as the name given
      */
     getSlashCommand(slashCommandName) {
-        return this.#slashCommands.get(slashCommandName)
+        return this.#slashCommands.get(slashCommandName);
     }
 
     /**
@@ -95,11 +95,11 @@ class Bot extends Client {
      */
     #registerSlashCommands() {
         // courtesy of https://discordjs.guide/interactions/slash-commands.html
-        const slashCommandsToRegister = []
+        const slashCommandsToRegister = [];
         this.#slashCommands.forEach((slashCommand) => {
-            slashCommandsToRegister.push(slashCommand.data.toJSON())
-        })
-        const clientId = '999892254808350811' // elsie bot id
+            slashCommandsToRegister.push(slashCommand.data.toJSON());
+        });
+        const clientId = '999892254808350811'; // elsie bot id
         const rest = new REST({ version: '10' }).setToken(process.env.token);
         (async () => {
             try {
@@ -118,4 +118,4 @@ class Bot extends Client {
     }
 }
 
-export default Bot
+export default Bot;
