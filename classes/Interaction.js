@@ -2,10 +2,14 @@
  * Parent class all Interactions. Subclasses should have a run() function, which is called when
  * the command is ran
  */
- class Interaction {
+class Interaction {
+    // fields
+    client;
+
+    name;
+
     /**
      * Constructor for class Interaction
-     * 
      * @param {Client} client The Discord client
      * @param {string} name The name of the interaction
      */

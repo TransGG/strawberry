@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand.js';
+import SlashCommand from '../classes/SlashCommand';
 
 /**
  * Handler for coolping slash command. Simple responses to a command in the same vein as ping, but demonstrates
@@ -8,7 +8,6 @@ import SlashCommand from '../classes/SlashCommand.js';
 class CoolPing extends SlashCommand {
     /**
      * Constructor for CoolPing class and instantiates this.data
-     * 
      * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
@@ -18,33 +17,24 @@ class CoolPing extends SlashCommand {
         this.data = new SlashCommandBuilder()
             .setName(name)
             .setDescription('Demonstrates different ways to respond to a message')
-            .addBooleanOption(option =>
-                option.setName('ephemeral')
-                    .setDescription('Whether or not to send the response(s) as ephemeral')
-                    .setRequired(true)
-            )
-            .addIntegerOption(option =>
-                option.setName('defer-time')
-                    .setDescription('Defers the response by this many milliseconds')
-            )
-            .addStringOption(option =>
-                option.setName('edit-text')
-                    .setDescription('Edit the message to say this')
-            )
-            .addStringOption(option =>
-                option.setName('follow-up-text')
-                    .setDescription('Text to send in a follow up message')
-                    .addChoices(
-                        { name: 'Choice 1', value: 'You chose choice 1' },
-                        { name: 'Choice 2', value: 'You chose choice 2' },
-                        { name: 'Choice the third', value: 'You chose choice the third' },
-                    )
-            );
+            .addBooleanOption((option) => option.setName('ephemeral')
+                .setDescription('Whether or not to send the response(s) as ephemeral')
+                .setRequired(true))
+            .addIntegerOption((option) => option.setName('defer-time')
+                .setDescription('Defers the response by this many milliseconds'))
+            .addStringOption((option) => option.setName('edit-text')
+                .setDescription('Edit the message to say this'))
+            .addStringOption((option) => option.setName('follow-up-text')
+                .setDescription('Text to send in a follow up message')
+                .addChoices(
+                    { name: 'Choice 1', value: 'You chose choice 1' },
+                    { name: 'Choice 2', value: 'You chose choice 2' },
+                    { name: 'Choice the third', value: 'You chose choice the third' },
+                ));
     }
 
     /**
      * Method to run when this slash command is executed
-     * 
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {
@@ -54,11 +44,13 @@ class CoolPing extends SlashCommand {
         const editText = interaction.options.getString('edit-text');
         const followUpText = interaction.options.getString('follow-up-text');
 
-        // defer causes the "[bot] is thinking" message to appear and expands the window for a reply from 3 seconds to 15 minutes
+        // defer causes the "[bot] is thinking" message to appear and expands the window for a reply from 3 seconds to
+        // 15 minutes
         if (deferTime) {
             await interaction.deferReply({ ephemeral: ephemeralChoice });
 
-            await new Promise(r => setTimeout(r, deferTime));
+            // eslint-disable-next-line no-promise-executor-return
+            await new Promise((r) => setTimeout(r, deferTime));
             await interaction.editReply({ content: 'Pong!', ephemeral: ephemeralChoice });
         } else {
             await interaction.reply({ content: 'Pong!', ephemeral: ephemeralChoice });
@@ -66,9 +58,9 @@ class CoolPing extends SlashCommand {
 
         // edits the reply's pre-existing contents with new contents, in this case text
         if (editText) {
-            await new Promise(r => setTimeout(r, 1000));
+            // eslint-disable-next-line no-promise-executor-return
+            await new Promise((r) => setTimeout(r, 1000));
             await interaction.editReply(editText);
-
         }
 
         // sends a follow up message, which is in this case composed of text

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand.js';
+import SlashCommand from '../classes/SlashCommand';
 
 /**
  * Handler for makeembed slash command. Makes an embed to demonstrate embed creation
@@ -7,7 +7,6 @@ import SlashCommand from '../classes/SlashCommand.js';
 class MakeEmbed extends SlashCommand {
     /**
      * Constructor for MakeEmbed class and instantiates this.data
-     * 
      * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
@@ -21,7 +20,6 @@ class MakeEmbed extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * 
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {
@@ -40,7 +38,8 @@ class MakeEmbed extends SlashCommand {
                 { name: 'Inline field title', value: 'Some value here', inline: true },
             )
             .addFields(
-                { name: 'Inline field title', value: 'Some value here', inline: true })
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
             .setImage('https://i.imgur.com/AfFp7pu.png')
             .setTimestamp()
             .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });

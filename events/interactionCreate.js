@@ -1,18 +1,17 @@
-import Event from '../classes/Event.js';
+import Event from '../classes/Event';
 
 /**
  * Handler for interactionCreate event
  */
 class interactionCreate extends Event {
-
     /**
      * @param {Interaction} interaction The interaction whose creation triggered this event
      */
     async run(interaction) {
         // slash commands
-        if(interaction.isChatInputCommand()) {
-            const commandName = interaction.commandName;
-            let command = this.client.getSlashCommand(commandName);
+        if (interaction.isChatInputCommand()) {
+            const { commandName } = interaction;
+            const command = this.client.getSlashCommand(commandName);
             command.run(interaction);
         }
 
@@ -22,6 +21,5 @@ class interactionCreate extends Event {
         }
     }
 }
-
 
 export default interactionCreate;

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand.js';
+import SlashCommand from '../classes/SlashCommand';
 
 /**
  * Handler for ping slash command. Replies to the given message with 'pong!'. Can be used to test if the bot is working.
@@ -7,7 +7,6 @@ import SlashCommand from '../classes/SlashCommand.js';
 class Ping extends SlashCommand {
     /**
      * Constructor for Ping class and instantiates this.data
-     * 
      * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
@@ -21,7 +20,6 @@ class Ping extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * 
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {

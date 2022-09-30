@@ -1,4 +1,4 @@
-import Event from '../classes/Event.js';
+import Event from '../classes/Event';
 
 /**
  * Handler for messageCreate event. Runs a command if the message
@@ -6,7 +6,6 @@ import Event from '../classes/Event.js';
  * valid name of a command.
  */
 class MessageCreate extends Event {
-
     /**
      * @param {Message} message The message whose creation triggered this event
      */

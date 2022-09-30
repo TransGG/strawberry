@@ -6,11 +6,11 @@ import 'dotenv/config';
 import { Client, Collection, Routes } from 'discord.js';
 
 // the absolute path to this file
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Helper function that gets all JavaScript files directly within the specified directory
- * 
  * @param {string|Buffer|URL} directory The directory to search
  * @returns All files that end with '.js' within the given directory
  */
@@ -20,22 +20,15 @@ function getFiles(directory) {
 
 class Bot extends Client {
     // private fields
-    #events = new Collection();          // these collections are populated as a map with the name of the event/slash command/etc.
-    #slashCommands = new Collection();   // as the key and the content as the value
+    // these collections are populated as a map with the name of the event/slash command/etc.
+    // as the key and the content as the value
+    #events = new Collection();
+
+    #slashCommands = new Collection();
 
     /**
-     * Constructor for class Bot.
-     * 
-     * @param {*} args The arguments to be passed up to the Client constructor (such as intents)
-     */
-    constructor(args) {
-        super(args);
-    }
-
-    /**
-     * Run this function to get the bot going. Loads the necessary files to populate the members of the Bot, optionally registers slash
-     * commands, then connects to Discord using the Discord API
-     * 
+     * Run this function to get the bot going. Loads the necessary files to populate the members of the Bot, optionally
+     * registers slash commands, then connects to Discord using the Discord API
      * @param {string} token The OAuth2 token to use to log in to the bot (see https://discord.com/developers/docs/topics/oauth2#bots)
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
@@ -58,7 +51,8 @@ class Bot extends Client {
         const eventsDirectory = `${(this, __dirname)}/../events/`;
         return Promise.all(getFiles(eventsDirectory).map(async (eventFileName) => {
             const eventName = eventFileName.split('.js')[0]; // event name is the filename sans the .js
-            const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`).toString())).default; // import the specific .js file for the event e.g. messageCreate.js
+            const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`) // import the specific .js file for the event e.g. messageCreate.js
+                .toString())).default;
             const event = new Event(this, eventName); // create an Event
             event.startListener(); // initalize the listener
             this.#events.set(eventName, event); // add the Event to the collection in this bot
@@ -72,17 +66,16 @@ class Bot extends Client {
         const slashCommandsDirectory = `${(this, __dirname)}/../slashcommands/`;
         return Promise.all(getFiles(slashCommandsDirectory).map(async (slashCommandFileName) => {
             const slashCommandName = slashCommandFileName.split('.js')[0];
-            const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`).toString())).default;
+            const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`)
+                .toString())).default;
             const slashCommand = new SlashCommand(this, slashCommandName);
             this.#slashCommands.set(slashCommandName, slashCommand);
         }));
     }
 
-
     /**
      * Retrieves the slash command that matches the given name.
-     * 
-     * @param {string} slashCommandName 
+     * @param {string} slashCommandName The name matching the SlashCommand.name field
      * @returns The slash command that has the same file name as the name given
      */
     getSlashCommand(slashCommandName) {
@@ -90,8 +83,8 @@ class Bot extends Client {
     }
 
     /**
-     * Registers the slash commands with all of the bot's guilds. Must be used when updating properties of slash commands for the change to be
-     * reflected in the guilds but unnecessary for normal operation.
+     * Registers the slash commands with all of the bot's guilds. Must be used when updating properties of slash
+     * commands for the change to be reflected in the guilds but unnecessary for normal operation.
      */
     #registerSlashCommands() {
         // courtesy of https://discordjs.guide/interactions/slash-commands.html

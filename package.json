@@ -19,10 +19,13 @@
   },
   "homepage": "https://github.com/elise32/elsie#readme",
   "dependencies": {
+    "@discordjs/rest": "^1.2.0",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.2"
   },
   "devDependencies": {
-    "eslint": "^8.24.0"
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   }
 }
