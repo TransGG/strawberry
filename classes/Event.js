@@ -24,7 +24,7 @@ class Event {
         try {
             await this.run(...args);
         } catch (error) {
-            console.error(err);
+            console.error(error);
         }
     }
 
