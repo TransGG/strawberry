@@ -10,14 +10,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "class-methods-use-this": [
-            "error",
-            {
-                "exceptMethods": [
-                    "run"
-                ]
-            }
-        ],
+        "class-methods-use-this": "off",
         "indent": [
             "error",
             4
