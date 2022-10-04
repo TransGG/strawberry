@@ -1,4 +1,4 @@
-import Event from '../classes/Event';
+import Event from '../classes/Event.js';
 
 /**
  * Handler for interactionCreate event

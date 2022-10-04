@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for questionnaire slash command. Allows the user to fill out a questionnaire. For the purpose of

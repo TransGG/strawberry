@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand';
+import SlashCommand from '../classes/SlashCommand.js';
 
 /**
  * Handler for ping slash command. Replies to the given message with 'pong!'. Can be used to test if the bot is working.

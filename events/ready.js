@@ -1,4 +1,4 @@
-import Event from '../classes/Event';
+import Event from '../classes/Event.js';
 
 /**
  * Handler for the ready event. Simply displays a log in message. A ready
