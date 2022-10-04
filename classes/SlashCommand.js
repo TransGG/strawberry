@@ -1,4 +1,4 @@
-import Interaction from './Interaction';
+import Interaction from './Interaction.js';
 
 /**
  * Parent class for commands. Subclasses should have a run() function, which is called when
