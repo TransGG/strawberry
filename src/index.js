@@ -13,7 +13,7 @@ const client = new Bot({
 
 let registerSlashCommands = false;
 // if ran with argument '1', then slash commands will be registered
-if (process.argv.slice(2)[0] === 1) {
+if (process.argv.slice(2)[0] === '1') {
     registerSlashCommands = true;
 }
 

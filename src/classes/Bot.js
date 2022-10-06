@@ -1,22 +1,6 @@
-import path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
-import fs from 'fs';
-import { REST } from '@discordjs/rest';
-import 'dotenv/config';
-import { Client, Collection, Routes } from 'discord.js';
-
-// the absolute path to this file
-// eslint-disable-next-line no-underscore-dangle
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-/**
- * Helper function that gets all JavaScript files directly within the specified directory
- * @param {string|Buffer|URL} directory The directory to search
- * @returns All files that end with '.js' within the given directory
- */
-function getFiles(directory) {
-    return fs.readdirSync(directory).filter((file) => file.endsWith('.js'));
-}
+import { Client, Collection } from 'discord.js';
+import { loadCommands, loadEvents } from '../utils/loadFiles.js';
+import registerSlashCommands from '../utils/registerSlashCommands.js';
 
 class Bot extends Client {
     // private fields
@@ -33,44 +17,14 @@ class Bot extends Client {
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
     async start(token, doRegisterSlashCommands) {
-        this.#loadEvents();
-        this.#loadSlashCommands().then(() => {
-            if (doRegisterSlashCommands) {
-                this.#registerSlashCommands(); // has to wait on a promise because it relies on the files to be loaded in loadSlashCommands() for the sake of efficiency
-            }
-        });
+        await loadEvents(this);
+        await loadCommands(this);
 
         await super.login(token);
-    }
 
-    /**
-     * Get and load the events. Loads all events within .js files within ../events/
-     * and adds them to the corresponding collection member of this class
-     */
-    #loadEvents() {
-        const eventsDirectory = `${(this, __dirname)}/../events/`;
-        return Promise.all(getFiles(eventsDirectory).map(async (eventFileName) => {
-            const eventName = eventFileName.split('.js')[0]; // event name is the filename sans the .js
-            const Event = (await import(pathToFileURL(`${eventsDirectory}${eventFileName}`) // import the specific .js file for the event e.g. messageCreate.js
-                .toString())).default;
-            const event = new Event(this, eventName); // create an Event
-            event.startListener(); // initalize the listener
-            this.#events.set(eventName, event); // add the Event to the collection in this bot
-        }));
-    }
-
-    /**
-     * Get and load the slash commands. Same flow as this.loadEvents() without initalizing the listener
-     */
-    #loadSlashCommands() {
-        const slashCommandsDirectory = `${(this, __dirname)}/../slashcommands/`;
-        return Promise.all(getFiles(slashCommandsDirectory).map(async (slashCommandFileName) => {
-            const slashCommandName = slashCommandFileName.split('.js')[0];
-            const SlashCommand = (await import(pathToFileURL(`${slashCommandsDirectory}${slashCommandFileName}`)
-                .toString())).default;
-            const slashCommand = new SlashCommand(this, slashCommandName);
-            this.#slashCommands.set(slashCommandName, slashCommand);
-        }));
+        if (doRegisterSlashCommands) { // needs to wait on slashcommands to be loaded and client logged in
+            registerSlashCommands(this.#slashCommands, this.user.id);
+        }
     }
 
     /**
@@ -83,31 +37,17 @@ class Bot extends Client {
     }
 
     /**
-     * Registers the slash commands with all of the bot's guilds. Must be used when updating properties of slash
-     * commands for the change to be reflected in the guilds but unnecessary for normal operation.
+     * Accessor for events collection
      */
-    #registerSlashCommands() {
-        // courtesy of https://discordjs.guide/interactions/slash-commands.html
-        const slashCommandsToRegister = [];
-        this.#slashCommands.forEach((slashCommand) => {
-            slashCommandsToRegister.push(slashCommand.data.toJSON());
-        });
-        const clientId = '999892254808350811'; // elsie bot id
-        const rest = new REST({ version: '10' }).setToken(process.env.token);
-        (async () => {
-            try {
-                console.log(`Started refreshing ${slashCommandsToRegister.length} application (/) commands.`);
+    get events() {
+        return this.#events;
+    }
 
-                const data = await rest.put(
-                    Routes.applicationCommands(clientId),
-                    { body: slashCommandsToRegister },
-                );
-
-                console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-            } catch (error) {
-                console.error(error);
-            }
-        })();
+    /**
+     * Accessor for slashcommands collection
+     */
+    get slashCommands() {
+        return this.#slashCommands;
     }
 }
 

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../classes/SlashCommand.js';
+import SlashCommand from '../../classes/SlashCommand.js';
 
 /**
  * Handler for coolping slash command. Simple responses to a command in the same vein as ping, but demonstrates
