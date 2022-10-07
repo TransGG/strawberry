@@ -5,6 +5,15 @@ import Event from '../classes/Event.js';
  */
 class interactionCreate extends Event {
     /**
+     * Constructor for InteractionCreate class
+     * @param {Client} client The Discord Client that will handle this interaction
+     * @param {String} name The name of this interaction
+     */
+    constructor(client, name = 'interactionCreate') {
+        super(client, name);
+    }
+
+    /**
      * @param {Interaction} interaction The interaction whose creation triggered this event
      */
     async run(interaction) {

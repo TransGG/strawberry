@@ -1,5 +1,5 @@
 import { Client, Collection } from 'discord.js';
-import { loadCommands, loadEvents } from '../utils/loadFiles.js';
+import { loadSlashCommands, loadEvents } from '../utils/loadFiles.js';
 import registerSlashCommands from '../utils/registerSlashCommands.js';
 
 class Bot extends Client {
@@ -17,8 +17,8 @@ class Bot extends Client {
      * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
      */
     async start(token, doRegisterSlashCommands) {
-        await loadEvents(this);
-        await loadCommands(this);
+        await loadEvents(this.#events, this);
+        await loadSlashCommands(this.#slashCommands);
 
         await super.login(token);
 
@@ -34,20 +34,6 @@ class Bot extends Client {
      */
     getSlashCommand(slashCommandName) {
         return this.#slashCommands.get(slashCommandName);
-    }
-
-    /**
-     * Accessor for events collection
-     */
-    get events() {
-        return this.#events;
-    }
-
-    /**
-     * Accessor for slashcommands collection
-     */
-    get slashCommands() {
-        return this.#slashCommands;
     }
 }
 

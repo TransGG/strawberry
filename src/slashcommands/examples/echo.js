@@ -8,14 +8,13 @@ import SlashCommand from '../../classes/SlashCommand.js';
 class Echo extends SlashCommand {
     /**
      * Constructor for Echo class and instantiates this.data
-     * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
-    constructor(client, name) {
-        super(client, name);
+    constructor(name = 'echo') {
+        super(name);
 
         this.data = new SlashCommandBuilder()
-            .setName(name)
+            .setName(this.name)
             .setDescription('Repeats the input back at you!')
             .addStringOption((option) => option.setName('message')
                 .setDescription('The message to echo')

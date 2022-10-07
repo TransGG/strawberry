@@ -6,45 +6,47 @@ import { pathToFileURL, fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Get and load the slash commands. Same flow as this.loadEvents() without initalizing the listener
+ * Recursively fetch and load slash command files.
+ * @param {Collection} slashCommands The collection to populate with loaded slash commands
+ * @param {string} dir The directory to search on this level
  */
-async function loadCommands(client, dir = '../slashcommands') {
-    const filePath = path.join(__dirname, dir);
-    const files = await fs.readdir(filePath);
+async function loadSlashCommands(slashCommands, dir = '../slashcommands') {
+    const dirPath = path.join(__dirname, dir);
+    const files = await fs.readdir(dirPath);
     files.forEach(async (file) => {
-        const stat = await fs.lstat(path.join(filePath, file));
+        const stat = await fs.lstat(path.join(dirPath, file));
         if (stat.isDirectory()) {
-            await loadCommands(client, path.join(dir, file));
+            await loadSlashCommands(slashCommands, path.join(dir, file));
         }
         if (file.endsWith('.js')) {
-            const slashCommandName = file.split('.js')[0];
-            const Command = (await import(pathToFileURL(path.join(filePath, file)))).default;
-            const cmd = new Command(client, slashCommandName);
-            client.slashCommands.set(cmd.name, cmd);
+            const Command = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+            const cmd = new Command();
+            slashCommands.set(cmd.name, cmd);
         }
     });
 }
 
 /**
- * Get and load the events. Loads all events within .js files within ../events/
- * and adds them to the corresponding collection member of this class
+ * Recursively fetch and load event files.
+ * @param {Collection} events The collection to populate with loaded events
+ * @param {Client} client The client to pass to each event on construction
+ * @param {path} dir The dirctory to search on this level
  */
-async function loadEvents(client, dir = '../events') {
-    const filePath = path.join(__dirname, dir);
-    const files = await fs.readdir(filePath);
+async function loadEvents(events, client, dir = '../events') {
+    const dirPath = path.join(__dirname, dir);
+    const files = await fs.readdir(dirPath);
     files.forEach(async (file) => {
-        const stat = await fs.lstat(path.join(filePath, file));
+        const stat = await fs.lstat(path.join(dirPath, file));
         if (stat.isDirectory()) {
-            await loadEvents(client, path.join(dir, file));
+            await loadEvents(events, client, path.join(dir, file));
         }
         if (file.endsWith('.js')) {
-            const eventName = file.split('.js')[0];
-            const Event = (await import(pathToFileURL(path.join(filePath, file)))).default;
-            const event = new Event(client, eventName);
+            const Event = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+            const event = new Event(client);
             event.startListener();
-            client.events.set(event.name, event);
+            events.set(event.name, event);
         }
     });
 }
 
-export { loadCommands, loadEvents };
+export { loadSlashCommands, loadEvents };

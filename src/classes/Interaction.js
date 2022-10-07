@@ -4,17 +4,13 @@
  */
 class Interaction {
     // fields
-    client;
-
     name;
 
     /**
      * Constructor for class Interaction
-     * @param {Client} client The Discord client
      * @param {string} name The name of the interaction
      */
-    constructor(client, name) {
-        this.client = client;
+    constructor(name) {
         this.name = name;
     }
 }

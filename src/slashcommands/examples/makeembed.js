@@ -7,14 +7,13 @@ import SlashCommand from '../../classes/SlashCommand.js';
 class MakeEmbed extends SlashCommand {
     /**
      * Constructor for MakeEmbed class and instantiates this.data
-     * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
-    constructor(client, name) {
-        super(client, name);
+    constructor(name = 'makeembed') {
+        super(name);
 
         this.data = new SlashCommandBuilder()
-            .setName(name)
+            .setName(this.name)
             .setDescription('Makes an embed');
     }
 

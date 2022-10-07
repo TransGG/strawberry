@@ -9,15 +9,14 @@ import SlashCommand from '../../classes/SlashCommand.js';
 class Questionnaire extends SlashCommand {
     /**
      * Constructor for Questionnaire class and instantiates this.data
-     * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
-    constructor(client, name) {
-        super(client, name);
+    constructor(name = 'questionnaire') {
+        super(name);
 
         // create a slash command with options that encompass all option types
         this.data = new SlashCommandBuilder()
-            .setName('questionnaire')
+            .setName(this.name)
             .setDescription('Asks you a series of questions!')
             .addStringOption((option) => option.setName('input').setDescription('Your name?'))
             .addBooleanOption((option) => option.setName('bool').setDescription('True or False?'))

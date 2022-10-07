@@ -7,14 +7,13 @@ import SlashCommand from '../../classes/SlashCommand.js';
 class Ping extends SlashCommand {
     /**
      * Constructor for Ping class and instantiates this.data
-     * @param {Client} client The Discord Client that will handle this command
      * @param {string} name The name of this slash command
      */
-    constructor(client, name) {
-        super(client, name);
+    constructor(name = 'ping') {
+        super(name);
 
         this.data = new SlashCommandBuilder()
-            .setName(name)
+            .setName(this.name)
             .setDescription('Replies with Pong!');
     }
 
