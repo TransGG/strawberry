@@ -2,7 +2,6 @@
  * Parent class for events. Subclasses should have a run function, which is called when the event is triggered.
  */
 class Event {
-    // fields
     client;
 
     name;

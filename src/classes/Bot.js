@@ -3,7 +3,6 @@ import { loadSlashCommands, loadEvents } from '../utils/loadFiles.js';
 import registerSlashCommands from '../utils/registerSlashCommands.js';
 
 class Bot extends Client {
-    // private fields
     // these collections are populated as a map with the name of the event/slash command/etc.
     // as the key and the content as the value
     #events = new Collection();

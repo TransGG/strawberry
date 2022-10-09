@@ -3,7 +3,6 @@
  * the command is ran
  */
 class Interaction {
-    // fields
     name;
 
     /**
