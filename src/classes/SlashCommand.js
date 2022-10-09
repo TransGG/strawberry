@@ -1,3 +1,4 @@
+import { SlashCommandBuilder } from 'discord.js';
 import Interaction from './Interaction.js';
 
 /**
@@ -5,7 +6,14 @@ import Interaction from './Interaction.js';
  * the command is ran
  */
 class SlashCommand extends Interaction {
-    data; // the data used to register a slash command
+    /**
+     * Default implementation of data
+     */
+    get data() {
+        return new SlashCommandBuilder()
+            .setName(this.name)
+            .setDescription('No description given!');
+    }
 }
 
 export default SlashCommand;

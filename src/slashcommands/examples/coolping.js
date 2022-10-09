@@ -7,13 +7,17 @@ import SlashCommand from '../../classes/SlashCommand.js';
  */
 class CoolPing extends SlashCommand {
     /**
-     * Constructor for CoolPing class and instantiates this.data
      * @param {string} name The name of this slash command
      */
     constructor(name = 'coolping') {
         super(name);
+    }
 
-        this.data = new SlashCommandBuilder()
+    /**
+     * The data that describes the command format to the Discord API
+     */
+    get data() {
+        return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Demonstrates different ways to respond to a message')
             .addBooleanOption((option) => option.setName('ephemeral')
