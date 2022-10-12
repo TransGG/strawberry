@@ -3,7 +3,7 @@ import Event from '../Event.js';
 /**
  * Handler for interactionCreate event
  */
-class interactionCreate extends Event {
+class InteractionCreate extends Event {
     /**
      * Constructor for InteractionCreate class
      * @param {Client} client The Discord Client that will handle this interaction
@@ -31,4 +31,4 @@ class interactionCreate extends Event {
     }
 }
 
-export default interactionCreate;
+export default InteractionCreate;
