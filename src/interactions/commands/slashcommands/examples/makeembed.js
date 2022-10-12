@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import SlashCommand from '../../classes/SlashCommand.js';
+import SlashCommand from '../../SlashCommand.js';
 
 /**
  * Handler for makeembed slash command. Makes an embed to demonstrate embed creation

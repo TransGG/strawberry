@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../../classes/SlashCommand.js';
+import SlashCommand from '../../SlashCommand.js';
 
 /**
  * Handler for ice slash command. A demonstration of subcommands and subcommand groups all within one file.

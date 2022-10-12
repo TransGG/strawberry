@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import SlashCommand from '../../classes/SlashCommand.js';
+import SlashCommand from '../../SlashCommand.js';
 
 /**
  * Handler for echo slash command. Repeats the message back to the user. For the purpose of demonstrating simple

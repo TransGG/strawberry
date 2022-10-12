@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import 'dotenv/config';
-import Bot from './classes/Bot.js';
+import Bot from './Bot.js';
 
 const client = new Bot({
     intents: [

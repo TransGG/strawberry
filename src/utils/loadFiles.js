@@ -6,13 +6,18 @@ import { Collection } from 'discord.js';
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// default paths to use to search for files
+const eventsPath = '../events';
+const slashCommandsPath = '../interactions/commands/slashcommands';
+const subcommandsPath = '../interactions/commands/subcommands';
+
 /**
  * Recursively fetch and load event files.
  * @param {Collection} collection The collection to populate with loaded events
  * @param {Client} client The client to pass to each event on construction
  * @param {path} dir The dirctory to search on this level
  */
-async function loadEvents(collection, client, dir = '../events') {
+async function loadEvents(collection, client, dir = eventsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     files.forEach(async (file) => {
@@ -34,7 +39,7 @@ async function loadEvents(collection, client, dir = '../events') {
  * @param {Collection} collection The collection to populate with loaded slash commands
  * @param {string} dir The directory to search on this level
  */
-async function loadSlashCommands(collection, dir = '../slashcommands') {
+async function loadSlashCommands(collection, dir = slashCommandsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     files.forEach(async (file) => {
@@ -63,7 +68,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
         const stat = await fs.lstat(path.join(dirPath, fileName));
         if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
             const groupCommands = new Collection();
-            await loadSubcommandsActually(groupCommands, path.join(dir, fileName, true));
+            await loadSubcommandsActually(groupCommands, path.join(dir, fileName), true);
             collection.set(fileName, groupCommands);
         }
         if (fileName.endsWith('.js')) {
@@ -82,7 +87,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
  * @param {string} cmdName The name of the parent command
  * @param {string} dir The directory to search for subcommands
  */
-async function loadSubcommands(collection, cmdName, dir = '../subcommands') {
+async function loadSubcommands(collection, cmdName, dir = subcommandsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     files.forEach(async (fileName) => {

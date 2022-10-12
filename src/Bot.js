@@ -1,6 +1,6 @@
 import { Client, Collection } from 'discord.js';
-import { loadSlashCommands, loadEvents } from '../utils/loadFiles.js';
-import registerSlashCommands from '../utils/registerSlashCommands.js';
+import { loadSlashCommands, loadEvents } from './utils/loadFiles.js';
+import registerSlashCommands from './utils/registerSlashCommands.js';
 
 class Bot extends Client {
     // these collections are populated as a map with the name of the event/slash command/etc.

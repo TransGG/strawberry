@@ -1,4 +1,4 @@
-import Interaction from './Interaction.js';
+import Interaction from '../Interaction.js';
 
 /**
  * Parent class for commands. Slash commands should have a run() function, which is called when the command is ran, and

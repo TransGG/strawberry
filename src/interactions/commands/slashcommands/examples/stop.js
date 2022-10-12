@@ -1,4 +1,4 @@
-import SlashCommandWithSubcommands from '../../classes/SlashCommandWithSubcommands.js';
+import SlashCommandWithSubcommands from '../../SlashCommandWithSubcommands.js';
 
 /**
  * Handler for stop slash command. Demonstration of subcommands and subcommand groups

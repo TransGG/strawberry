@@ -1,5 +1,5 @@
 import { SlashCommandSubcommandBuilder } from 'discord.js';
-import SubCommand from '../../classes/Subcommand.js';
+import SubCommand from '../../Subcommand.js';
 
 /**
  * Handler for Hammertime subcommand. Demonstration of a subcommand without a subcommand group.
