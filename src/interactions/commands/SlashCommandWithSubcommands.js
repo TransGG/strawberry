@@ -1,6 +1,6 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
-import { loadSubcommands } from '../../utils/loadFiles.js';
+import { CommandChildNotFoundException, loadSubcommands } from '../../utils/index.js';
 
 /**
  * Parent class for commands that subcommands. Handles building the data and running the selected subcommand so all
@@ -56,22 +56,39 @@ class SlashCommandWithSubcommands extends SlashCommand {
         return builder;
     }
 
-    // TODO: test with multiple subcommands and subcommand groups, test with multiple slashcommandwithsubcommands
     /**
      * Runs the subcommand passed by the interaction, retrieving it from its group if necessary.
      * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
      * @throws {CommandInteractionOptionNoSubcommand} If the interaction does not have a subcommand (should be because
-     *     the command has no subcommands)
+     *     the command was ran without a subcommand)
+     * @throws {CommandChildNotFoundException} If a group or subcommand was specified and it was not found as a child of
+     *     this command.
      */
     async run(interaction) {
+        const groupName = interaction.options.getSubcommandGroup();
         const subcommandName = interaction.options.getSubcommand();
 
-        let subcommand = null;
-        const groupName = interaction.options.getSubcommandGroup();
+        // get subcommand from the collection or get subcommand group from collection and subcommand from the group
+        let subcommand;
         if (groupName) {
-            subcommand = this.#children.get(groupName).get(subcommandName);
-        } else {
+            const group = this.#children.get(groupName);
+            if (!group) {
+                throw new CommandChildNotFoundException(interaction.commandName, {
+                    group: groupName,
+                    subcommand: subcommandName,
+                    isGroupTheMissingOne: true,
+                });
+            }
+            subcommand = group.get(subcommandName);
+        } else { // no subcommand group, so get subcommand directly
             subcommand = this.#children.get(subcommandName);
+        }
+
+        if (!subcommand) {
+            throw new CommandChildNotFoundException(interaction.commandName, {
+                group: groupName,
+                subcommand: subcommandName,
+            });
         }
 
         subcommand.run(interaction);

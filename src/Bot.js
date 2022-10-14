@@ -1,6 +1,11 @@
 import { Client, Collection } from 'discord.js';
-import { loadSlashCommands, loadEvents } from './utils/loadFiles.js';
-import registerSlashCommands from './utils/registerSlashCommands.js';
+import {
+    CommandNotFoundException,
+    loadSlashCommands,
+    loadEvents,
+    registerSlashCommands,
+    deleteAllSlashCommands,
+} from './utils/index.js';
 
 class Bot extends Client {
     // these collections are populated as a map with the name of the event/slash command/etc.
@@ -13,16 +18,24 @@ class Bot extends Client {
      * Run this function to get the bot going. Loads the necessary files to populate the members of the Bot, optionally
      * registers slash commands, then connects to Discord using the Discord API
      * @param {string} token The OAuth2 token to use to log in to the bot (see https://discord.com/developers/docs/topics/oauth2#bots)
-     * @param {boolean} doRegisterSlashCommands Will register slash commands if true, do nothing otherwise
+     * @param {Object} [options={}] The options to be used while creating the bot
+     * @param {boolean} [options.doRegisterSlashCommands=false] Will register slash commands if true, do nothing
+     *     otherwise
+     * @param {boolean} [options.clean=false] Will clear all slash commands from the target if true. This happens before
+     *     registration of slash commands.
+     * @param {Snowflake} [options.guildId=null] Specifies a guild to load slash commands into; commands will be
+     *     registered globally if unspecified
      */
-    async start(token, doRegisterSlashCommands) {
+    async start(token, { doRegisterSlashCommands = false, clean = false, guildId = null } = {}) {
         await loadEvents(this.#events, this);
         await loadSlashCommands(this.#slashCommands);
 
         await super.login(token);
 
         if (doRegisterSlashCommands) { // needs to wait on slashcommands to be loaded and client logged in
-            registerSlashCommands(this.#slashCommands, this.user.id);
+            await registerSlashCommands(this.#slashCommands, this.user.id, { clean, guildId });
+        } else if (clean) {
+            await deleteAllSlashCommands(this.user.id, guildId);
         }
     }
 
@@ -32,7 +45,13 @@ class Bot extends Client {
      * @returns The slash command that has the same file name as the name given
      */
     getSlashCommand(slashCommandName) {
-        return this.#slashCommands.get(slashCommandName);
+        const command = this.#slashCommands.get(slashCommandName);
+
+        if (!command) {
+            throw new CommandNotFoundException(slashCommandName);
+        }
+
+        return command;
     }
 }
 

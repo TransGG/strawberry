@@ -21,7 +21,8 @@
   "dependencies": {
     "@discordjs/rest": "^1.2.0",
     "discord.js": "^14.3.0",
-    "dotenv": "^16.0.2"
+    "dotenv": "^16.0.2",
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
     "eslint": "^8.24.0",
