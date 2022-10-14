@@ -5,7 +5,6 @@ import Event from '../Event.js';
  */
 class InteractionCreate extends Event {
     /**
-     * Constructor for InteractionCreate class
      * @param {Client} client The Discord Client that will handle this interaction
      * @param {String} name The name of this interaction
      */

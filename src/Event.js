@@ -9,7 +9,6 @@ class Event {
     #listener;
 
     /**
-     * Constructor for class Event
      * @param {Client} client The Discord Client
      * @param {string} name The name of the event
      */

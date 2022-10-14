@@ -1,9 +1,8 @@
 import Event from '../Event.js';
 
 /**
- * Handler for messageCreate event. Runs a command if the message
- * starts with the correct prefix and the remaining message is a
- * valid name of a command.
+ * Handler for messageCreate event. Runs a command if the message starts with the correct prefix and the remaining
+ * message is a valid name of a command.
  */
 class MessageCreate extends Event {
     /**

@@ -3,13 +3,13 @@ import 'dotenv/config';
 import yargs from 'yargs';
 import Bot from './Bot.js';
 
+// create bot
 const client = new Bot({
     intents: [
         Discord.GatewayIntentBits.Guilds,
         Discord.GatewayIntentBits.GuildMessages,
         Discord.GatewayIntentBits.MessageContent,
     ],
-    // prefix: '.'
 });
 
 // parse arguments
@@ -39,4 +39,5 @@ const options = {
     guildId: guild,
 };
 
+// start the bot
 client.start(process.env.TOKEN, options);

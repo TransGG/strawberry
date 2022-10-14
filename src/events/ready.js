@@ -1,12 +1,11 @@
 import Event from '../Event.js';
 
 /**
- * Handler for the ready event. Simply displays a log in message. A ready
- * event is emitted after the bot is finished loading and logging in
+ * Handler for the ready event. Simply displays a log in message. A ready event is emitted after the bot is finished
+ * loading and logging in
  */
 class Ready extends Event {
     /**
-     * Constructor for Ready class
      * @param {Client} client The Discord Client that will handle this interaction
      * @param {String} name The name of this interaction
      */

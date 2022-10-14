@@ -27,11 +27,13 @@ class Bot extends Client {
      *     registered globally if unspecified
      */
     async start(token, { doRegisterSlashCommands = false, clean = false, guildId = null } = {}) {
+        // init
         await loadEvents(this.#events, this);
         await loadSlashCommands(this.#slashCommands);
 
         await super.login(token);
 
+        // do requested command tasks
         if (doRegisterSlashCommands) { // needs to wait on slashcommands to be loaded and client logged in
             await registerSlashCommands(this.#slashCommands, this.user.id, { clean, guildId });
         } else if (clean) {

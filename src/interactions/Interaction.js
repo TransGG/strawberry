@@ -6,7 +6,6 @@ class Interaction {
     name;
 
     /**
-     * Constructor for class Interaction
      * @param {string} name The name of the interaction
      */
     constructor(name) {
