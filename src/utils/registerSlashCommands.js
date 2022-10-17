@@ -52,29 +52,26 @@ async function deleteSlashCommand(clientId, commandId, guildId = null) {
 /**
  * Registers the slash commands of the bot, in a specific guild or globally. Must be used when updating properties of
  * slash commands for the change to be reflected in the guilds but unnecessary for normal operation.
- * @param {Collection} slashCommands The slash commands to load
+ * @param {Collection} slashCommands A Collection that maps the name of the slash command to an object that contains the
+ *     registration data
  * @param {Snowflake} clientId The id of the client (the bot) that is registering slash commands
  * @param {Object} [options={}] The options for registering commands
  * @param {boolean} [options.clean=false] Will clear all slash commands from the target before registering them
  * @param {Snowflake} [options.guildId=null] Specifies a guild to load slash commands into; commands will be registered
  *     globally if unspecified
  */
-async function registerSlashCommands(slashCommands, clientId, { clean = false, guildId = null } = {}) {
+async function registerSlashCommands(slashCommands, clientId, guildId = null) {
     const slashCommandsData = slashCommands.map((command) => command.data.toJSON());
 
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
-    if (clean) {
-        await deleteAllSlashCommands(clientId, guildId);
-    }
-
-    if (guildId) { // guild-specific
+    if (guildId) { // for guild-based commands
         console.log(`Started registering ${slashCommandsData.length} application commands in guild ${guildId}.`);
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: slashCommandsData })
             .then((data) => console.log(`Successfully registered ${data.length} application commands in guild `
                 + `${guildId}.`))
             .catch(console.error);
-    } else { // global
+    } else { // for global commands
         console.log(`Started registering ${slashCommandsData.length} application commands.`);
         await rest.put(Routes.applicationCommands(clientId), { body: slashCommandsData })
             .then((data) => console.log(`Successfully registered ${data.length} application commands.`))
