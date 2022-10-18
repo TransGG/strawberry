@@ -1,11 +1,7 @@
 import { Client, Collection } from 'discord.js';
-import {
-    CommandNotFoundException,
-    loadSlashCommands,
-    loadEvents,
-    registerSlashCommands,
-    deleteAllSlashCommands,
-} from './utils/index.js';
+import { CommandNotFoundException } from './utils/errors.js';
+import { loadSlashCommands, loadEvents } from './utils/loadFiles.js';
+import { registerSlashCommands, deleteAllSlashCommands } from './utils/registerSlashCommands.js';
 
 class Bot extends Client {
     // these collections are populated as a map with the name of the event/slash command/etc.

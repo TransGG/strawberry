@@ -1,6 +1,7 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
-import { CommandChildNotFoundException, loadSubcommands } from '../../utils/index.js';
+import { CommandChildNotFoundException } from '../../utils/errors.js';
+import { loadSubcommands } from '../../utils/loadFiles.js';
 
 /**
  * Parent class for commands that subcommands. Handles building the data and running the selected subcommand so all
