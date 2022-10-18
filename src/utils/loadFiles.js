@@ -20,7 +20,8 @@ const subcommandsPath = '../interactions/commands/subcommands';
 async function loadEvents(collection, client, dir = eventsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
-    files.forEach(async (file) => {
+    await Promise.all(
+        files.map(async (file) => {
         const stat = await fs.lstat(path.join(dirPath, file));
         if (stat.isDirectory()) {
             await loadEvents(collection, client, path.join(dir, file));
@@ -31,7 +32,8 @@ async function loadEvents(collection, client, dir = eventsPath) {
             event.startListener();
             collection.set(event.name, event);
         }
-    });
+        }),
+    );
 }
 
 /**
@@ -42,7 +44,8 @@ async function loadEvents(collection, client, dir = eventsPath) {
 async function loadSlashCommands(collection, dir = slashCommandsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
-    files.forEach(async (file) => {
+    await Promise.all(
+        files.map(async (file) => {
         const stat = await fs.lstat(path.join(dirPath, file));
         if (stat.isDirectory()) {
             await loadSlashCommands(collection, path.join(dir, file));
@@ -52,7 +55,8 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
             const cmd = new Command();
             collection.set(cmd.name, cmd);
         }
-    });
+        }),
+    );
 }
 
 /**
@@ -64,7 +68,8 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
-    files.forEach(async (fileName) => {
+    await Promise.all(
+        files.map(async (fileName) => {
         const stat = await fs.lstat(path.join(dirPath, fileName));
         if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
             const groupCommands = new Collection();
@@ -76,7 +81,8 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
             const cmd = new Command();
             collection.set(cmd.name, cmd);
         }
-    });
+        }),
+    );
 }
 
 /**
@@ -90,12 +96,14 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
 async function loadSubcommands(collection, cmdName, dir = subcommandsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
-    files.forEach(async (fileName) => {
+    await Promise.all(
+        files.map(async (fileName) => {
         const stat = await fs.lstat(path.join(dirPath, fileName));
         if (stat.isDirectory() && fileName === cmdName) { // looking for a directory with the same name as the parent command
             await loadSubcommandsActually(collection, path.join(dir, fileName));
         }
-    });
+        }),
+    );
 }
 
 export { loadEvents, loadSlashCommands, loadSubcommands };
