@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { pathToFileURL, fileURLToPath } from 'url';
 import { Collection } from 'discord.js';
+import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,16 +23,16 @@ async function loadEvents(collection, client, dir = eventsPath) {
     const files = await fs.readdir(dirPath);
     await Promise.all(
         files.map(async (file) => {
-        const stat = await fs.lstat(path.join(dirPath, file));
-        if (stat.isDirectory()) {
-            await loadEvents(collection, client, path.join(dir, file));
-        }
-        if (file.endsWith('.js')) {
-            const Event = (await import(pathToFileURL(path.join(dirPath, file)))).default;
-            const event = new Event(client);
-            event.startListener();
-            collection.set(event.name, event);
-        }
+            const stat = await fs.lstat(path.join(dirPath, file));
+            if (stat.isDirectory()) {
+                await loadEvents(collection, client, path.join(dir, file));
+            }
+            if (file.endsWith('.js')) {
+                const Event = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+                const event = new Event(client);
+                event.startListener();
+                collection.set(event.name, event);
+            }
         }),
     );
 }
@@ -46,15 +47,15 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
     const files = await fs.readdir(dirPath);
     await Promise.all(
         files.map(async (file) => {
-        const stat = await fs.lstat(path.join(dirPath, file));
-        if (stat.isDirectory()) {
-            await loadSlashCommands(collection, path.join(dir, file));
-        }
-        if (file.endsWith('.js')) {
-            const Command = (await import(pathToFileURL(path.join(dirPath, file)))).default;
-            const cmd = new Command();
-            collection.set(cmd.name, cmd);
-        }
+            const stat = await fs.lstat(path.join(dirPath, file));
+            if (stat.isDirectory()) {
+                await loadSlashCommands(collection, path.join(dir, file));
+            }
+            if (file.endsWith('.js')) {
+                const Command = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+                const cmd = new Command();
+                collection.set(cmd.name, cmd);
+            }
         }),
     );
 }
@@ -70,38 +71,73 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const files = await fs.readdir(dirPath);
     await Promise.all(
         files.map(async (fileName) => {
-        const stat = await fs.lstat(path.join(dirPath, fileName));
-        if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
-            const groupCommands = new Collection();
-            await loadSubcommandsActually(groupCommands, path.join(dir, fileName), true);
-            collection.set(fileName, groupCommands);
-        }
-        if (fileName.endsWith('.js')) {
-            const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
-            const cmd = new Command();
-            collection.set(cmd.name, cmd);
-        }
+            const stat = await fs.lstat(path.join(dirPath, fileName));
+            if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
+                const groupCommands = new Collection();
+                await loadSubcommandsActually(groupCommands, path.join(dir, fileName), true);
+                collection.set(fileName, groupCommands);
+            }
+            if (fileName.endsWith('.js')) {
+                const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
+                const cmd = new Command();
+                collection.set(cmd.name, cmd);
+            }
         }),
     );
 }
 
 /**
- * Loads subcommands and subcommand groups into the given collection. Subcommand groups are represented as a collection
- * with its respective subcommands as elements. A command is detected when a folder within the given subcommand
- * directory has given command name. Currently only supports commands that are directly in the subcommand directory.
- * @param {Collection} collection The collection to load subcommands into
- * @param {string} cmdName The name of the parent command
- * @param {string} dir The directory to search for subcommands
+ * Loads subcommands and subcommand groups into the commands in the given collection. Subcommand groups are represented
+ * as a collection with its respective subcommands as elements. A command is detected when a folder within the given
+ * subcommand directory has given command name. Currently only supports commands that are directly in the subcommand
+ * directory.
+ * @param {Collection} commands The collection of commands to load subcommands into
+ * @param {string} [dir=this.subcommandsPath] The directory to search for subcommands
  */
-async function loadSubcommands(collection, cmdName, dir = subcommandsPath) {
+async function loadSubcommands(commands, dir = subcommandsPath) {
+    // commands validity checking
+    if (!commands) {
+        throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist!');
+    }
+    if (!(commands instanceof Map)) {
+        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a '
+            + 'Collection)!');
+    }
+    if (commands.size === 0) {
+        throw new RangeError('Cannot load subcommands: size of commands is 0! (zero, not one you smart aleck)');
+    }
+
+    // get files within subcommands directory
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     await Promise.all(
         files.map(async (fileName) => {
-        const stat = await fs.lstat(path.join(dirPath, fileName));
-        if (stat.isDirectory() && fileName === cmdName) { // looking for a directory with the same name as the parent command
-            await loadSubcommandsActually(collection, path.join(dir, fileName));
-        }
+            // try to match a directory name with a command name
+            const stat = await fs.lstat(path.join(dirPath, fileName));
+            if (stat.isDirectory()) {
+                // get command with matching name
+                const command = commands.get(fileName);
+
+                // check command validity
+                if (!command) {
+                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the `
+                        + 'name of any commands!');
+                }
+                if (!(command instanceof SlashCommandWithSubcommands)) {
+                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type `
+                        + 'SlashCommandWithSubcommand!');
+                }
+
+                // create and populate children
+                const children = new Collection();
+                await loadSubcommandsActually(children, path.join(dir, fileName));
+
+                // apply children to command
+                command.addChildren(children);
+            } else { // file is not a directory, so it's a file
+                console.error(`Warning: found file ${fileName} directly in ${dirPath} while looking for subcommands. `
+                    + 'Subcommands are expected to be found within a subdirectory of the subcommands directory.');
+            }
         }),
     );
 }

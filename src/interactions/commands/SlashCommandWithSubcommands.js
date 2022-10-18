@@ -1,7 +1,6 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
 import { CommandChildNotFoundException } from '../../utils/errors.js';
-import { loadSubcommands } from '../../utils/loadFiles.js';
 
 /**
  * Parent class for commands that subcommands. Handles building the data and running the selected subcommand so all
@@ -15,17 +14,6 @@ class SlashCommandWithSubcommands extends SlashCommand {
      * A collection of the subcommands and subcommand groups of this command. Maps the name to the value.
      */
     #children;
-
-    /**
-     * @param {string} name The name of this slash command
-     */
-    constructor(name) {
-        super(name);
-
-        // load subcommands
-        this.#children = new Collection();
-        loadSubcommands(this.#children, this.name);
-    }
 
     /**
      * Creates the data that describes the command format to the Discord API for the command and all subcommands and
@@ -55,6 +43,26 @@ class SlashCommandWithSubcommands extends SlashCommand {
         });
 
         return builder;
+    }
+
+    /**
+     * Combines the existing collection of children with a new one. (Children meaning direct subcommands or subcommand
+     * groups)
+     * @param {Collection} newChildren A collection of children
+     */
+    addChildren(newChildren) {
+        // type check
+        if (!(newChildren instanceof Collection)) {
+            throw new TypeError('Expected argument val to be of type Collection!');
+        }
+
+        // initialize #children if needed
+        if (!this.#children) {
+            this.#children = new Collection();
+        }
+
+        // combine the collection
+        this.#children = this.#children.concat(newChildren);
     }
 
     /**

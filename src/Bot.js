@@ -1,6 +1,6 @@
 import { Client, Collection } from 'discord.js';
 import { CommandNotFoundException } from './utils/errors.js';
-import { loadSlashCommands, loadEvents } from './utils/loadFiles.js';
+import { loadSlashCommands, loadEvents, loadSubcommands } from './utils/loadFiles.js';
 import { registerSlashCommands, deleteAllSlashCommands } from './utils/registerSlashCommands.js';
 
 class Bot extends Client {
@@ -26,6 +26,7 @@ class Bot extends Client {
         // init
         await loadEvents(this.#events, this);
         await loadSlashCommands(this.#slashCommands);
+        await loadSubcommands(this.#slashCommands);
 
         await super.login(token);
 
