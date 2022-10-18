@@ -38,4 +38,11 @@ class CommandChildNotFoundException extends Error {
     }
 }
 
-export { CommandNotFoundException, CommandChildNotFoundException };
+class DuplicateElementException extends Error {
+    constructor(path, name, collection) {
+        const keys = collection.map((value, key) => key);
+        super(`Found duplicate while loading files: ${name} found at ${path}! Existing keys of collection: ${keys}`);
+    }
+}
+
+export { CommandNotFoundException, CommandChildNotFoundException, DuplicateElementException };

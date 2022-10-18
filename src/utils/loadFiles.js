@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import { pathToFileURL, fileURLToPath } from 'url';
 import { Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
+import { DuplicateElementException } from './errors.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,15 +23,18 @@ async function loadEvents(collection, client, dir = eventsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     await Promise.all(
-        files.map(async (file) => {
-            const stat = await fs.lstat(path.join(dirPath, file));
+        files.map(async (fileName) => {
+            const stat = await fs.lstat(path.join(dirPath, fileName));
             if (stat.isDirectory()) {
-                await loadEvents(collection, client, path.join(dir, file));
+                await loadEvents(collection, client, path.join(dir, fileName));
             }
-            if (file.endsWith('.js')) {
-                const Event = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+            if (fileName.endsWith('.js')) {
+                const Event = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
                 const event = new Event(client);
                 event.startListener();
+                if (collection.has(event.name)) {
+                    throw new DuplicateElementException(path.join(dirPath, fileName), event.name, collection);
+                }
                 collection.set(event.name, event);
             }
         }),
@@ -46,14 +50,17 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath);
     await Promise.all(
-        files.map(async (file) => {
-            const stat = await fs.lstat(path.join(dirPath, file));
+        files.map(async (fileName) => {
+            const stat = await fs.lstat(path.join(dirPath, fileName));
             if (stat.isDirectory()) {
-                await loadSlashCommands(collection, path.join(dir, file));
+                await loadSlashCommands(collection, path.join(dir, fileName));
             }
-            if (file.endsWith('.js')) {
-                const Command = (await import(pathToFileURL(path.join(dirPath, file)))).default;
+            if (fileName.endsWith('.js')) {
+                const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
                 const cmd = new Command();
+                if (collection.has(cmd.name)) {
+                    throw new DuplicateElementException(path.join(dirPath, fileName), cmd.name, collection);
+                }
                 collection.set(cmd.name, cmd);
             }
         }),
@@ -73,6 +80,9 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
         files.map(async (fileName) => {
             const stat = await fs.lstat(path.join(dirPath, fileName));
             if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
+                if (collection.has(fileName)) {
+                    throw new DuplicateElementException(dirPath, fileName, collection);
+                }
                 const groupCommands = new Collection();
                 await loadSubcommandsActually(groupCommands, path.join(dir, fileName), true);
                 collection.set(fileName, groupCommands);
@@ -80,6 +90,9 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
             if (fileName.endsWith('.js')) {
                 const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
                 const cmd = new Command();
+                if (collection.has(cmd.name)) {
+                    throw new DuplicateElementException(path.join(dirPath, fileName), cmd.name, collection);
+                }
                 collection.set(cmd.name, cmd);
             }
         }),
