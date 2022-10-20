@@ -24,8 +24,10 @@ class InteractionCreate extends Event {
         }
 
         // buttons
-        if (interaction.commandName === 'button') {
-            // todo: handle buttons
+        if (interaction.isButton()) {
+            const { customId } = interaction;
+            const button = interaction.client.getButton(customId);
+            await button.run(interaction);
         }
     }
 }

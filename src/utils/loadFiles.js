@@ -12,6 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const eventsPath = '../events';
 const slashCommandsPath = '../interactions/commands/slashcommands';
 const subcommandsPath = '../interactions/commands/subcommands';
+const buttonsPath = '../interactions/messagecomponents/buttons';
 
 /**
  * Recursively fetch and load event files.
@@ -151,4 +152,35 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
     );
 }
 
-export { loadEvents, loadSlashCommands, loadSubcommands };
+/**
+ * Recursively fetch and load button files.
+ * @param {Collection} collection The collection to populate with loaded button classes
+ * @param {string} dir The directory to search on this level
+ */
+async function loadButtons(collection, dir = buttonsPath) {
+    const dirPath = path.join(__dirname, dir);
+    const files = await fs.readdir(dirPath);
+    await Promise.all(
+        files.map(async (fileName) => {
+            const stat = await fs.lstat(path.join(dirPath, fileName));
+            if (stat.isDirectory()) {
+                await loadButtons(collection, path.join(dir, fileName));
+            }
+            if (fileName.endsWith('.js')) {
+                const Button = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
+                const button = new Button();
+                if (collection.has(button.name)) {
+                    throw new DuplicateElementException(path.join(dirPath, fileName), button.name, collection);
+                }
+                collection.set(button.name, button);
+            }
+        }),
+    );
+}
+
+export {
+    loadEvents,
+    loadSlashCommands,
+    loadSubcommands,
+    loadButtons,
+};

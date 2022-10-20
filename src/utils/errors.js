@@ -1,12 +1,19 @@
 // this file is to store various error classes
 /* eslint-disable max-classes-per-file */
-class CommandNotFoundException extends Error {
+class LookupError extends Error {
+    query;
+
+    source;
+
     /**
-     * Exception to be thrown when a command is looked up but the command does not exist.
-     * @param {string} command The name of the command
+     * Exception to be thrown when a query had no result or an improper result
+     * @param {string} query The query that was not found
+     * @param {string} source Where the query was searching
      */
-    constructor(command) {
-        super(`Tried to lookup '/${command}' but it was not found! (psst: try updating commands or deleting commands that are registered but no longer exist)`);
+    constructor(message, query, source) {
+        super(message);
+        this.query = query;
+        this.source = source;
     }
 }
 
@@ -43,6 +50,8 @@ class DuplicateElementException extends Error {
 }
 
 class DataError extends Error {
+    name;
+
     constructor(message, name) {
         super(message);
         this.name = name;
@@ -50,7 +59,7 @@ class DataError extends Error {
 }
 
 export {
-    CommandNotFoundException,
+    LookupError,
     CommandChildNotFoundException,
     DuplicateElementException,
     DataError,
