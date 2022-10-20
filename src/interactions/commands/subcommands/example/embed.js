@@ -1,14 +1,14 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import SlashCommand from '../../SlashCommand.js';
+import { SlashCommandSubcommandBuilder, EmbedBuilder } from 'discord.js';
+import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for makeembed slash command. Makes an embed to demonstrate embed creation
+ * Handler for Embed subcommand. Makes an embed to demonstrate embed creation
  */
-class MakeEmbed extends SlashCommand {
+class Embed extends SubCommand {
     /**
-     * @param {string} name The name of this slash command
+     * @param {string} name The name of this subcommand
      */
-    constructor(name = 'makeembed') {
+    constructor(name = 'embed') {
         super(name);
     }
 
@@ -16,14 +16,14 @@ class MakeEmbed extends SlashCommand {
      * The data that describes the command format to the Discord API
      */
     getData() {
-        return new SlashCommandBuilder()
+        return new SlashCommandSubcommandBuilder()
             .setName(this.name)
             .setDescription('Makes an embed');
     }
 
     /**
-     * Method to run when this slash command is executed
-     * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
+     * Method to run when this subcommand is executed
+     * @param {Interaction} interaction The interaction that was emitted when the slash command was executed
      */
     async run(interaction) {
         // courtesy of https://discordjs.guide/popular-topics/embeds.html
@@ -51,4 +51,4 @@ class MakeEmbed extends SlashCommand {
     }
 }
 
-export default MakeEmbed;
+export default Embed;

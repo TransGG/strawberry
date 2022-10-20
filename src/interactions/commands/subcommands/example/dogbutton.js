@@ -1,18 +1,21 @@
 import { setTimeout as wait } from 'node:timers/promises';
 import {
-    SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle,
+    SlashCommandSubcommandBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
 } from 'discord.js';
-import SlashCommand from '../../SlashCommand.js';
+import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for Button slash command. Example for monolithically creating an example button, receiving button presses,
+ * Handler for dogbutton subcommand. Example for monolithically creating an example button, receiving button presses,
  * and handling the button press(es).
  */
-class MakeButton extends SlashCommand {
+class dogbutton extends SubCommand {
     /**
-     * @param {string} name The name of this slash command
+     * @param {string} name The name of this subcommand
      */
-    constructor(name = 'makebutton') {
+    constructor(name = 'dogbutton') {
         super(name);
     }
 
@@ -20,14 +23,14 @@ class MakeButton extends SlashCommand {
      * The data that describes the command format to the Discord API
      */
     getData() {
-        return new SlashCommandBuilder()
+        return new SlashCommandSubcommandBuilder()
             .setName(this.name)
             .setDescription('Creates a button and responds to it');
     }
 
     /**
-     * Method to run when this slash command is executed
-     * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
+     * Method to run when this subcommand is executed
+     * @param {Interaction} interaction The interaction that was emitted when the slash command was executed
      */
     async run(interaction) {
         // make button
@@ -59,4 +62,4 @@ class MakeButton extends SlashCommand {
     }
 }
 
-export default MakeButton;
+export default dogbutton;
