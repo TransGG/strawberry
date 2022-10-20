@@ -6,8 +6,7 @@ class CommandNotFoundException extends Error {
      * @param {string} command The name of the command
      */
     constructor(command) {
-        super(`Tried to lookup '/${command}' but it was not found! (psst: try updating commands or deleting commands `
-            + 'that are registered but no longer exist)');
+        super(`Tried to lookup '/${command}' but it was not found! (psst: try updating commands or deleting commands that are registered but no longer exist)`);
     }
 }
 
@@ -30,9 +29,7 @@ class CommandChildNotFoundException extends Error {
         const groupStr = group ? ` ${group}` : '';
         const subcommandStr = subcommand ? ` ${subcommand}` : '';
 
-        const message = `Tried to lookup '/${command}${groupStr}${subcommandStr}' but `
-            + `${subcommand && !isGroupTheMissingOne ? `subcommand '${subcommand}'` : `group '${group}'`} ` // yields 'subcommand 'foo'' or 'group 'bar'' based on if subcommand was passed and group has been flagged as the errant part of the command
-            + 'was not found.';
+        const message = `Tried to lookup '/${command}${groupStr}${subcommandStr}' but ${subcommand && !isGroupTheMissingOne ? `subcommand '${subcommand}'` : `group '${group}'`} was not found.`;
 
         super(message);
     }

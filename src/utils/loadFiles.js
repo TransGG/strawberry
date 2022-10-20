@@ -113,8 +113,7 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
         throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist!');
     }
     if (!(commands instanceof Map)) {
-        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a '
-            + 'Collection)!');
+        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a Collection)!');
     }
     if (commands.size === 0) {
         throw new RangeError('Cannot load subcommands: size of commands is 0! (zero, not one you smart aleck)');
@@ -133,12 +132,10 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
 
                 // check command validity
                 if (!command) {
-                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the `
-                        + 'name of any commands!');
+                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the name of any commands!`);
                 }
                 if (!(command instanceof SlashCommandWithSubcommands)) {
-                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type `
-                        + 'SlashCommandWithSubcommand!');
+                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type SlashCommandWithSubcommand!`);
                 }
 
                 // create and populate children
@@ -148,8 +145,7 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
                 // apply children to command
                 command.addChildren(children);
             } else { // file is not a directory, so it's a file
-                console.error(`Warning: found file ${fileName} directly in ${dirPath} while looking for subcommands. `
-                    + 'Subcommands are expected to be found within a subdirectory of the subcommands directory.');
+                console.error(`Warning: found file ${fileName} directly in ${dirPath} while looking for subcommands. Subcommands are expected to be found within a subdirectory of the subcommands directory.`);
             }
         }),
     );

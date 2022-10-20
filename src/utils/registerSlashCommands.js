@@ -68,8 +68,7 @@ async function registerSlashCommands(slashCommands, clientId, guildId = null) {
     if (guildId) { // for guild-based commands
         console.log(`Started registering ${slashCommandsData.length} application commands in guild ${guildId}.`);
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: slashCommandsData })
-            .then((data) => console.log(`Successfully registered ${data.length} application commands in guild `
-                + `${guildId}.`))
+            .then((data) => console.log(`Successfully registered ${data.length} application commands in guild ${guildId}.`))
             .catch(console.error);
     } else { // for global commands
         console.log(`Started registering ${slashCommandsData.length} application commands.`);
