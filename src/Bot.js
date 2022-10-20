@@ -33,7 +33,8 @@ class Bot extends Client {
         // do requested command registration tasks (needs to wait on slashcommands to be loaded and client logged in)
         if (clean) {
             await deleteAllSlashCommands(this.user.id, guildId);
-        } else if (doRegisterSlashCommands) {
+        }
+        if (doRegisterSlashCommands) {
             await registerSlashCommands(this.#slashCommands, this.user.id, guildId);
         }
     }
