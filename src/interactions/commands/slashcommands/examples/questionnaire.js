@@ -17,7 +17,7 @@ class Questionnaire extends SlashCommand {
     /**
      * The data that describes the command format to the Discord API
      */
-    get data() {
+    getData() {
         // these options that encompass all option types
         return new SlashCommandBuilder()
             .setName(this.name)

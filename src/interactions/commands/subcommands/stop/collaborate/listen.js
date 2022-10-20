@@ -15,7 +15,7 @@ class Listen extends SubCommand {
     /**
      * The data that describes the command format to the Discord API
      */
-    get data() {
+    getData() {
         return new SlashCommandSubcommandBuilder()
             .setName(this.name)
             .setDescription('From the famous song, \'Water Vapor, Water Vapor, Adult\'');

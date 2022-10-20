@@ -61,7 +61,7 @@ async function deleteSlashCommand(clientId, commandId, guildId = null) {
  *     globally if unspecified
  */
 async function registerSlashCommands(slashCommands, clientId, guildId = null) {
-    const slashCommandsData = slashCommands.map((command) => command.data.toJSON());
+    const slashCommandsData = slashCommands.map((command) => command.getData().toJSON());
 
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 

@@ -15,7 +15,7 @@ class Hammertime extends SubCommand {
     /**
      * The data that describes the command format to the Discord API
      */
-    get data() {
+    getData() {
         return new SlashCommandSubcommandBuilder()
             .setName(this.name)
             .setDescription('From the famous song, \'I Can Touch That\'');

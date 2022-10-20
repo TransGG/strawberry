@@ -19,7 +19,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
      * Creates the data that describes the command format to the Discord API for the command and all subcommands and
      * subcommand groups. The only other data needed are the data for the subcommand.
      */
-    get data() {
+    getData() {
         // create data for the parent command
         const builder = new SlashCommandBuilder()
             .setName(this.name)
@@ -33,12 +33,12 @@ class SlashCommandWithSubcommands extends SlashCommand {
                         .setName(name)
                         .setDescription(name); // placeholder - descriptions of subcommand groups are not visible
                     child.forEach((subcommand) => { // add data for each of the group's subcommands
-                        group.addSubcommand(subcommand.data);
+                        group.addSubcommand(subcommand.getData());
                     });
                     return group;
                 });
             } else { // option is a direct subcommand
-                builder.addSubcommand(child.data);
+                builder.addSubcommand(child.getData());
             }
         });
 

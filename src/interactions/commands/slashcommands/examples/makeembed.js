@@ -15,7 +15,7 @@ class MakeEmbed extends SlashCommand {
     /**
      * The data that describes the command format to the Discord API
      */
-    get data() {
+    getData() {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Makes an embed');
