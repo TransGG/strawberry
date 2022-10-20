@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
 
-// courtesy of https://discordjs.guide/creating-your-bot/creating-commands.html#command-deployment-script
+// courtesy of https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and https://discordjs.guide/slash-commands/deleting-commands.html
 
 /**
  * Deletes all slash commands, in a specific guild or globally based on the parameters.
@@ -29,7 +29,7 @@ async function deleteAllSlashCommands(clientId, guildId = null) {
 /**
  * Deletes a specific slash command, in a specific guild or globally based on the parameters.
  * @param {Snowflake} clientId The id of the client (the bot) that is registering slash commands
- * @param {Snowflake} commandId The id of the command to delete (see https://discordjs.guide/creating-your-bot/deleting-commands.html#deleting-specific-commands)
+ * @param {Snowflake} commandId The id of the command to delete (see https://discordjs.guide/slash-commands/deleting-commands.html#deleting-specific-commands)
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */

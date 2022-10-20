@@ -18,7 +18,7 @@ const buttonsPath = '../interactions/messagecomponents/buttons';
  * Recursively fetch and load event files.
  * @param {Collection} collection The collection to populate with loaded events
  * @param {Client} client The client to pass to each event on construction
- * @param {path} dir The dirctory to search on this level
+ * @param {path} dir The directory to search on this level
  */
 async function loadEvents(collection, client, dir = eventsPath) {
     const dirPath = path.join(__dirname, dir);

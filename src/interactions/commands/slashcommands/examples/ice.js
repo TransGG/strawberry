@@ -45,7 +45,8 @@ class Ice extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
+     *     executed
      */
     async run(interaction) {
         let message = '';

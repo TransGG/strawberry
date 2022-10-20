@@ -7,7 +7,7 @@ import { CommandChildNotFoundException } from '../../utils/errors.js';
  * further operations are handleded by the specific subcommand of this command (since a slash command that has
  * subcommands cannot be ran without a subcommand). If subclasses implement run or data, they should call
  * super.run(interaction) and super.builder unless they are prepared to handle retrieval of subcommands, groups, and
- * their  respective data.
+ * their respective data.
  */
 class SlashCommandWithSubcommands extends SlashCommand {
     /**
@@ -67,7 +67,8 @@ class SlashCommandWithSubcommands extends SlashCommand {
 
     /**
      * Runs the subcommand passed by the interaction, retrieving it from its group if necessary.
-     * @param {Interaction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
+     *     executed
      * @throws {CommandInteractionOptionNoSubcommand} If the interaction does not have a subcommand (should be because
      *     the command was ran without a subcommand)
      * @throws {CommandChildNotFoundException} If a group or subcommand was specified and it was not found as a child of
@@ -103,4 +104,5 @@ class SlashCommandWithSubcommands extends SlashCommand {
         subcommand.run(interaction);
     }
 }
+
 export default SlashCommandWithSubcommands;

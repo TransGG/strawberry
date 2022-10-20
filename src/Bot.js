@@ -9,8 +9,8 @@ import {
 import { registerSlashCommands, deleteAllSlashCommands } from './utils/registerSlashCommands.js';
 
 class Bot extends Client {
-    // these collections are populated as a map with the name of the event/slash command/etc.
-    // as the key and the content as the value
+    // these collections are populated as a map with the name of the event/slash command/etc. as the key and an instance
+    // of its respective class as the value
     #events = new Collection();
 
     #slashCommands = new Collection();

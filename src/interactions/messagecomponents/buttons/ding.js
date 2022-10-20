@@ -3,7 +3,7 @@ import Button from '../Button.js';
 
 class Ding extends Button {
     /**
-     * @param {string} name The naem to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
      */
     constructor(name = 'ding') {
         super(name);

@@ -23,7 +23,8 @@ class Hammertime extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {Interaction} interaction The interaction that was emitted when the slash command was executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
+     *     executed
      */
     async run(interaction) {
         await interaction.reply({ content: 'Stop, hammertime!', ephemeral: true });
