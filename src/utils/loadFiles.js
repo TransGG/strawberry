@@ -15,64 +15,94 @@ const subcommandsPath = '../interactions/commands/subcommands';
 const buttonsPath = '../interactions/messagecomponents/buttons';
 
 /**
- * Recursively fetch and load event files.
- * @param {Collection} collection The collection to populate with loaded events
+ * Recursively loads and instantiates any class that has a .name function and maps the value returned by .data to an
+ * the instance of the class in the passed collection.
+ * @param {Map} collection The collection to populate with class instances
+ * @param {string} dir The directory to search on this level
+ * @param {function} [callback] The function to call after an instantiation, with the instance passed as a parameter
+ *     along with the instanceArgs
+ * @param {Array} [instanceArgs=[]] The arguments to pass to the instance
+ * @param {Array} [callbackArgs=[]] The arguments to pass to the callback function. They are preceded by the instance as
+ *     an argument
+ */
+async function loadNameable(collection, dir, callback, instanceArgs = [], callbackArgs = []) {
+    if (!dir) {
+        throw new Error(`Cannot load files: dir has value of ${dir}!`);
+    }
+    const dirPath = path.join(__dirname, dir);
+
+    // collection validity checking
+    if (!collection) {
+        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'commands' does not exist!`);
+    }
+    if (!(collection instanceof Map)) {
+        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'commands' to be a Map (probably a Collection)!`);
+    }
+
+    const files = await fs.readdir(dirPath);
+    await Promise.all(
+        files.map(async (fileName) => {
+            const stat = await fs.lstat(path.join(dirPath, fileName));
+            if (stat.isDirectory()) {
+                await loadNameable(collection, path.join(dir, fileName), callback);
+            }
+            if (fileName.endsWith('.js')) {
+                const Class = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
+                const instance = new Class(...instanceArgs);
+                if (collection.has(instance.name)) {
+                    throw new DuplicateElementException(path.join(dirPath, fileName), instance.name, collection);
+                }
+                collection.set(instance.name, instance);
+                if (callback) {
+                    callback(instance, ...callbackArgs);
+                }
+            }
+        }),
+    );
+}
+
+/**
+ * Recursively fetch and load event files into the collection.
+ * @param {Map} collection The collection to populate with loaded events
  * @param {Client} client The client to pass to each event on construction
- * @param {path} dir The directory to search on this level
+ * @param {string} [dir=this.eventsPath] The directory to search on this level
  */
 async function loadEvents(collection, client, dir = eventsPath) {
-    const dirPath = path.join(__dirname, dir);
-    const files = await fs.readdir(dirPath);
-    await Promise.all(
-        files.map(async (fileName) => {
-            const stat = await fs.lstat(path.join(dirPath, fileName));
-            if (stat.isDirectory()) {
-                await loadEvents(collection, client, path.join(dir, fileName));
-            }
-            if (fileName.endsWith('.js')) {
-                const Event = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
-                const event = new Event(client);
-                event.startListener();
-                if (collection.has(event.name)) {
-                    throw new DuplicateElementException(path.join(dirPath, fileName), event.name, collection);
-                }
-                collection.set(event.name, event);
-            }
-        }),
+    loadNameable(
+        collection,
+        dir,
+        (event) => {
+            event.startListener();
+        },
+        [
+            client,
+        ],
     );
 }
 
 /**
- * Recursively fetch and load slash command files.
- * @param {Collection} collection The collection to populate with loaded slash commands
- * @param {string} dir The directory to search on this level
+ * Recursively fetch and load slash command files into the collection.
+ * @param {Map} collection The collection to populate with loaded slash commands
+ * @param {string} [dir=this.slashCommandsPath] The directory to search on this level
  */
 async function loadSlashCommands(collection, dir = slashCommandsPath) {
-    const dirPath = path.join(__dirname, dir);
-    const files = await fs.readdir(dirPath);
-    await Promise.all(
-        files.map(async (fileName) => {
-            const stat = await fs.lstat(path.join(dirPath, fileName));
-            if (stat.isDirectory()) {
-                await loadSlashCommands(collection, path.join(dir, fileName));
-            }
-            if (fileName.endsWith('.js')) {
-                const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
-                const cmd = new Command();
-                if (collection.has(cmd.name)) {
-                    throw new DuplicateElementException(path.join(dirPath, fileName), cmd.name, collection);
-                }
-                collection.set(cmd.name, cmd);
-            }
-        }),
-    );
+    await loadNameable(collection, dir);
 }
 
 /**
- * Helper function to process the loading of commands
- * @param {Collection} collection The collection to put subcommands into
+ * Recursively fetch and load button files into the collection.
+ * @param {Map} collection The collection to populate with loaded button classes
+ * @param {string} [dir=this.buttonsPath] The directory to search on this level
+ */
+async function loadButtons(collection, dir = buttonsPath) {
+    loadNameable(collection, dir);
+}
+
+/**
+ * Helper function that does the actual the loading of commands
+ * @param {Map} collection The collection to put subcommands into
  * @param {string} dir The directory to search for files
- * @param {boolean} inGroup Whether this function call is in directory that represents a subcommand group
+ * @param {boolean} [inGroup=false] Whether this function call is in directory that represents a subcommand group
  */
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
@@ -105,7 +135,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
  * as a collection with its respective subcommands as elements. A command is detected when a folder within the given
  * subcommand directory has given command name. Currently only supports commands that are directly in the subcommand
  * directory.
- * @param {Collection} commands The collection of commands to load subcommands into
+ * @param {Map <string, SlashCommand>} commands The collection that contains the commands to load subcommands into
  * @param {string} [dir=this.subcommandsPath] The directory to search for subcommands
  */
 async function loadSubcommands(commands, dir = subcommandsPath) {
@@ -147,32 +177,6 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
                 command.addChildren(children);
             } else { // file is not a directory, so it's a file
                 console.error(`Warning: found file ${fileName} directly in ${dirPath} while looking for subcommands. Subcommands are expected to be found within a subdirectory of the subcommands directory.`);
-            }
-        }),
-    );
-}
-
-/**
- * Recursively fetch and load button files.
- * @param {Collection} collection The collection to populate with loaded button classes
- * @param {string} dir The directory to search on this level
- */
-async function loadButtons(collection, dir = buttonsPath) {
-    const dirPath = path.join(__dirname, dir);
-    const files = await fs.readdir(dirPath);
-    await Promise.all(
-        files.map(async (fileName) => {
-            const stat = await fs.lstat(path.join(dirPath, fileName));
-            if (stat.isDirectory()) {
-                await loadButtons(collection, path.join(dir, fileName));
-            }
-            if (fileName.endsWith('.js')) {
-                const Button = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
-                const button = new Button();
-                if (collection.has(button.name)) {
-                    throw new DuplicateElementException(path.join(dirPath, fileName), button.name, collection);
-                }
-                collection.set(button.name, button);
             }
         }),
     );
