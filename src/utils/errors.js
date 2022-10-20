@@ -42,4 +42,16 @@ class DuplicateElementException extends Error {
     }
 }
 
-export { CommandNotFoundException, CommandChildNotFoundException, DuplicateElementException };
+class DataError extends Error {
+    constructor(message, name) {
+        super(message);
+        this.name = name;
+    }
+}
+
+export {
+    CommandNotFoundException,
+    CommandChildNotFoundException,
+    DuplicateElementException,
+    DataError,
+};
