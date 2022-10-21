@@ -2,14 +2,14 @@ import { ActionRowBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for Ding subcommand. Creates a message with a button to demonstrate this project's button
- * handling.
+ * Handler for modalviabutton subcommand. Creates a message with a button that shows a modal to demonstrate the behavior
+ * of modals when they come from a message component.
  */
-class Ding extends SubCommand {
+class ModalViaButton extends SubCommand {
     /**
      * @param {string} name The name of this subcommand
      */
-    constructor(name = 'ding') {
+    constructor(name = 'modalviabutton') {
         super(name);
     }
 
@@ -19,7 +19,7 @@ class Ding extends SubCommand {
     getData() {
         return new SlashCommandSubcommandBuilder()
             .setName(this.name)
-            .setDescription('Creates a button!');
+            .setDescription('Creates a modal triggered by a button!');
     }
 
     /**
@@ -29,9 +29,9 @@ class Ding extends SubCommand {
      */
     async run(interaction) {
         const row = new ActionRowBuilder()
-            .addComponents(interaction.client.getButton('ding'));
-        await interaction.reply({ content: 'Ding!', ephemeral: true, components: [row] });
+            .addComponents(interaction.client.getButton('modalButton'));
+        await interaction.reply({ ephemeral: true, components: [row] });
     }
 }
 
-export default Ding;
+export default ModalViaButton;

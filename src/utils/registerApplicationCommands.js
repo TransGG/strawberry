@@ -5,12 +5,12 @@ import { Routes } from 'discord.js';
 // courtesy of https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and https://discordjs.guide/slash-commands/deleting-commands.html
 
 /**
- * Deletes all slash commands, in a specific guild or globally based on the parameters.
- * @param {Snowflake} clientId The id of the client (the bot) that is registering slash commands
+ * Deletes all application commands, in a specific guild or globally based on the parameters.
+ * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */
-async function deleteAllSlashCommands(clientId, guildId = null) {
+async function deleteAllApplicationCommands(clientId, guildId = null) {
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
     if (guildId) { // for guild-based commands
@@ -27,13 +27,13 @@ async function deleteAllSlashCommands(clientId, guildId = null) {
 }
 
 /**
- * Deletes a specific slash command, in a specific guild or globally based on the parameters.
- * @param {Snowflake} clientId The id of the client (the bot) that is registering slash commands
+ * Deletes a specific application command, in a specified guild or globally based on the parameters.
+ * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
  * @param {Snowflake} commandId The id of the command to delete (see https://discordjs.guide/slash-commands/deleting-commands.html#deleting-specific-commands)
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */
-async function deleteSlashCommand(clientId, commandId, guildId = null) {
+async function deleteApplicationCommand(clientId, commandId, guildId = null) {
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
     if (guildId) { // for guild-based commands
@@ -50,32 +50,35 @@ async function deleteSlashCommand(clientId, commandId, guildId = null) {
 }
 
 /**
- * Registers the slash commands of the bot, in a specific guild or globally. Must be used when updating properties of
- * slash commands for the change to be reflected in the guilds but unnecessary for normal operation.
- * @param {Collection} slashCommands A Collection that maps the name of the slash command to an object that contains the
+ * Registers the application commands (slash commands or context menu commands) of the bot, in a specified guild or
+ * globally. Must be used when updating properties of application commands for the change to be reflected in the guilds,
+ * but otherwise unnecessary for normal operation.
+ * @param {Collection} commands A Collection that maps the name of the command to an object that contains the
  *     registration data
- * @param {Snowflake} clientId The id of the client (the bot) that is registering slash commands
- * @param {Object} [options={}] The options for registering commands
- * @param {boolean} [options.clean=false] Will clear all slash commands from the target before registering them
- * @param {Snowflake} [options.guildId=null] Specifies a guild to load slash commands into; commands will be registered
- *     globally if unspecified
+ * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
+ * @param {Snowflake} [guildId=null] Specifies a guild to load commands into; commands will be registered globally if
+ *     unspecified
  */
-async function registerSlashCommands(slashCommands, clientId, guildId = null) {
-    const slashCommandsData = slashCommands.map((command) => command.getData().toJSON());
+async function registerApplicationCommands(commands, clientId, guildId = null) {
+    const commandsData = commands.map((command) => command.getData().toJSON());
 
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
     if (guildId) { // for guild-based commands
-        console.log(`Started registering ${slashCommandsData.length} application commands in guild ${guildId}.`);
-        await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: slashCommandsData })
+        console.log(`Started registering ${commandsData.length} application commands in guild ${guildId}.`);
+        await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commandsData })
             .then((data) => console.log(`Successfully registered ${data.length} application commands in guild ${guildId}.`))
             .catch(console.error);
     } else { // for global commands
-        console.log(`Started registering ${slashCommandsData.length} application commands.`);
-        await rest.put(Routes.applicationCommands(clientId), { body: slashCommandsData })
-            .then((data) => console.log(`Successfully registered ${data.length} application commands.`))
+        console.log(`Started registering ${commandsData.length} application commands.`);
+        console.log(commandsData);
+        await rest.put(Routes.applicationCommands(clientId), { body: commandsData })
+            .then((data) => {
+                console.log(`Successfully registered ${data.length} application commands.`);
+                console.log(data);
+            })
             .catch(console.error);
     }
 }
 
-export { deleteAllSlashCommands, deleteSlashCommand, registerSlashCommands };
+export { deleteAllApplicationCommands, deleteApplicationCommand, registerApplicationCommands };

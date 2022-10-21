@@ -13,6 +13,9 @@ const eventsPath = '../events';
 const slashCommandsPath = '../interactions/commands/slashcommands';
 const subcommandsPath = '../interactions/commands/subcommands';
 const buttonsPath = '../interactions/messagecomponents/buttons';
+const selectMenusPath = '../interactions/messagecomponents/selectmenus';
+const modalsPath = '../interactions/modals';
+const contextMenuCommandsPath = '../interactions/commands/contextmenucommands';
 
 /**
  * Recursively loads and instantiates any class that has a .name function and maps the value returned by .data to an
@@ -39,7 +42,9 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
         throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'commands' to be a Map (probably a Collection)!`);
     }
 
-    const files = await fs.readdir(dirPath);
+    const files = await fs.readdir(dirPath).catch((error) => {
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+    });
     await Promise.all(
         files.map(async (fileName) => {
             const stat = await fs.lstat(path.join(dirPath, fileName));
@@ -99,6 +104,33 @@ async function loadButtons(collection, dir = buttonsPath) {
 }
 
 /**
+ * Recursively fetch and load button files into the collection.
+ * @param {Map} collection The collection to populate with loaded button classes
+ * @param {string} [dir=this.selectMenusPath] The directory to search on this level
+ */
+async function loadSelectMenus(collection, dir = selectMenusPath) {
+    loadNameable(collection, dir);
+}
+
+/**
+ * Recursively fetch and load button files into the collection.
+ * @param {Map} collection The collection to populate with loaded button classes
+ * @param {string} [dir=this.modalsPath] The directory to search on this level
+ */
+async function loadModals(collection, dir = modalsPath) {
+    loadNameable(collection, dir);
+}
+
+/**
+ * Recursively fetch and load button files into the collection.
+ * @param {Map} collection The collection to populate with loaded button classes
+ * @param {string} [dir=this.contextMenuCommandsPath] The directory to search on this level
+ */
+async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath) {
+    loadNameable(collection, dir);
+}
+
+/**
  * Helper function that does the actual the loading of commands
  * @param {Map} collection The collection to put subcommands into
  * @param {string} dir The directory to search for files
@@ -106,7 +138,9 @@ async function loadButtons(collection, dir = buttonsPath) {
  */
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
-    const files = await fs.readdir(dirPath);
+    const files = await fs.readdir(dirPath).catch((error) => {
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+    });
     await Promise.all(
         files.map(async (fileName) => {
             const stat = await fs.lstat(path.join(dirPath, fileName));
@@ -152,7 +186,9 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
 
     // get files within subcommands directory
     const dirPath = path.join(__dirname, dir);
-    const files = await fs.readdir(dirPath);
+    const files = await fs.readdir(dirPath).catch((error) => {
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+    });
     await Promise.all(
         files.map(async (fileName) => {
             // try to match a directory name with a command name
@@ -187,4 +223,7 @@ export {
     loadSlashCommands,
     loadSubcommands,
     loadButtons,
+    loadSelectMenus,
+    loadContextMenuCommands,
+    loadModals,
 };

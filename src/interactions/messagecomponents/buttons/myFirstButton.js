@@ -1,16 +1,16 @@
 import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import Button from '../Button.js';
 
-class Ding extends Button {
+class MyFirstButton extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
      */
-    constructor(name = 'ding') {
+    constructor(name = 'myFirstButton') {
         super(name);
     }
 
     /**
-     * The data that describes the button format to the Discord API. Dictates button appeareance in the Discord client.
+     * @returns {ButtonBuilder} The data that describes the button format to the Discord API.
      */
     getData() {
         return new ButtonBuilder()
@@ -29,4 +29,4 @@ class Ding extends Button {
         await interaction.editReply({ content: 'Dong!', components: [] });
     }
 }
-export default Ding;
+export default MyFirstButton;

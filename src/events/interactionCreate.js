@@ -13,21 +13,30 @@ class InteractionCreate extends Event {
     }
 
     /**
+     * Looks up the interaction from the interaction's client and runs it.
      * @param {Interaction} interaction The interaction whose creation triggered this event
      */
     async run(interaction) {
-        // slash commands
-        if (interaction.isChatInputCommand()) {
+        if (interaction.isChatInputCommand()) { // slash commands
             const { commandName } = interaction;
             const command = interaction.client.getSlashCommand(commandName);
             await command.run(interaction);
-        }
-
-        // buttons
-        if (interaction.isButton()) {
+        } else if (interaction.isButton()) { // buttons
             const { customId } = interaction;
             const button = interaction.client.getButton(customId);
             await button.run(interaction);
+        } else if (interaction.isSelectMenu()) { // select menus
+            const { customId } = interaction;
+            const selectMenu = interaction.client.getSelectMenu(customId);
+            await selectMenu.run(interaction);
+        } else if (interaction.isModalSubmit()) { // modals
+            const { customId } = interaction;
+            const modal = interaction.client.getModal(customId);
+            await modal.run(interaction);
+        } else if (interaction.isUserContextMenuCommand()) { // context menu commands
+            const { commandName } = interaction;
+            const command = interaction.client.getContextMenuCommand(commandName);
+            await command.run(interaction);
         }
     }
 }
