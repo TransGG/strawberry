@@ -1,6 +1,7 @@
 import Discord from 'discord.js';
 import 'dotenv/config';
 import yargs from 'yargs';
+import config from './config/config.js';
 import Bot from './Bot.js';
 
 // create bot
@@ -15,14 +16,24 @@ const client = new Bot({
 // parse arguments
 const args = yargs(process.argv.slice(2))
     .options({
+        d: {
+            alias: 'debug',
+            describe: 'Enable debug mode',
+            type: 'boolean',
+        },
+        v: {
+            alias: 'verbose',
+            describe: 'Enable verbose output',
+            type: 'boolean',
+        },
         r: {
             alias: 'register',
-            describe: 'registers slash commands',
+            describe: 'Registers application (slash and context menu) commands',
             type: 'boolean',
         },
         c: {
             alias: 'clean',
-            describe: 'does a clean register if used with -r, or clears all commands if used without -r',
+            describe: 'Unregisters application (slash and context menu) commands',
             type: 'boolean',
         },
         g: {
@@ -31,7 +42,16 @@ const args = yargs(process.argv.slice(2))
             type: 'string',
         },
     }).argv;
-const { register, clean, guild } = args;
+const {
+    debug,
+    verbose,
+    register,
+    clean,
+    guild,
+} = args;
+
+config.debug = debug;
+config.verbose = verbose;
 
 const options = {
     clean,
@@ -40,4 +60,4 @@ const options = {
 };
 
 // start the bot
-client.start(process.env.TOKEN, options);
+client.start(config.token, options);

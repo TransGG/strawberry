@@ -1,17 +1,18 @@
 import 'dotenv/config';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
+import config from '../config/config.js';
 
 // courtesy of https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and https://discordjs.guide/slash-commands/deleting-commands.html
+const { clientId, token } = config;
 
 /**
  * Deletes all application commands, in a specific guild or globally based on the parameters.
- * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */
-async function deleteAllApplicationCommands(clientId, guildId = null) {
-    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+async function deleteAllApplicationCommands(guildId = null) {
+    const rest = new REST({ version: '10' }).setToken(token);
 
     if (guildId) { // for guild-based commands
         console.log(`Started to delete application commands in guild ${guildId}.`);
@@ -28,13 +29,12 @@ async function deleteAllApplicationCommands(clientId, guildId = null) {
 
 /**
  * Deletes a specific application command, in a specified guild or globally based on the parameters.
- * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
  * @param {Snowflake} commandId The id of the command to delete (see https://discordjs.guide/slash-commands/deleting-commands.html#deleting-specific-commands)
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */
-async function deleteApplicationCommand(clientId, commandId, guildId = null) {
-    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+async function deleteApplicationCommand(commandId, guildId = null) {
+    const rest = new REST({ version: '10' }).setToken(token);
 
     if (guildId) { // for guild-based commands
         console.log(`Started to delete application command with id: ${commandId} in guild ${guildId}.`);
@@ -55,14 +55,13 @@ async function deleteApplicationCommand(clientId, commandId, guildId = null) {
  * but otherwise unnecessary for normal operation.
  * @param {Collection} commands A Collection that maps the name of the command to an object that contains the
  *     registration data
- * @param {Snowflake} clientId The id of the client (the bot) to which commands are to be registered
  * @param {Snowflake} [guildId=null] Specifies a guild to load commands into; commands will be registered globally if
  *     unspecified
  */
-async function registerApplicationCommands(commands, clientId, guildId = null) {
+async function registerApplicationCommands(commands, guildId = null) {
     const commandsData = commands.map((command) => command.getData().toJSON());
 
-    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+    const rest = new REST({ version: '10' }).setToken(token);
 
     if (guildId) { // for guild-based commands
         console.log(`Started registering ${commandsData.length} application commands in guild ${guildId}.`);

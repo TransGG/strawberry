@@ -52,11 +52,11 @@ class Bot extends Client {
 
         // do requested command registration tasks (needs to wait on commands to be loaded and client logged in)
         if (clean) {
-            await deleteAllApplicationCommands(this.user.id, guildId);
+            await deleteAllApplicationCommands(guildId);
         }
         if (registerCommands) {
-            await registerApplicationCommands(this.#slashCommands, this.user.id, guildId);
-            await registerApplicationCommands(this.#contextMenuCommands, this.user.id, guildId);
+            await registerApplicationCommands(this.#slashCommands, guildId);
+            await registerApplicationCommands(this.#contextMenuCommands, guildId);
         }
     }
 
