@@ -20,7 +20,7 @@ class dogbutton extends SubCommand {
     }
 
     /**
-     * The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()

@@ -14,7 +14,7 @@ class CoolPing extends SlashCommand {
     }
 
     /**
-     * The data that describes the command format to the Discord API
+     * @returns {SlashCommandBuilder} The data that describes the command format to the Discord API
      */
     getData() {
         return new SlashCommandBuilder()
