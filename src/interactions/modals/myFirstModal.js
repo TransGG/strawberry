@@ -67,8 +67,6 @@ class MyFirstModal extends Modal {
         } else {
             await interaction.reply({ content: `${favoriteColor}\n${hobbies}`, ephemeral: true });
         }
-
-        console.log(interaction);
     }
 }
 

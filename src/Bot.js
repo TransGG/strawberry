@@ -27,8 +27,8 @@ class Bot extends Client {
     #contextMenuCommands = new Collection();
 
     /**
-     * Run this function to get the bot going. Loads the necessary files to populate the members of the Botm connects to
-     *  Discord using the Discord API, then optionally registers application commands
+     * Run this function to get the bot going. Loads the necessary files to populate the members of the Bot, connects to
+     * Discord using the Discord API, then optionally registers application commands
      * @param {string} token The OAuth2 token to use to log in to the bot (see https://discord.com/developers/docs/topics/oauth2#bots)
      * @param {Object} [options={}] The options to be used while starting the bot
      * @param {boolean} [options.registerCommands=false] Will register application commands if true, do nothing

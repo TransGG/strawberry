@@ -70,11 +70,9 @@ async function registerApplicationCommands(commands, guildId = null) {
             .catch(console.error);
     } else { // for global commands
         console.log(`Started registering ${commandsData.length} application commands.`);
-        console.log(commandsData);
         await rest.put(Routes.applicationCommands(clientId), { body: commandsData })
             .then((data) => {
                 console.log(`Successfully registered ${data.length} application commands.`);
-                console.log(data);
             })
             .catch(console.error);
     }

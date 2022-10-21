@@ -55,7 +55,7 @@ config.verbose = verbose;
 
 const options = {
     clean,
-    doRegisterSlashCommands: register,
+    registerCommands: register,
     guildId: guild,
 };
 
