@@ -59,7 +59,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
                 }
                 collection.set(instance.name, instance);
                 if (callback) {
-                    callback(instance, ...callbackArgs);
+                    await callback(instance, ...callbackArgs);
                 }
             }
         }),
