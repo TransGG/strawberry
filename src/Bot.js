@@ -40,24 +40,26 @@ class Bot extends Client {
      */
     async start(token, { registerCommands = false, clean = false, guildId = null } = {}) {
         // init
-        loadButtons(this.#buttons);
-        loadSelectMenus(this.#selectMenus);
-        loadModals(this.#modals);
-        await loadEvents(this.#events, this);
-        await loadSlashCommands(this.#slashCommands);
-        await loadSubcommands(this.#slashCommands);
-        await loadContextMenuCommands(this.#contextMenuCommands);
+        await Promise.all([
+            loadSlashCommands(this.#slashCommands).then(async () => {
+                await loadSubcommands(this.#slashCommands);
+            }),
+            loadContextMenuCommands(this.#contextMenuCommands),
+            loadButtons(this.#buttons),
+            loadSelectMenus(this.#selectMenus),
+            loadModals(this.#modals),
+            loadEvents(this.#events, this),
+        ]);
 
-        await super.login(token);
-
-        // do requested command registration tasks (needs to wait on commands to be loaded and client logged in)
+        // command registration
         if (clean) {
             await deleteAllApplicationCommands(guildId);
         }
         if (registerCommands) {
-            await registerApplicationCommands(this.#slashCommands, guildId);
-            await registerApplicationCommands(this.#contextMenuCommands, guildId);
+            await registerApplicationCommands(this.#slashCommands.concat(this.#contextMenuCommands), guildId);
         }
+
+        await super.login(token);
     }
 
     /**
