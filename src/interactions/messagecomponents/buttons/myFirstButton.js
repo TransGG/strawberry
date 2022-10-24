@@ -1,6 +1,9 @@
 import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import Button from '../Button.js';
 
+/**
+ * Handler for myFirstButton button. Example for buttons
+ */
 class MyFirstButton extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.

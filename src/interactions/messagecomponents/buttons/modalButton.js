@@ -1,7 +1,10 @@
 import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import Button from '../Button.js';
 
-class MyFirstButton extends Button {
+/**
+ * Handler for modalButton button. Example for buttons
+ */
+class ModalButton extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
      */
@@ -27,4 +30,4 @@ class MyFirstButton extends Button {
         await interaction.showModal(interaction.client.getModal('myFirstModal').getData());
     }
 }
-export default MyFirstButton;
+export default ModalButton;

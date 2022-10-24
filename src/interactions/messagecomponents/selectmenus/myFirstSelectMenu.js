@@ -1,6 +1,9 @@
 import { SelectMenuBuilder } from 'discord.js';
 import SelectMenu from '../SelectMenu.js';
 
+/**
+ * Handler for myFirstSelectMenu select menu. Example for select menus
+ */
 class MyFirstSelectMenu extends SelectMenu {
     /**
      * @param {string} name The name to use to identify this select menu and to serve as its customId. Must be unique.
