@@ -27,7 +27,7 @@ class ModalButton extends Button {
      * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
      */
     async run(interaction) {
-        await interaction.showModal(interaction.client.getModal('myFirstModal').getData());
+        await interaction.showModal(interaction.client.getModal('myFirstModal'));
     }
 }
 export default ModalButton;
