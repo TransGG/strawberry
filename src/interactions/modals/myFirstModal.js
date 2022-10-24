@@ -22,31 +22,30 @@ class MyFirstModal extends Modal {
      */
     getData() {
         // Courtesy of https://discordjs.guide/interactions/modals.html
-        const modal = new ModalBuilder()
+        return new ModalBuilder()
             .setCustomId(this.name)
-            .setTitle('My Modal');
-
-        const favoriteColorInput = new TextInputBuilder()
-            .setCustomId('favoriteColorInput')
-            .setLabel("What's your favorite color?")
-            .setStyle(TextInputStyle.Short)
-            .setMaxLength(1000)
-            .setMinLength(5)
-            .setPlaceholder('Enter some text!')
-            .setValue('Default')
-            .setRequired(true);
-
-        const hobbiesInput = new TextInputBuilder()
-            .setCustomId('hobbiesInput')
-            .setLabel("What's some of your favorite hobbies?")
-            .setStyle(TextInputStyle.Paragraph);
-
-        const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
-        const secondActionRow = new ActionRowBuilder().addComponents(hobbiesInput);
-
-        modal.addComponents(firstActionRow, secondActionRow);
-
-        return modal;
+            .setTitle('My Modal')
+            .addComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new TextInputBuilder()
+                            .setCustomId('favoriteColorInput')
+                            .setLabel("What's your favorite color?")
+                            .setStyle(TextInputStyle.Short)
+                            .setMaxLength(1000)
+                            .setMinLength(5)
+                            .setPlaceholder('Enter some text!')
+                            .setValue('Default')
+                            .setRequired(true),
+                    ),
+                new ActionRowBuilder()
+                    .addComponents(
+                        new TextInputBuilder()
+                            .setCustomId('hobbiesInput')
+                            .setLabel("What's some of your favorite hobbies?")
+                            .setStyle(TextInputStyle.Paragraph),
+                    ),
+            );
     }
 
     /**
