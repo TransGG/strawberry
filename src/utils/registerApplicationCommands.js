@@ -59,7 +59,7 @@ async function deleteApplicationCommand(commandId, guildId = null) {
  *     unspecified
  */
 async function registerApplicationCommands(commands, guildId = null) {
-    const commandsData = commands.map((command) => command.getData().toJSON());
+    const commandsData = commands.map((command) => command.toJSON());
 
     const rest = new REST({ version: '10' }).setToken(token);
 
