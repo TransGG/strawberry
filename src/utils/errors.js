@@ -50,12 +50,18 @@ class DuplicateElementException extends Error {
 }
 
 class DataError extends Error {
-    name;
+    instance;
 
-    constructor(message, name) {
+    instanceName;
+
+    constructor(message, instance) {
         super(message);
-        this.name = name;
+        this.instance = instance;
     }
+}
+
+class FatalError extends Error {
+
 }
 
 export {
@@ -63,4 +69,5 @@ export {
     CommandChildNotFoundException,
     DuplicateElementException,
     DataError,
+    FatalError,
 };

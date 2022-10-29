@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { pathToFileURL, fileURLToPath } from 'url';
-import { Collection } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 import { DuplicateElementException } from './errors.js';
 
@@ -36,10 +36,10 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
 
     // collection validity checking
     if (!collection) {
-        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'commands' does not exist!`);
+        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'collection' does not exist!`);
     }
     if (!(collection instanceof Map)) {
-        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'commands' to be a Map (probably a Collection)!`);
+        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'collection' to be of type Map (probably a Collection) when 'collection' was of type ${collection.constructor.name}!`);
     }
 
     const files = await fs.readdir(dirPath).catch((error) => {
@@ -47,15 +47,19 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
     });
     await Promise.all(
         files.map(async (fileName) => {
-            const stat = await fs.lstat(path.join(dirPath, fileName));
+            const filePath = path.join(dirPath, fileName);
+            const stat = await fs.lstat(filePath);
             if (stat.isDirectory()) {
                 await loadNameable(collection, path.join(dir, fileName), callback);
             }
             if (fileName.endsWith('.js')) {
-                const Class = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
+                const Class = (await import(pathToFileURL(filePath))).default;
                 const instance = new Class(...instanceArgs);
+                if (!(Object.hasOwn(instance, 'name'))) {
+                    throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
+                }
                 if (collection.has(instance.name)) {
-                    throw new DuplicateElementException(path.join(dirPath, fileName), instance.name, collection);
+                    throw new DuplicateElementException(filePath, instance.name, collection);
                 }
                 collection.set(instance.name, instance);
                 if (callback) {
@@ -73,6 +77,12 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
  * @param {string} [dir=this.eventsPath] The directory to search on this level
  */
 async function loadEvents(collection, client, dir = eventsPath) {
+    if (!client) {
+        throw new ReferenceError('Cannot load events: argument \'client\' does not exist!');
+    }
+    if (!(client instanceof Client)) {
+        throw new TypeError(`Cannot load events: expected argument client to be of type Client when client was of type ${client.constructor.name}`);
+    }
     loadNameable(
         collection,
         dir,
@@ -143,7 +153,8 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
     });
     await Promise.all(
         files.map(async (fileName) => {
-            const stat = await fs.lstat(path.join(dirPath, fileName));
+            const filePath = path.join(dirPath, fileName);
+            const stat = await fs.lstat(filePath);
             if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
                 if (collection.has(fileName)) {
                     throw new DuplicateElementException(dirPath, fileName, collection);
@@ -153,10 +164,10 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
                 collection.set(fileName, groupCommands);
             }
             if (fileName.endsWith('.js')) {
-                const Command = (await import(pathToFileURL(path.join(dirPath, fileName)))).default;
+                const Command = (await import(pathToFileURL(filePath))).default;
                 const cmd = new Command();
                 if (collection.has(cmd.name)) {
-                    throw new DuplicateElementException(path.join(dirPath, fileName), cmd.name, collection);
+                    throw new DuplicateElementException(filePath, cmd.name, collection);
                 }
                 collection.set(cmd.name, cmd);
             }

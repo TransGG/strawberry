@@ -3,6 +3,7 @@ import 'dotenv/config';
 import yargs from 'yargs';
 import config from './config/config.js';
 import Bot from './Bot.js';
+import { FatalError } from './utils/errors.js';
 
 // create bot
 const client = new Bot({
@@ -60,4 +61,10 @@ const options = {
 };
 
 // start the bot
-client.start(config.token, options);
+try {
+    await client.start(config.token, options);
+} catch (error) {
+    /* any error encountered during startup is considered fatal because they may place the bot in an unexpected or
+       unrecoverable state and they are immediately actionable */
+    throw new FatalError('Encountered an error on client startup:', { cause: error });
+}

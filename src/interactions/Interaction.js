@@ -22,7 +22,7 @@ class Interaction {
     getData() {
         throw new DataError(
             'Tried to load data but data were not found! (psst: getData() is probably not implemented)',
-            this.name,
+            this,
         );
     }
 
