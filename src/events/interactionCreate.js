@@ -21,6 +21,10 @@ class InteractionCreate extends Event {
             const { commandName } = interaction;
             const command = interaction.client.getSlashCommand(commandName);
             await command.run(interaction);
+        } else if (interaction.isUserContextMenuCommand()) { // context menu commands
+            const { commandName } = interaction;
+            const command = interaction.client.getContextMenuCommand(commandName);
+            await command.run(interaction);
         } else if (interaction.isButton()) { // buttons
             const { customId } = interaction;
             const button = interaction.client.getButton(customId);
@@ -33,10 +37,10 @@ class InteractionCreate extends Event {
             const { customId } = interaction;
             const modal = interaction.client.getModal(customId);
             await modal.run(interaction);
-        } else if (interaction.isUserContextMenuCommand()) { // context menu commands
+        } else if (interaction.isAutocomplete()) { // autocomplete
             const { commandName } = interaction;
-            const command = interaction.client.getContextMenuCommand(commandName);
-            await command.run(interaction);
+            const command = interaction.client.getSlashCommand(commandName);
+            command.autocomplete(interaction);
         }
     }
 }
