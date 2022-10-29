@@ -1,14 +1,11 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
-import { CommandChildNotFoundException } from '../../utils/errors.js';
+import { CommandChildNotFound } from '../../utils/errors.js';
 import { debug } from '../../config/out.js';
 
 /**
- * Parent class for commands that subcommands. Handles building the data and running the selected subcommand so all
- * further operations are handleded by the specific subcommand of this command (since a slash command that has
- * subcommands cannot be ran without a subcommand). If subclasses implement run or data, they should call
- * super.run(interaction) and super.builder unless they are prepared to handle retrieval of subcommands, groups, and
- * their respective data.
+ * Parent class for handlers of slash commands that have subcommands. Has a default implementation for run() and
+ * getData() that runs the proper subcommand and retrieves the subcommand[ group]'s data, respectively.
  */
 class SlashCommandWithSubcommands extends SlashCommand {
     /**
@@ -93,7 +90,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
         if (groupName) {
             const group = this.#children.get(groupName);
             if (!group) {
-                throw new CommandChildNotFoundException(interaction.commandName, {
+                throw new CommandChildNotFound(interaction.commandName, {
                     group: groupName,
                     subcommand: subcommandName,
                     isGroupTheMissingOne: true,
@@ -105,7 +102,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
         }
 
         if (!subcommand) {
-            throw new CommandChildNotFoundException(interaction.commandName, {
+            throw new CommandChildNotFound(interaction.commandName, {
                 group: groupName,
                 subcommand: subcommandName,
             });

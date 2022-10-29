@@ -2,7 +2,7 @@ import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
 /**
- * Handler for Display Avatar context menu command. This command is a user command. Displays the avatar of the user.
+ * Handler for Display Avatar user context menu command. Displays the avatar of the user.
  */
 class DisplayAvatar extends ContextMenuCommand {
     /**
@@ -23,7 +23,7 @@ class DisplayAvatar extends ContextMenuCommand {
 
     /**
      * Method to run when this context menu command is executed
-     * @param {ContextMenuCommandInteraction} interaction The interaction that was emitted when this command was
+     * @param {UserContextMenuCommandInteraction} interaction The interaction that was emitted when this command was
      *     executed
      */
     async run(interaction) {

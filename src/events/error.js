@@ -2,7 +2,7 @@ import { Events } from 'discord.js';
 import Event from '../Event.js';
 
 /**
- * Handler for error event
+ * Handler for error event. Experimental.
  */
 class Error extends Event {
     /**

@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { pathToFileURL, fileURLToPath } from 'url';
 import { Client, Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
-import { DuplicateElementException } from './errors.js';
+import { DuplicateElement } from './errors.js';
 import { debug, verbose } from '../config/out.js';
 
 // eslint-disable-next-line no-underscore-dangle
@@ -19,8 +19,8 @@ const selectMenusPath = '../interactions/message_components/select_menus';
 const modalsPath = '../interactions/modals';
 
 /**
- * Recursively loads and instantiates any class that has a .name function and maps the value returned by .data to an
- * the instance of the class in the passed collection.
+ * Recursively loads files in the given directory and instantiates them. Instances are then inserted into the given
+ * collection with the instance's name property mapping to the instance.
  * @param {Map} collection The collection to populate with class instances
  * @param {string} dir The directory to search on this level
  * @param {function} [callback] The function to call after an instantiation, with the instance passed as a parameter
@@ -28,6 +28,11 @@ const modalsPath = '../interactions/modals';
  * @param {Array} [instanceArgs=[]] The arguments to pass to the instance
  * @param {Array} [callbackArgs=[]] The arguments to pass to the callback function. They are preceded by the instance as
  *     an argument
+ * @throws {Error} If files could not be read from the directory
+ * @throws {Error} If an instance of a file's default export does not have a name property
+ * @throws {ReferenceError} If collection does not exist
+ * @throws {TypeError} If collection is not a Map (probably should be a Collection)
+ *
  */
 async function loadNameable(collection, dir, callback, instanceArgs = [], callbackArgs = []) {
     if (!dir) {
@@ -63,7 +68,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
                     throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
                 }
                 if (collection.has(instance.name)) {
-                    throw new DuplicateElementException(filePath, instance.name, collection);
+                    throw new DuplicateElement(filePath, instance.name, collection);
                 }
                 collection.set(instance.name, instance);
                 if (callback) {
@@ -173,7 +178,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
             const stat = await fs.lstat(filePath);
             if (stat.isDirectory() && !inGroup) { // directory represents a subcommand group
                 if (collection.has(fileName)) {
-                    throw new DuplicateElementException(dirPath, fileName, collection);
+                    throw new DuplicateElement(dirPath, fileName, collection);
                 }
                 const groupCommands = new Collection();
                 await loadSubcommandsActually(groupCommands, path.join(dir, fileName), true);
@@ -185,7 +190,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
                 const Command = (await import(pathToFileURL(filePath))).default;
                 const cmd = new Command();
                 if (collection.has(cmd.name)) {
-                    throw new DuplicateElementException(filePath, cmd.name, collection);
+                    throw new DuplicateElement(filePath, cmd.name, collection);
                 }
                 collection.set(cmd.name, cmd);
             }

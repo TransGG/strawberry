@@ -7,7 +7,7 @@ import { debug, verbose } from '../config/out.js';
 const { clientId, token } = config;
 
 /**
- * Deletes all application commands, in a specific guild or globally based on the parameters.
+ * Deletes all application commands, either in a specific guild or globally based on the parameters.
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
  */
@@ -32,7 +32,7 @@ async function deleteAllApplicationCommands(guildId = null) {
 }
 
 /**
- * Deletes a specific application command, in a specified guild or globally based on the parameters.
+ * Deletes a specific application command, either in a specified guild or globally based on the parameters.
  * @param {Snowflake} commandId The id of the command to delete (see https://discordjs.guide/slash-commands/deleting-commands.html#deleting-specific-commands)
  * @param {Snowflake} [guildId=null] The id of the guild to delete a guild command in. Will delete commands globally if
  *     unspecified
@@ -54,9 +54,9 @@ async function deleteApplicationCommand(commandId, guildId = null) {
 }
 
 /**
- * Registers the application commands (slash commands or context menu commands) of the bot, in a specified guild or
- * globally. Must be used when updating properties of application commands for the change to be reflected in the guilds,
- * but otherwise unnecessary for normal operation.
+ * Registers the application commands (slash commands or context menu commands) of the bot, either in a specified guild
+ * or globally. Must be used when updating properties of application commands for the change to be reflected in the
+ * guilds, but otherwise unnecessary for normal operation.
  * @param {Collection} commands A Collection that maps the name of the command to an object that contains the
  *     registration data
  * @param {Snowflake} [guildId=null] Specifies a guild to load commands into; commands will be registered globally if

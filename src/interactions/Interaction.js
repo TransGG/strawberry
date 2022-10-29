@@ -1,8 +1,8 @@
 import { DataError } from '../utils/errors.js';
 
 /**
- * Parent class all interaction handlers. All subclasses should pass a name unique to the type of subclass and implement
- * run() and getData().
+ * Parent class all interaction handlers. All subclasses should pass a name that is unique within the class of subclass
+ * and implement run() and getData()
  */
 class Interaction {
     name;

@@ -40,6 +40,7 @@ class Bot extends Client {
      *     registered globally if unspecified
      */
     async start(token, { registerCommands = false, clean = false, guildId = null } = {}) {
+        // load files
         verbose('Starting client');
 
         // init
@@ -65,6 +66,7 @@ class Bot extends Client {
             await registerApplicationCommands(applicationCommands, guildId);
         }
 
+        // login
         verbose('Logging in to Discord...');
 
         await super.login(token);
