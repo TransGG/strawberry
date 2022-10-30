@@ -32,7 +32,7 @@ class Echo extends SlashCommand {
      */
     async run(interaction) {
         const message = interaction.options.getString('message');
-        await interaction.reply({ content: message, ephemeral: true });
+        await interaction.reply({ content: message.replace('\\n', '\n'), ephemeral: true });
     }
 }
 
