@@ -21,7 +21,7 @@ class InteractionCreate extends Event {
             const { commandName } = interaction;
             const command = interaction.client.getSlashCommand(commandName);
             await command.run(interaction);
-        } else if (interaction.isUserContextMenuCommand()) { // context menu commands
+        } else if (interaction.isContextMenuCommand()) { // context menu commands
             const { commandName } = interaction;
             const command = interaction.client.getContextMenuCommand(commandName);
             await command.run(interaction);

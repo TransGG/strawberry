@@ -101,7 +101,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
             });
         }
 
-        subcommand.run(interaction);
+        await subcommand.run(interaction);
     }
 }
 

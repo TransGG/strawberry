@@ -83,7 +83,7 @@ async function loadEvents(collection, client, dir = eventsPath) {
     if (!(client instanceof Client)) {
         throw new TypeError(`Cannot load events: expected argument client to be of type Client when client was of type ${client.constructor.name}`);
     }
-    loadNameable(
+    await loadNameable(
         collection,
         dir,
         (event) => {
@@ -110,7 +110,7 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
  * @param {string} [dir=this.buttonsPath] The directory to search on this level
  */
 async function loadButtons(collection, dir = buttonsPath) {
-    loadNameable(collection, dir);
+    await loadNameable(collection, dir);
 }
 
 /**
@@ -119,7 +119,7 @@ async function loadButtons(collection, dir = buttonsPath) {
  * @param {string} [dir=this.selectMenusPath] The directory to search on this level
  */
 async function loadSelectMenus(collection, dir = selectMenusPath) {
-    loadNameable(collection, dir);
+    await loadNameable(collection, dir);
 }
 
 /**
@@ -128,7 +128,7 @@ async function loadSelectMenus(collection, dir = selectMenusPath) {
  * @param {string} [dir=this.modalsPath] The directory to search on this level
  */
 async function loadModals(collection, dir = modalsPath) {
-    loadNameable(collection, dir);
+    await loadNameable(collection, dir);
 }
 
 /**
@@ -137,7 +137,7 @@ async function loadModals(collection, dir = modalsPath) {
  * @param {string} [dir=this.contextMenuCommandsPath] The directory to search on this level
  */
 async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath) {
-    loadNameable(collection, dir);
+    await loadNameable(collection, dir);
 }
 
 /**
