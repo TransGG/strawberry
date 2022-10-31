@@ -1,5 +1,4 @@
 import Discord from 'discord.js';
-import 'dotenv/config';
 import yargs from 'yargs';
 import config from './config/config.js';
 import Bot from './Bot.js';

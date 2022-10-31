@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
 import config from '../config/config.js';
