@@ -4,6 +4,7 @@ import { pathToFileURL, fileURLToPath } from 'url';
 import { Client, Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 import { DuplicateElementException } from './errors.js';
+import { debug, verbose } from '../config/out.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,11 +49,14 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
     await Promise.all(
         files.map(async (fileName) => {
             const filePath = path.join(dirPath, fileName);
+
             const stat = await fs.lstat(filePath);
             if (stat.isDirectory()) {
                 await loadNameable(collection, path.join(dir, fileName), callback);
             }
             if (fileName.endsWith('.js')) {
+                debug(`Loading ${path.join(dir, fileName)}`);
+
                 const Class = (await import(pathToFileURL(filePath))).default;
                 const instance = new Class(...instanceArgs);
                 if (!(Object.hasOwn(instance, 'name'))) {
@@ -77,6 +81,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
  * @param {string} [dir=this.eventsPath] The directory to search on this level
  */
 async function loadEvents(collection, client, dir = eventsPath) {
+    verbose('Loading events');
     if (!client) {
         throw new ReferenceError('Cannot load events: argument \'client\' does not exist!');
     }
@@ -93,6 +98,7 @@ async function loadEvents(collection, client, dir = eventsPath) {
             client,
         ],
     );
+    verbose('Done loading events');
 }
 
 /**
@@ -101,7 +107,9 @@ async function loadEvents(collection, client, dir = eventsPath) {
  * @param {string} [dir=this.slashCommandsPath] The directory to search on this level
  */
 async function loadSlashCommands(collection, dir = slashCommandsPath) {
+    verbose('Loading slash commands');
     await loadNameable(collection, dir);
+    verbose('Done loading slash commands');
 }
 
 /**
@@ -110,7 +118,9 @@ async function loadSlashCommands(collection, dir = slashCommandsPath) {
  * @param {string} [dir=this.buttonsPath] The directory to search on this level
  */
 async function loadButtons(collection, dir = buttonsPath) {
+    verbose('Loading buttons');
     await loadNameable(collection, dir);
+    verbose('Done loading buttons');
 }
 
 /**
@@ -119,7 +129,9 @@ async function loadButtons(collection, dir = buttonsPath) {
  * @param {string} [dir=this.selectMenusPath] The directory to search on this level
  */
 async function loadSelectMenus(collection, dir = selectMenusPath) {
+    verbose('Loading select menus');
     await loadNameable(collection, dir);
+    verbose('Done loading select menus');
 }
 
 /**
@@ -128,7 +140,9 @@ async function loadSelectMenus(collection, dir = selectMenusPath) {
  * @param {string} [dir=this.modalsPath] The directory to search on this level
  */
 async function loadModals(collection, dir = modalsPath) {
+    verbose('Loading modals');
     await loadNameable(collection, dir);
+    verbose('Done loading modals');
 }
 
 /**
@@ -137,7 +151,9 @@ async function loadModals(collection, dir = modalsPath) {
  * @param {string} [dir=this.contextMenuCommandsPath] The directory to search on this level
  */
 async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath) {
+    verbose('Loading context menu commands');
     await loadNameable(collection, dir);
+    verbose('Done loading context menu commands');
 }
 
 /**
@@ -164,6 +180,8 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
                 collection.set(fileName, groupCommands);
             }
             if (fileName.endsWith('.js')) {
+                debug(`Loading ${path.join(dir, fileName)}`);
+
                 const Command = (await import(pathToFileURL(filePath))).default;
                 const cmd = new Command();
                 if (collection.has(cmd.name)) {
@@ -184,6 +202,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
  * @param {string} [dir=this.subcommandsPath] The directory to search for subcommands
  */
 async function loadSubcommands(commands, dir = subcommandsPath) {
+    verbose('Loading subcommands');
     // commands validity checking
     if (!commands) {
         throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist!');
@@ -227,6 +246,7 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
             }
         }),
     );
+    verbose('Done loading subcommands');
 }
 
 export {

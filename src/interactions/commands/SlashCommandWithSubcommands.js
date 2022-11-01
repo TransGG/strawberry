@@ -1,6 +1,7 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
 import { CommandChildNotFoundException } from '../../utils/errors.js';
+import { debug } from '../../config/out.js';
 
 /**
  * Parent class for commands that subcommands. Handles building the data and running the selected subcommand so all
@@ -46,6 +47,15 @@ class SlashCommandWithSubcommands extends SlashCommand {
     }
 
     /**
+     * Method to run when this slash command is executed. Runs the subcommand if not overridden
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
+     *     executed
+     */
+    async run(interaction) {
+        await this.runSubcommand(interaction);
+    }
+
+    /**
      * Combines the existing collection of children with a new one. (Children meaning direct subcommands or subcommand
      * groups)
      * @param {Collection} newChildren A collection of children
@@ -74,7 +84,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
      * @throws {CommandChildNotFoundException} If a group or subcommand was specified and it was not found as a child of
      *     this command.
      */
-    async run(interaction) {
+    async runSubcommand(interaction) {
         const groupName = interaction.options.getSubcommandGroup();
         const subcommandName = interaction.options.getSubcommand();
 
@@ -101,6 +111,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
             });
         }
 
+        debug(`Running subcommand: ${subcommand.name}${groupName ? `, group: ${groupName} ` : ''}`);
         await subcommand.run(interaction);
     }
 }

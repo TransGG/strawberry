@@ -1,6 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
 import config from '../config/config.js';
+import { debug, verbose } from '../config/out.js';
 
 // courtesy of https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and https://discordjs.guide/slash-commands/deleting-commands.html
 const { clientId, token } = config;
@@ -11,6 +12,8 @@ const { clientId, token } = config;
  *     unspecified
  */
 async function deleteAllApplicationCommands(guildId = null) {
+    verbose(`Deleting application commands: guildId set to ${guildId}`);
+
     const rest = new REST({ version: '10' }).setToken(token);
 
     if (guildId) { // for guild-based commands
@@ -24,6 +27,8 @@ async function deleteAllApplicationCommands(guildId = null) {
             .then(() => console.log('Successfully deleted all application commands.'))
             .catch(console.error);
     }
+
+    verbose('Done deleting commands');
 }
 
 /**
@@ -58,6 +63,9 @@ async function deleteApplicationCommand(commandId, guildId = null) {
  *     unspecified
  */
 async function registerApplicationCommands(commands, guildId = null) {
+    verbose(`Registering application commands: guildId set to ${guildId}`);
+    debug('Application commands to register:\n', commands);
+
     const commandsData = commands.map((command) => command.toJSON());
 
     const rest = new REST({ version: '10' }).setToken(token);
@@ -75,6 +83,8 @@ async function registerApplicationCommands(commands, guildId = null) {
             })
             .catch(console.error);
     }
+
+    verbose('Done registering application commands');
 }
 
 export { deleteAllApplicationCommands, deleteApplicationCommand, registerApplicationCommands };

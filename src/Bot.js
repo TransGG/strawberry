@@ -1,4 +1,5 @@
 import { Client, Collection } from 'discord.js';
+import { verbose } from './config/out.js';
 import { LookupError } from './utils/errors.js';
 import {
     loadSlashCommands,
@@ -39,7 +40,10 @@ class Bot extends Client {
      *     registered globally if unspecified
      */
     async start(token, { registerCommands = false, clean = false, guildId = null } = {}) {
+        verbose('Starting client');
+
         // init
+        verbose('----------- Loading files -----------');
         await Promise.all([
             loadSlashCommands(this.#slashCommands).then(async () => {
                 await loadSubcommands(this.#slashCommands);
@@ -50,16 +54,22 @@ class Bot extends Client {
             loadModals(this.#modals),
             loadEvents(this.#events, this),
         ]);
+        verbose('--------- Done loading files --------');
 
         // command registration
         if (clean) {
             await deleteAllApplicationCommands(guildId);
         }
         if (registerCommands) {
-            await registerApplicationCommands(this.#slashCommands.concat(this.#contextMenuCommands), guildId);
+            const applicationCommands = this.#slashCommands.concat(this.#contextMenuCommands);
+            await registerApplicationCommands(applicationCommands, guildId);
         }
 
+        verbose('Logging in to Discord...');
+
         await super.login(token);
+
+        verbose('Done logging in to discord');
     }
 
     /**
@@ -90,11 +100,7 @@ class Bot extends Client {
         const button = this.#buttons.get(buttonName);
 
         if (!button) {
-            throw new LookupError(
-                `Tried to lookup button with name '${buttonName}' but it was not found!`,
-                buttonName,
-                this.#buttons,
-            );
+            throw new LookupError('button', buttonName, this.#buttons);
         }
 
         return button;
@@ -110,7 +116,7 @@ class Bot extends Client {
 
         if (!selectMenu) {
             throw new LookupError(
-                `Tried to lookup select menu with name '${selectMenuName}' but it was not found!`,
+                'select menu',
                 selectMenuName,
                 this.#selectMenus,
             );
@@ -128,11 +134,7 @@ class Bot extends Client {
         const modal = this.#modals.get(modalName);
 
         if (!modal) {
-            throw new LookupError(
-                `Tried to lookup modal with name '${modalName}' but it was not found!`,
-                modalName,
-                this.#modals,
-            );
+            throw new LookupError('modal', modalName, this.#modals);
         }
 
         return modal;
@@ -147,11 +149,7 @@ class Bot extends Client {
         const contextMenuCommand = this.#contextMenuCommands.get(contextMenuName);
 
         if (!contextMenuCommand) {
-            throw new LookupError(
-                `Tried to lookup context menu command with name '${contextMenuName}' but it was not found!`,
-                contextMenuName,
-                this.#contextMenuCommands,
-            );
+            throw new LookupError('context menu command', contextMenuName, this.#contextMenuCommands);
         }
 
         return contextMenuCommand;

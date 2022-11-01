@@ -1,5 +1,6 @@
 // this file is to store various error classes
 /* eslint-disable max-classes-per-file */
+
 class LookupError extends Error {
     query;
 
@@ -7,12 +8,12 @@ class LookupError extends Error {
 
     /**
      * Exception to be thrown when a query had no result or an improper result
+     * @param {string} type The type of result that was being searched for
      * @param {string} query The query that was not found
-     * @param {string} source Where the query was searching
+     * @param {Array} source Where the query was searching
      */
-    constructor(message, query, source) {
-        super(message);
-        this.query = query;
+    constructor(type, query, source) {
+        super(`Tried to lookup ${type} with query '${query}' but it was not found!`);
         this.source = source;
     }
 }
