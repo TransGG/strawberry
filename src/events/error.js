@@ -1,3 +1,4 @@
+import { Events } from 'discord.js';
 import Event from '../Event.js';
 
 /**
@@ -8,7 +9,7 @@ class Error extends Event {
      * @param {Client} client The Discord Client that will handle this interaction
      * @param {String} name The name of this interaction
      */
-    constructor(client, name = 'error') {
+    constructor(client, name = Events.Error) {
         super(client, name);
     }
 

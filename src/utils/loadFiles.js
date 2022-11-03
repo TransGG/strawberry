@@ -10,12 +10,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // default paths to use to search for files
 const eventsPath = '../events';
-const slashCommandsPath = '../interactions/commands/slashcommands';
+const contextMenuCommandsPath = '../interactions/commands/context_menu_commands';
+const slashCommandsPath = '../interactions/commands/slash_commands';
 const subcommandsPath = '../interactions/commands/subcommands';
-const buttonsPath = '../interactions/messagecomponents/buttons';
-const selectMenusPath = '../interactions/messagecomponents/selectmenus';
+const buttonsPath = '../interactions/message_components/buttons';
+const selectMenusPath = '../interactions/message_components/select_menus';
 const modalsPath = '../interactions/modals';
-const contextMenuCommandsPath = '../interactions/commands/contextmenucommands';
 
 /**
  * Recursively loads and instantiates any class that has a .name function and maps the value returned by .data to an
