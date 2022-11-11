@@ -31,15 +31,22 @@ class Event {
     }
 
     /**
-     * Call client.on for the event with the name of this Event and if that event name does have a trigger, call the
-     * #listener function specified in the constructor
+     * Adds this this instance's listener function to the listener array of this.client for the event named this.name
      */
     startListener() {
         this.client.on(this.name, this.#listener);
     }
 
     /**
-     * Same as startListener(), but with client.off
+     * Adds a one-time listener function to this.client for the event named this.name. The next time the event is
+     * triggered, the client removes and then invokes this listener.
+     */
+    listenOnce() {
+        this.client.once(this.name, this.#listener);
+    }
+
+    /**
+     * Removes this instance's listener from this.client's listener array for the event named this.name.
      */
     stopListener() {
         this.client.off(this.name, this.#listener);
