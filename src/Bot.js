@@ -34,10 +34,10 @@ class Bot extends Client {
      * @param {Object} [options={}] The options to be used while starting the bot
      * @param {boolean} [options.registerCommands=false] Will register application commands if true, do nothing
      *     otherwise
-     * @param {boolean} [options.clean=false] Will clear all application commands from the target if true. This happens
-     *     before registration of commands.
-     * @param {Snowflake} [options.guildId=null] Specifies a guild to load application commands into; commands will be
-     *     registered globally if unspecified
+     * @param {boolean} [options.clean=false] Will clear all application commands if true. Will clear only global
+     *     commands if guildId is not set or will clear only commands in the specified guild if guildId is set. This
+     *     happens before registration of commands
+     * @param {Snowflake} [options.guildId=null] Specifies a guild to clear application commands from.
      */
     async start(token, { registerCommands = false, clean = false, guildId = null } = {}) {
         // load files
@@ -62,8 +62,32 @@ class Bot extends Client {
             await deleteAllApplicationCommands(guildId);
         }
         if (registerCommands) {
-            const applicationCommands = this.#slashCommands.concat(this.#contextMenuCommands);
-            await registerApplicationCommands(applicationCommands, guildId);
+            const commands = this.#slashCommands.concat(this.#contextMenuCommands);
+
+            // partition commands into global commands and guild-specific commands grouped on their guild
+            const partition = commands.reduce((result, cur) => {
+                if (cur.guild) {
+                    if (!result[cur.guild]) {
+                        // eslint-disable-next-line no-param-reassign
+                        result[cur.guild] = [];
+                    }
+                }
+                result[cur.guild ? cur.guild : 'globals'].push(cur);
+                return result;
+            }, { globals: [] });
+
+            const { globals, ...guilds } = partition;
+
+            // register global commands
+            await registerApplicationCommands(globals);
+
+            // register guild-specific commands
+            await Promise.all(
+                Object.entries(guilds).map(async (element) => {
+                    const [guild, guildCommands] = element;
+                    await registerApplicationCommands(guildCommands, guild);
+                }),
+            );
         }
 
         // login

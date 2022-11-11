@@ -33,12 +33,12 @@ const args = yargs(process.argv.slice(2))
         },
         c: {
             alias: 'clean',
-            describe: 'Unregisters application (slash and context menu) commands',
+            describe: 'Unregisters application (slash and context menu) commands. Only unregisters global commands unless a value for -g was passed',
             type: 'boolean',
         },
         g: {
             alias: 'guild',
-            describe: '-r and -c default to global, give the id of a guild to do perform -r and -c in a guild',
+            describe: 'Specify a guild to clean guild-specific commands from',
             type: 'string',
         },
     }).argv;

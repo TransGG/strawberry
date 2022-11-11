@@ -57,8 +57,8 @@ async function deleteApplicationCommand(commandId, guildId = null) {
  * Registers the application commands (slash commands or context menu commands) of the bot, either in a specified guild
  * or globally. Must be used when updating properties of application commands for the change to be reflected in the
  * guilds, but otherwise unnecessary for normal operation.
- * @param {Collection} commands A Collection that maps the name of the command to an object that contains the
- *     registration data
+ * @param {Map|Array} commands A collection that contains the registration data. Each element must have a toJSON()
+ *     method.
  * @param {Snowflake} [guildId=null] Specifies a guild to load commands into; commands will be registered globally if
  *     unspecified
  */
