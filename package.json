@@ -1,7 +1,7 @@
 {
-  "name": "base-discord-bot",
+  "name": "strawberry",
   "version": "1.0.0",
-  "description": "",
+  "description": "We can rebuild him. Better. Stronger. Gayer.",
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./src/index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elise32/base-discord-bot.git"
+    "url": "git+https://github.com/elise32/strawberry.git"
   },
   "type": "module",
   "author": "elise",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elise32/base-discord-bot/issues"
+    "url": "https://github.com/elise32/strawberry/issues"
   },
-  "homepage": "https://github.com/elise32/base-discord-bot#readme",
+  "homepage": "https://github.com/elise32/strawberry#readme",
   "dependencies": {
     "@discordjs/rest": "^1.2.0",
     "discord.js": "^14.3.0",
