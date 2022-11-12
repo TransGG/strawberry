@@ -11,22 +11,46 @@
     },
     "rules": {
         "class-methods-use-this": "off",
-        "import/extensions": ["error", "ignorePackages"],
-        "indent": ["error", 4],
-        "max-len": ["error", 120, 2, {
-            "ignoreUrls": true,
-            "ignoreComments": false,
-            "ignoreTrailingComments": true,
-            "ignoreRegExpLiterals": true,
-            "ignoreStrings": true,
-            "ignoreTemplateLiterals": true
-          }],
+        "import/extensions": [
+            "error",
+            "ignorePackages"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "max-len": [
+            "error",
+            120,
+            2,
+            {
+                "ignoreUrls": true,
+                "ignoreComments": false,
+                "ignoreTrailingComments": true,
+                "ignoreRegExpLiterals": true,
+                "ignoreStrings": true,
+                "ignoreTemplateLiterals": true
+            }
+        ],
         "no-console": "off",
-        "no-multi-spaces": ["error", {
-            "ignoreEOLComments": true
-        }],
-        "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }],
+        "no-multi-spaces": [
+            "error",
+            {
+                "ignoreEOLComments": true
+            }
+        ],
+        "no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": true
+            }
+        ],
         "linebreak-style": "off",
-        "curly": ["error", "all"]
+        "curly": [
+            "error",
+            "all"
+        ]
     }
 }
