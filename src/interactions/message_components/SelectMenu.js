@@ -1,9 +1,9 @@
-import Interaction from '../Interaction.js';
+import TakesArguments from '../TakesArguments.js';
 
 /**
  * Parent class for select menu interaction handlers.
  */
-class SelectMenu extends Interaction {
+class SelectMenu extends TakesArguments {
 }
 
 export default SelectMenu;

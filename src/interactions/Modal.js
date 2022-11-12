@@ -1,9 +1,9 @@
-import Interaction from './Interaction.js';
+import TakesArguments from './TakesArguments.js';
 
 /**
  * Parent class for modal interaction handlers.
  */
-class Modal extends Interaction {
+class Modal extends TakesArguments {
 }
 
 export default Modal;
