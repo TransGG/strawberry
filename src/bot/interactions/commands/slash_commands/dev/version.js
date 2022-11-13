@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
-import packageDotJSON from '../../../../../package.json' assert {type: 'json'};
+import packageDotJSON from '../../../../../../package.json' assert {type: 'json'};
 
 /**
  * Handler for version slash command. Retrieves the version (currently from package.json)

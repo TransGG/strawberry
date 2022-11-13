@@ -5,7 +5,7 @@ import {
     EmbedBuilder,
     roleMention,
 } from 'discord.js';
-import config from '../../../../config/config.js';
+import config from '../../../../../config/config.js';
 import TakesArguments from '../../../TakesArguments.js';
 import Button from '../../Button.js';
 

@@ -1,5 +1,5 @@
 import { Events } from 'discord.js';
-import { debug, verbose } from '../config/out.js';
+import { debug, verbose } from '../../config/out.js';
 import Event from '../Event.js';
 import TakesArguments from '../interactions/TakesArguments.js';
 

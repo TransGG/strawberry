@@ -1,7 +1,7 @@
 import {
     ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, channelMention, EmbedBuilder, italic, roleMention, userMention,
 } from 'discord.js';
-import config from '../../../../config/config.js';
+import config from '../../../../../config/config.js';
 import Button from '../../Button.js';
 
 /**

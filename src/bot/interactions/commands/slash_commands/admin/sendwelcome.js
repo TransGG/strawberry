@@ -6,7 +6,7 @@ import {
     messageLink,
     SlashCommandBuilder,
 } from 'discord.js';
-import config from '../../../../config/config.js';
+import config from '../../../../../config/config.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**

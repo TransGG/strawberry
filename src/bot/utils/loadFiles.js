@@ -4,7 +4,7 @@ import { pathToFileURL, fileURLToPath } from 'url';
 import { Client, Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 import { DuplicateElement } from './errors.js';
-import { debug, verbose } from '../config/out.js';
+import { debug, verbose } from '../../config/out.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

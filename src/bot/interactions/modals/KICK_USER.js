@@ -11,7 +11,7 @@ import {
     TextInputStyle,
     userMention,
 } from 'discord.js';
-import config from '../../config/config.js';
+import config from '../../../config/config.js';
 import Modal from '../Modal.js';
 
 /**

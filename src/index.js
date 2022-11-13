@@ -1,16 +1,6 @@
-import Discord from 'discord.js';
 import yargs from 'yargs';
+import startBot from './bot/index.js';
 import config from './config/config.js';
-import Bot from './Bot.js';
-import { FatalError } from './utils/errors.js';
-
-// create bot
-const client = new Bot({
-    intents: [
-        Discord.GatewayIntentBits.Guilds,
-        Discord.GatewayIntentBits.GuildMembers,
-    ],
-});
 
 // parse arguments
 const args = yargs(process.argv.slice(2))
@@ -52,20 +42,8 @@ const {
 config.debug = debug;
 config.verbose = verbose;
 
-const options = {
-    clean,
-    registerCommands: register,
-    guildId: guild,
-};
-
-// start the bot
-try {
-    await client.start(config.token, options);
-} catch (error) {
-    /* any error encountered during startup is considered fatal because they may place the bot in an unexpected or
-       unrecoverable state and they are immediately actionable */
-    throw new FatalError('Encountered an error on client startup:', { cause: error });
-}
+// start bot
+await startBot(clean, register, guild);
 
 // catch unhandled exceptions/promise rejections if in prod
 if (process.env.NODE_ENV === 'production') {

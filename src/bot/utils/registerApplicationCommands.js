@@ -1,7 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
-import config from '../config/config.js';
-import { debug, verbose } from '../config/out.js';
+import config from '../../config/config.js';
+import { debug, verbose } from '../../config/out.js';
 
 // courtesy of https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and https://discordjs.guide/slash-commands/deleting-commands.html
 const { clientId, token } = config;

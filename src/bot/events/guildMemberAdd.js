@@ -5,7 +5,7 @@ import {
     channelLink,
     Events,
 } from 'discord.js';
-import config from '../config/config.js';
+import config from '../../config/config.js';
 import Event from '../Event.js';
 
 /**

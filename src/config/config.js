@@ -1,6 +1,6 @@
 import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
-import { FatalError } from '../utils/errors.js';
+import { FatalError } from '../bot/utils/errors.js';
 
 // for easier reading
 /* eslint-disable max-len */

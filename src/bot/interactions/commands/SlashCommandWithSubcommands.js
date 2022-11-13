@@ -1,7 +1,7 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
 import { CommandChildNotFound } from '../../utils/errors.js';
-import { debug } from '../../config/out.js';
+import { debug } from '../../../config/out.js';
 
 /**
  * Parent class for handlers of slash commands that have subcommands. Has a default implementation for run() and

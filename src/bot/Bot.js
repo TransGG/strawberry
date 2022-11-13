@@ -1,5 +1,5 @@
 import { Client, Collection } from 'discord.js';
-import { verbose } from './config/out.js';
+import { verbose } from '../config/out.js';
 import { LookupError } from './utils/errors.js';
 import {
     loadSlashCommands,
