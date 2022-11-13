@@ -1,6 +1,7 @@
 import { Events } from 'discord.js';
 import { debug, verbose } from '../config/out.js';
 import Event from '../Event.js';
+import TakesArguments from '../interactions/TakesArguments.js';
 
 /**
  * Handler for interactionCreate event
@@ -40,30 +41,36 @@ class InteractionCreate extends Event {
 
             await command.run(interaction);
         } else if (interaction.isButton()) { // buttons
-            const { customId } = interaction;
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const button = interaction.client.getButton(customId);
 
             verbose(`${interaction.user.tag} ran button: ${customId}`);
+            debug(`Button '${customId}' args:`);
+            debug(args);
 
-            await button.run(interaction);
+            await button.run(interaction, ...args);
         } else if (interaction.isSelectMenu()) { // select menus
-            const { customId } = interaction;
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const selectMenu = interaction.client.getSelectMenu(customId);
 
             verbose(`${interaction.user.tag} ran select menu: ${customId}`);
             debug(`Select menu '${customId}' values:`);
             debug(interaction.values);
+            debug(`Select menu '${customId}' args:`);
+            debug(args);
 
-            await selectMenu.run(interaction);
+            await selectMenu.run(interaction, ...args);
         } else if (interaction.isModalSubmit()) { // modals
-            const { customId } = interaction;
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const modal = interaction.client.getModal(customId);
 
             verbose(`${interaction.user.tag} ran modal submit: ${customId}`);
             debug(`Modal '${customId}' values:`);
             debug(interaction.fields.fields);
+            debug(`Modal '${customId}' args:`);
+            debug(args);
 
-            await modal.run(interaction);
+            await modal.run(interaction, ...args);
         } else if (interaction.isAutocomplete()) { // autocomplete
             const { commandName } = interaction;
             const command = interaction.client.getSlashCommand(commandName);
