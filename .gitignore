@@ -1,3 +1,6 @@
 .env
 package-lock.json
 node_modules/
+yarn.lock
+.DS_Store
+/drive.json

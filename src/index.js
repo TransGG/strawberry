@@ -8,8 +8,7 @@ import { FatalError } from './utils/errors.js';
 const client = new Bot({
     intents: [
         Discord.GatewayIntentBits.Guilds,
-        Discord.GatewayIntentBits.GuildMessages,
-        Discord.GatewayIntentBits.MessageContent,
+        Discord.GatewayIntentBits.GuildMembers,
     ],
 });
 
@@ -66,4 +65,15 @@ try {
     /* any error encountered during startup is considered fatal because they may place the bot in an unexpected or
        unrecoverable state and they are immediately actionable */
     throw new FatalError('Encountered an error on client startup:', { cause: error });
+}
+
+// catch unhandled exceptions/promise rejections if in prod
+if (process.env.NODE_ENV === 'production') {
+    process.on('unhandledRejection', (err) => {
+        console.error('Unhandled promise rejection:', err);
+    });
+
+    process.on('uncaughtException', (err) => {
+        console.error(`Uncaught exception: ${err}`);
+    });
 }
