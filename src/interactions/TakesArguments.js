@@ -7,33 +7,40 @@ const delim = '|';
  */
 class TakesArguments extends Interaction {
     /**
-     * Creates a version of the data with arguments added in.
-     * @param  {...any} args Arguments to add on to the data
-     * @returns The data with the arguments added in
+     * Joins the arguments together with a delimiter
+     * @param  {...any} args The elements to join
+     * @returns {string} The arguments joined with the delimiter
      */
-    args(...args) {
-        const data = this.getData();
-
-        // check if data has a function called setCustomId
-        if (!(typeof data.setCustomId === 'function')) {
-            throw Object.assign(
-                new TypeError('Expected data of TakesArguments to have function setCustomId but it was not present!'),
-                { data, instance: this },
-            );
-        }
-
-        data.setCustomId(`${data.data.custom_id}${delim}${args.join(delim)}`);
-        return data;
+    static delimit(...args) {
+        return args.join(delim);
     }
 
     /**
-     * Parses a custom id that has had arguments added into an array containing the base custom id as the first element
-     * then all the arguments as the subsequent elements, if any.
-     * @param {string} string A custom id with arguments.
-     * @returns {Array<string>} An array containing the base custom id first, then the arguments, if any.
+     * Tokenizes a delimited string
+     * @param {string} string A delimited string
+     * @returns {Array<string>} An array containing each token
      */
-    static parse(string) {
+    static tokenize(string) {
         return string.split(delim);
+    }
+
+    /**
+     * Adds arguments to a builder
+     * @param {ComponentBuilder|ModalBuilder} builder The builder to add arguments to
+     * @param  {...any} args The arguments to add
+     * @returns {ComponentBuilder|ModalBuilder} The builder with the arguments added
+     */
+    static addArgs(builder, ...args) {
+        return builder.setCustomId(TakesArguments.delimit(builder.data.custom_id, ...args));
+    }
+
+    /**
+     * Creates a version of this instance's data with arguments added in.
+     * @param  {...any} args Arguments to add on to the data
+     * @returns The data with the arguments added in
+     */
+    addArgs(...args) {
+        return TakesArguments.addArgs(this.getData(), ...args);
     }
 }
 

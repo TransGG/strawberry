@@ -41,7 +41,7 @@ class InteractionCreate extends Event {
 
             await command.run(interaction);
         } else if (interaction.isButton()) { // buttons
-            const [customId, ...args] = TakesArguments.parse(interaction.customId);
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const button = interaction.client.getButton(customId);
 
             verbose(`${interaction.user.tag} ran button: ${customId}`);
@@ -50,7 +50,7 @@ class InteractionCreate extends Event {
 
             await button.run(interaction, ...args);
         } else if (interaction.isSelectMenu()) { // select menus
-            const [customId, ...args] = TakesArguments.parse(interaction.customId);
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const selectMenu = interaction.client.getSelectMenu(customId);
 
             verbose(`${interaction.user.tag} ran select menu: ${customId}`);
@@ -61,7 +61,7 @@ class InteractionCreate extends Event {
 
             await selectMenu.run(interaction, ...args);
         } else if (interaction.isModalSubmit()) { // modals
-            const [customId, ...args] = TakesArguments.parse(interaction.customId);
+            const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const modal = interaction.client.getModal(customId);
 
             verbose(`${interaction.user.tag} ran modal submit: ${customId}`);
