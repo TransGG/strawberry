@@ -48,7 +48,7 @@ class Embed extends SubCommand {
             .setTimestamp()
             .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
-        interaction.reply({ embeds: [exampleEmbed], ephemeral: true });
+        await interaction.reply({ embeds: [exampleEmbed], ephemeral: true });
     }
 }
 

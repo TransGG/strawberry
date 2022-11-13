@@ -85,7 +85,7 @@ class Say extends SlashCommand {
                 });
             }
         } else {
-            interaction.reply({
+            await interaction.reply({
                 content: `Invalid input '${replyto}' for replyto. Should be one of the options or a message id.`,
                 ephemeral: true,
             });
