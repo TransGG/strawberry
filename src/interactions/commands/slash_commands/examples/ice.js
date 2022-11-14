@@ -2,8 +2,10 @@ import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
- * Handler for ice slash command. A demonstration of subcommands and subcommand groups all within one file.
- * @see stop.js for a demonstration of how subcommand[ group]s are handled with separate files within this project.
+ * Handler for ice slash command. A demonstration of subcommands and subcommand groups all within
+ * one file.
+ * @see stop.js for a demonstration of how subcommand[ group]s are handled with separate files
+ * within this project.
  */
 class Ice extends SlashCommand {
     /**
@@ -45,8 +47,8 @@ class Ice extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         let message = '';

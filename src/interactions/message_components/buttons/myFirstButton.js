@@ -6,7 +6,8 @@ import Button from '../Button.js';
  */
 class MyFirstButton extends Button {
     /**
-     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId.
+     *     Must be unique.
      */
     constructor(name = 'myFirstButton') {
         super(name);
@@ -25,7 +26,8 @@ class MyFirstButton extends Button {
 
     /**
      * Method to run when this button is pressed
-     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
+     *     command was executed
      */
     async run(interaction) {
         await interaction.update({ content: 'and...' });

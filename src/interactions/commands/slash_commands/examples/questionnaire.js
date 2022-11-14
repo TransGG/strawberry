@@ -2,9 +2,9 @@ import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
- * Handler for questionnaire slash command. Allows the user to fill out a questionnaire. For the purpose of
- * demonstrating all the different types of command options.
- * Courtesy of https://discordjs.guide/interactions/slash-commands.html#parsing-options
+ * Handler for questionnaire slash command. Allows the user to fill out a questionnaire. For the
+ * purpose of demonstrating all the different types of command options. Courtesy of
+ * https://discordjs.guide/interactions/slash-commands.html#parsing-options
  */
 class Questionnaire extends SlashCommand {
     /**
@@ -35,8 +35,8 @@ class Questionnaire extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         // parse all options

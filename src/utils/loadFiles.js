@@ -19,15 +19,15 @@ const selectMenusPath = '../interactions/message_components/select_menus';
 const modalsPath = '../interactions/modals';
 
 /**
- * Recursively loads files in the given directory and instantiates them. Instances are then inserted into the given
- * collection with the instance's name property mapping to the instance.
+ * Recursively loads files in the given directory and instantiates them. Instances are then inserted
+ * into the given collection with the instance's name property mapping to the instance.
  * @param {Map} collection The collection to populate with class instances
  * @param {string} dir The directory to search on this level
- * @param {function} [callback] The function to call after an instantiation, with the instance passed as a parameter
- *     along with the instanceArgs
+ * @param {function} [callback] The function to call after an instantiation, with the instance
+ *     passed as a parameter along with the instanceArgs
  * @param {Array} [instanceArgs=[]] The arguments to pass to the instance
- * @param {Array} [callbackArgs=[]] The arguments to pass to the callback function. They are preceded by the instance as
- *     an argument
+ * @param {Array} [callbackArgs=[]] The arguments to pass to the callback function. They are
+ *     preceded by the instance as an argument
  * @throws {Error} If files could not be read from the directory
  * @throws {Error} If an instance of a file's default export does not have a name property
  * @throws {ReferenceError} If collection does not exist
@@ -165,7 +165,8 @@ async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath
  * Helper function that does the actual the loading of commands
  * @param {Map} collection The collection to put subcommands into
  * @param {string} dir The directory to search for files
- * @param {boolean} [inGroup=false] Whether this function call is in directory that represents a subcommand group
+ * @param {boolean} [inGroup=false] Whether this function call is in directory that represents a
+ *     subcommand group
  */
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
@@ -199,11 +200,12 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
 }
 
 /**
- * Loads subcommands and subcommand groups into the commands in the given collection. Subcommand groups are represented
- * as a collection with its respective subcommands as elements. A command is detected when a folder within the given
- * subcommand directory has given command name. Currently only supports commands that are directly in the subcommand
- * directory.
- * @param {Map <string, SlashCommand>} commands The collection that contains the commands to load subcommands into
+ * Loads subcommands and subcommand groups into the commands in the given collection. Subcommand
+ * groups are represented as a collection with its respective subcommands as elements. A command is
+ * detected when a folder within the given subcommand directory has given command name. Currently
+ * only supports commands that are directly in the subcommand directory.
+ * @param {Map <string, SlashCommand>} commands The collection that contains the commands to load
+ * subcommands into
  * @param {string} [dir=this.subcommandsPath] The directory to search for subcommands
  */
 async function loadSubcommands(commands, dir = subcommandsPath) {

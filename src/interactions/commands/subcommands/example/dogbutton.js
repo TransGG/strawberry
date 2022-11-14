@@ -8,8 +8,8 @@ import {
 import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for dogbutton subcommand. Example for monolithically creating an example button, receiving button presses,
- * and handling the button press(es).
+ * Handler for dogbutton subcommand. Example for monolithically creating an example button,
+ * receiving button presses, and handling the button press(es).
  */
 class dogbutton extends SubCommand {
     /**
@@ -20,7 +20,8 @@ class dogbutton extends SubCommand {
     }
 
     /**
-     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the
+     *     Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()
@@ -30,8 +31,8 @@ class dogbutton extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the
+     *     slash command was executed
      */
     async run(interaction) {
         // make button
@@ -48,7 +49,9 @@ class dogbutton extends SubCommand {
         // make filter for collector and make collector
         const filter = (i) => i.customId === 'primary' && i.user.id === '274206665241395202';
 
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+        const collector = interaction.channel.createMessageComponentCollector(
+            { filter, time: 15000 },
+        );
 
         collector.on('collect', async (i) => {
             await i.deferUpdate();

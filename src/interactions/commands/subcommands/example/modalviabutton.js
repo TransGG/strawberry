@@ -2,8 +2,8 @@ import { ActionRowBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for modalviabutton subcommand. Creates a message with a button that shows a modal to demonstrate the behavior
- * of modals when they come from a message component.
+ * Handler for modalviabutton subcommand. Creates a message with a button that shows a modal to
+ * demonstrate the behavior of modals when they come from a message component.
  */
 class ModalViaButton extends SubCommand {
     /**
@@ -14,7 +14,8 @@ class ModalViaButton extends SubCommand {
     }
 
     /**
-     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the
+     *     Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()
@@ -24,8 +25,8 @@ class ModalViaButton extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the
+     *     slash command was executed
      */
     async run(interaction) {
         const row = new ActionRowBuilder()

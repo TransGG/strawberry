@@ -13,7 +13,8 @@ class Embed extends SubCommand {
     }
 
     /**
-     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the
+     *     Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()
@@ -23,8 +24,8 @@ class Embed extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the
+     *     slash command was executed
      */
     async run(interaction) {
         // courtesy of https://discordjs.guide/popular-topics/embeds.html

@@ -2,7 +2,8 @@ import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
- * Handler for ping slash command. Replies to the given message with 'pong!'. Can be used to test if the bot is working.
+ * Handler for ping slash command. Replies to the given message with 'pong!'. Can be used to test if
+ * the bot is working.
  */
 class Ping extends SlashCommand {
     /**
@@ -23,8 +24,8 @@ class Ping extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         await interaction.reply({ content: 'Pong!', ephemeral: true });

@@ -13,7 +13,8 @@ class DisplayAvatar extends ContextMenuCommand {
     }
 
     /**
-     * @returns {ContextMenuCommandBuilder} The data that describe the command format to the Discord API
+     * @returns {ContextMenuCommandBuilder} The data that describe the command format to the Discord
+     *     API
      */
     getData() {
         return new ContextMenuCommandBuilder()
@@ -23,8 +24,8 @@ class DisplayAvatar extends ContextMenuCommand {
 
     /**
      * Method to run when this context menu command is executed
-     * @param {UserContextMenuCommandInteraction} interaction The interaction that was emitted when this command was
-     *     executed
+     * @param {UserContextMenuCommandInteraction} interaction The interaction that was emitted when
+     *     this command was executed
      */
     async run(interaction) {
         await interaction.reply({

@@ -50,7 +50,8 @@ class MyFirstModal extends Modal {
 
     /**
      * Method to run when this modal is submitted
-     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal was submitted
+     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal
+     *     was submitted
      */
     async run(interaction) {
         const favoriteColor = interaction.fields.getTextInputValue('favoriteColorInput');
@@ -58,8 +59,8 @@ class MyFirstModal extends Modal {
 
         /*
          * A bit of interpretive jiggery-pokery: if the modal was shown from a ButtonInteraction or
-         * SelectMenuInteraction, the interaction will provide update() and deferUpdate(). We can determine this by
-         * checking if message exists.
+         * SelectMenuInteraction, the interaction will provide update() and deferUpdate(). We can
+         * determine this by checking if message exists.
          */
         if (interaction.message) {
             await interaction.update({ content: `${favoriteColor}\n${hobbies}` });

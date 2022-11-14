@@ -63,7 +63,9 @@ const options = {
 try {
     await client.start(config.token, options);
 } catch (error) {
-    /* any error encountered during startup is considered fatal because they may place the bot in an unexpected or
-       unrecoverable state and they are immediately actionable */
+    /*
+     * any error encountered during startup is considered fatal because they may place the bot in an
+     * unexpected or unrecoverable state and they are immediately actionable
+     */
     throw new FatalError('Encountered an error on client startup:', { cause: error });
 }

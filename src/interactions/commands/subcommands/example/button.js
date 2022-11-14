@@ -2,7 +2,8 @@ import { ActionRowBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for button subcommand. Creates a message with a button to demonstrate this project's button handling.
+ * Handler for button subcommand. Creates a message with a button to demonstrate this project's
+ * button handling.
  */
 class ButtonSubcommand extends SubCommand {
     /**
@@ -13,7 +14,8 @@ class ButtonSubcommand extends SubCommand {
     }
 
     /**
-     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the
+     * Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()
@@ -23,8 +25,8 @@ class ButtonSubcommand extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the
+     *     slash command was executed
      */
     async run(interaction) {
         const row = new ActionRowBuilder()

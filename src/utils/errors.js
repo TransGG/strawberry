@@ -20,17 +20,18 @@ class LookupError extends Error {
 
 class CommandChildNotFound extends Error {
     /**
-     * Exception to be thrown when a subcommand or subcommand group of a slash command is looked up but it was not
-     * found. Displays the command as well as, if given, the subcommand and subcommand group. If you may want to pass
-     * the subcommand as well as the subcommand group but the group was the property whose lookup failed, that is what
-     * info.isGroupTheMissingOne is for.
+     * Exception to be thrown when a subcommand or subcommand group of a slash command is looked up
+     * but it was not found. Displays the command as well as, if given, the subcommand and
+     * subcommand group. If you may want to pass the subcommand as well as the subcommand group but
+     * the group was the property whose lookup failed, that is what info.isGroupTheMissingOne is
+     * for.
      * @param {string} command The name of the command whose running caused this exception
      * @param {Object} info The details of the failed command
      * @param {string} [info.group] The name of the subcommand group of the command
      * @param {string} [info.subcommand] The name of the subcommand group of the command
-     * @param {boolean} [info.isGroupTheMissingOne=false] Will make the error display the group if the subcommand
-     *     exists. Useful for when you want to pass both the subcommand group and subcommand and the group was the
-     *     missing element.
+     * @param {boolean} [info.isGroupTheMissingOne=false] Will make the error display the group if
+     *     the subcommand exists. Useful for when you want to pass both the subcommand group and
+     *     subcommand and the group was the missing element.
      */
     constructor(command, { group, subcommand, isGroupTheMissingOne = false }) {
         // pad the names for proper spaces in message

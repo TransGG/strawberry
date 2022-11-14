@@ -2,8 +2,8 @@ import { ActionRowBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import SubCommand from '../../Subcommand.js';
 
 /**
- * Handler for SelectMenu subcommand. Creates a message with a select menu to demonstrate this project's select menu
- * handling.
+ * Handler for SelectMenu subcommand. Creates a message with a select menu to demonstrate this
+ * project's select menu handling.
  */
 class SelectMenuSubcommand extends SubCommand {
     /**
@@ -14,7 +14,8 @@ class SelectMenuSubcommand extends SubCommand {
     }
 
     /**
-     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the Discord API
+     * @returns {SlashCommandSubcommandBuilder} The data that describes the command format to the
+     *     Discord API
      */
     getData() {
         return new SlashCommandSubcommandBuilder()
@@ -24,8 +25,8 @@ class SelectMenuSubcommand extends SubCommand {
 
     /**
      * Method to run when this subcommand is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when the
+     *     slash command was executed
      */
     async run(interaction) {
         const row = new ActionRowBuilder()

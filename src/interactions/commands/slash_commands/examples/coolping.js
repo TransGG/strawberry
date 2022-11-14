@@ -2,8 +2,8 @@ import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
- * Handler for coolping slash command. Simple responses to a command in the same vein as ping, but demonstrates
- * different ways to respond to an interaction
+ * Handler for coolping slash command. Simple responses to a command in the same vein as ping, but
+ * demonstrates different ways to respond to an interaction
  */
 class CoolPing extends SlashCommand {
     /**
@@ -38,8 +38,8 @@ class CoolPing extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         // get options (options can only be retrieved once)
@@ -48,8 +48,8 @@ class CoolPing extends SlashCommand {
         const editText = interaction.options.getString('edit-text');
         const followUpText = interaction.options.getString('follow-up-text');
 
-        // defer causes the "[bot] is thinking" message to appear and expands the window for a reply from 3 seconds to
-        // 15 minutes
+        // defer causes the "[bot] is thinking" message to appear and expands the window for a reply
+        // from 3 seconds to 15 minutes
         if (deferTime) {
             await interaction.deferReply({ ephemeral: ephemeralChoice });
 

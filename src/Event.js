@@ -1,5 +1,6 @@
 /**
- * Parent class for events. Subclasses should have a run function, which is called when the event is triggered.
+ * Parent class for events. Subclasses should have a run function, which is called when the event is
+ * triggered.
  */
 class Event {
     client;
@@ -19,7 +20,8 @@ class Event {
     }
 
     /**
-     * Run the run function (should be implemented in subclasses) with given arguments as well as catch and log errors.
+     * Run the run function (should be implemented in subclasses) with given arguments as well as
+     * catch and log errors.
      * @param  {...any} args The arguments of the event
      */
     async #run(...args) {
@@ -31,22 +33,24 @@ class Event {
     }
 
     /**
-     * Adds this this instance's listener function to the listener array of this.client for the event named this.name
+     * Adds this this instance's listener function to the listener array of this.client for the
+     * event named this.name
      */
     startListener() {
         this.client.on(this.name, this.#listener);
     }
 
     /**
-     * Adds a one-time listener function to this.client for the event named this.name. The next time the event is
-     * triggered, the client removes and then invokes this listener.
+     * Adds a one-time listener function to this.client for the event named this.name. The next time
+     * the event is triggered, the client removes and then invokes this listener.
      */
     listenOnce() {
         this.client.once(this.name, this.#listener);
     }
 
     /**
-     * Removes this instance's listener from this.client's listener array for the event named this.name.
+     * Removes this instance's listener from this.client's listener array for the event named
+     * this.name.
      */
     stopListener() {
         this.client.off(this.name, this.#listener);

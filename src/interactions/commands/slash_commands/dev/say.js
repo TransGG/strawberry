@@ -38,7 +38,8 @@ class Say extends SlashCommand {
         // three options
         const choices = ['Interaction', 'None', 'Enter message id:'];
 
-        // if the user has typed anything, either show only the message id input or everything but it
+        // if the user has typed anything, either show only the message id prompt or everything but
+        // the message id prompt
         if (focusedValue.length > 0) {
             const msgIdOption = choices.pop();
             if (/^\d+$/.test(focusedValue)) { // test if string contains only numbers
@@ -47,7 +48,9 @@ class Say extends SlashCommand {
                 );
             }
         }
-        const filtered = choices.filter((choice) => choice.toLowerCase().startsWith(focusedValue.toLowerCase()));
+        const filtered = choices.filter(
+            (choice) => choice.toLowerCase().startsWith(focusedValue.toLowerCase()),
+        );
         if (!interaction.responded) {
             await interaction.respond(
                 filtered.map((choice) => ({ name: choice, value: choice })),
@@ -57,8 +60,8 @@ class Say extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         const message = interaction.options.getString('message').replace('\\n', '\n');
