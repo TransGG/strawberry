@@ -2,8 +2,8 @@ import { Events } from 'discord.js';
 import Event from '../Event.js';
 
 /**
- * Handler for the ready event. Displays a log in message. A ready event is emitted after the bot is finished
- * loading and logging in
+ * Handler for the ready event. Displays a log in message. A ready event is emitted after the bot is
+ * finished loading and logging in
  */
 class Ready extends Event {
     /**

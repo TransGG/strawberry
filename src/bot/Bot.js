@@ -10,11 +10,14 @@ import {
     loadModals,
     loadContextMenuCommands,
 } from './utils/loadFiles.js';
-import { registerApplicationCommands, deleteAllApplicationCommands } from './utils/registerApplicationCommands.js';
+import {
+    registerApplicationCommands,
+    deleteAllApplicationCommands,
+} from './utils/registerApplicationCommands.js';
 
 class Bot extends Client {
-    // these collections are populated as a map with the name of the event/slash command/etc. as the key and an instance
-    // of its respective class as the value
+    // these collections are populated as a map with the name of the event/slash command/etc. as the
+    // key and an instance of its respective class as the value
     #events = new Collection();
 
     #slashCommands = new Collection();
@@ -28,16 +31,19 @@ class Bot extends Client {
     #contextMenuCommands = new Collection();
 
     /**
-     * Run this function to get the bot going. Loads the necessary files to populate the members of the Bot, connects to
-     * Discord using the Discord API, then optionally registers application commands
-     * @param {string} token The OAuth2 token to use to log in to the bot (see https://discord.com/developers/docs/topics/oauth2#bots)
+     * Run this function to get the bot going. Loads the necessary files to populate the members of
+     * the Bot, connects to Discord using the Discord API, then optionally registers application
+     * commands
+     * @param {string} token The OAuth2 token to use to log in to the bot (see
+     * https://discord.com/developers/docs/topics/oauth2#bots)
      * @param {Object} [options={}] The options to be used while starting the bot
-     * @param {boolean} [options.registerCommands=false] Will register application commands if true, do nothing
-     *     otherwise
-     * @param {boolean} [options.clean=false] Will clear all application commands if true. Will clear only global
-     *     commands if guildId is not set or will clear only commands in the specified guild if guildId is set. This
-     *     happens before registration of commands
-     * @param {Snowflake} [options.guildId=null] Specifies a guild to clear application commands from.
+     * @param {boolean} [options.registerCommands=false] Will register application commands if true,
+     *     do nothing otherwise
+     * @param {boolean} [options.clean=false] Will clear all application commands if true. Will
+     *     clear only global commands if guildId is not set or will clear only commands in the
+     *     specified guild if guildId is set. This happens before registration of commands
+     * @param {Snowflake} [options.guildId=null] Specifies a guild to clear application commands
+     *     from.
      */
     async start(token, { registerCommands = false, clean = false, guildId = null } = {}) {
         // load files
@@ -64,7 +70,8 @@ class Bot extends Client {
         if (registerCommands) {
             const commands = this.#slashCommands.concat(this.#contextMenuCommands);
 
-            // partition commands into global commands and guild-specific commands grouped on their guild
+            // partition commands into global commands and guild-specific commands grouped on their
+            // guild
             const partition = commands.reduce((result, cur) => {
                 if (cur.guild) {
                     if (!result[cur.guild]) {
@@ -175,7 +182,11 @@ class Bot extends Client {
         const contextMenuCommand = this.#contextMenuCommands.get(contextMenuName);
 
         if (!contextMenuCommand) {
-            throw new LookupError('context menu command', contextMenuName, this.#contextMenuCommands);
+            throw new LookupError(
+                'context menu command',
+                contextMenuName,
+                this.#contextMenuCommands,
+            );
         }
 
         return contextMenuCommand;

@@ -2,8 +2,8 @@ import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
- * Handler for echo slash command. Repeats the message back to the user. For the purpose of demonstrating simple
- * parameter handling
+ * Handler for echo slash command. Repeats the message back to the user. For the purpose of
+ * demonstrating simple parameter handling
  */
 class Echo extends SlashCommand {
     /**
@@ -27,8 +27,8 @@ class Echo extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
         const message = interaction.options.getString('message');
