@@ -60,11 +60,11 @@ class KickUser extends Modal {
 
     /**
      * Method to run when this modal is submitted
-     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal was submitted
+     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal
+     *     was submitted
      */
     async run(interaction) {
-        // find member
-        // TODO: fix this parsing here and elsewhere
+        // find member TODO: fix this parsing here and elsewhere
         const threadName = interaction.channel.name.split(' | ');
         if (threadName.length !== 2) {
             return;
@@ -79,8 +79,7 @@ class KickUser extends Modal {
             return;
         }
 
-        // get escaped version of input to send
-        // TODO: use new markdown escaping
+        // get escaped version of input to send TODO: use new markdown escaping
         function escapeMarkdown(text) {
             const unescaped = text.replace(/\\(\*|_|`|~|\\)/g, '$1'); // unescape any "backslashed" character
             const escaped = unescaped.replace(/(\*|_|`|~|\\)/g, '\\$1'); // escape *, _, `, ~, \

@@ -17,7 +17,8 @@ import Button from '../../Button.js';
  */
 class StartVerification extends Button {
     /**
-     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId.
+     *     Must be unique.
      */
     constructor(name = 'START_VERIFICATION') {
         super(name);
@@ -35,7 +36,8 @@ class StartVerification extends Button {
 
     /**
      * Method to run when this button is pressed
-     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
+     *     command was executed
      */
     async run(interaction) {
         // Check if the current member is a verifier
@@ -177,8 +179,7 @@ class StartVerification extends Button {
             ephemeral: true,
         });
 
-        // Add a log for the newly created thread
-        // TODO: refactor date calculation
+        // Add a log for the newly created thread TODO: refactor date calculation
         const oneDay = 1000 * 60 * 60 * 24;
         const oneHour = 1000 * 60 * 60;
         const now = Date.now();
@@ -214,18 +215,19 @@ class StartVerification extends Button {
             },
             ]);
 
-        const logMessage = await interaction.client.channels.cache.get(config.channels.verifyLogs).send({
-            embeds: [logEmbed],
-            components: [
-                new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setURL(newThreadURL)
-                            .setLabel('View Thread')
-                            .setStyle(ButtonStyle.Link),
-                    ),
-            ],
-        });
+        const logMessage = await interaction.client.channels.cache.get(config.channels.verifyLogs)
+            .send({
+                embeds: [logEmbed],
+                components: [
+                    new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setURL(newThreadURL)
+                                .setLabel('View Thread')
+                                .setStyle(ButtonStyle.Link),
+                        ),
+                ],
+            });
 
         logMessage.startThread({
             name: `${interaction.user.tag} Private Verifier Discussion Thread`,

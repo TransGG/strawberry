@@ -12,7 +12,8 @@ import Button from '../../Button.js';
  */
 class VerifierActions extends Button {
     /**
-     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId.
+     *     Must be unique.
      */
     constructor(name = 'VERIFIER_ACTIONS') {
         super(name);
@@ -30,7 +31,8 @@ class VerifierActions extends Button {
 
     /**
      * Method to run when this button is pressed
-     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
+     *     command was executed
      */
     async run(interaction) {
         // Check if the current member is a verifier

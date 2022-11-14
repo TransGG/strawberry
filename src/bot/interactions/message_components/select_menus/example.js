@@ -6,14 +6,16 @@ import SelectMenu from '../SelectMenu.js';
  */
 class Example extends SelectMenu {
     /**
-     * @param {string} name The name to use to identify this select menu and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this select menu and to serve as its
+     *     customId. Must be unique.
      */
     constructor(name = 'example') {
         super(name);
     }
 
     /**
-     * @returns {SelectMenuBuilder} The data that describes the select menu format to the Discord API.
+     * @returns {SelectMenuBuilder} The data that describes the select menu format to the Discord
+     *     API.
      */
     getData() {
         return new SelectMenuBuilder()
@@ -30,7 +32,8 @@ class Example extends SelectMenu {
 
     /**
      * Method to run when this select menu is used
-     * @param {SelectMenuInteraction} interaction The interaction that was emitted when this select menu was used
+     * @param {SelectMenuInteraction} interaction The interaction that was emitted when this select
+     *     menu was used
      */
     async run(interaction) {
         await interaction.reply({ content: `You selected ${interaction.values.join(', ')}!`, ephemeral: true });

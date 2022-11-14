@@ -27,17 +27,18 @@ class SendWelcome extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Sends the welcome/rules message in this channel')
-            .addBooleanOption((option) => option.setName('preview').setDescription('Whether to preview the message'));
+            .addBooleanOption((option) => option
+                .setName('preview')
+                .setDescription('Whether to preview the message'));
     }
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
-        // TODO: format all the discord links
-        // create components
+        // TODO: format all the discord links create components
         const rulesImgEmbed = new EmbedBuilder()
             .setColor(0x6F6DB8)
             .setImage('https://i.imgur.com/gzTtYiQ.png');
@@ -66,8 +67,8 @@ class SendWelcome extends SlashCommand {
             .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜')
             .setImage('https://i.imgur.com/CBbbw0d.png');
 
-        /* Magic number. Appears to be the id of a message sent before the current welcome message. From original Theo
-           code */
+        /* Magic number. Appears to be the id of a message sent before the current welcome message.
+           From original Theo code */
         const magicMessage = '987842342247608410';
         const row = new ActionRowBuilder()
             .addComponents(

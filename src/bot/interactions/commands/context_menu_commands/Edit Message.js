@@ -13,7 +13,8 @@ class EditMessage extends ContextMenuCommand {
     }
 
     /**
-     * @returns {ContextMenuCommandBuilder} The data that describe the command format to the Discord API
+     * @returns {ContextMenuCommandBuilder} The data that describe the command format to the Discord
+     *     API
      */
     getData() {
         return new ContextMenuCommandBuilder()
@@ -24,8 +25,8 @@ class EditMessage extends ContextMenuCommand {
 
     /**
      * Method to run when this context menu command is executed
-     * @param {MessageContextMenuCommandInteraction} interaction The interaction that was emitted when this command was
-     *     executed
+     * @param {MessageContextMenuCommandInteraction} interaction The interaction that was emitted
+     *     when this command was executed
      */
     async run(interaction) {
         if (interaction.targetMessage.embeds.length > 0) {

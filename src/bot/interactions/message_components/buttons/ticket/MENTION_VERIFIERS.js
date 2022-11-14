@@ -14,7 +14,8 @@ import Button from '../../Button.js';
  */
 class MentionVerifiers extends Button {
     /**
-     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId.
+     *     Must be unique.
      */
     constructor(name = 'MENTION_VERIFIERS') {
         super(name);
@@ -42,7 +43,7 @@ class MentionVerifiers extends Button {
 
     /**
      * Creates a version of the data with arguments added in.
-     * @param  {string|number} type Arguments to add on to the data
+     * @param {string|number} type Arguments to add on to the data
      * @returns {ButtonBuilder} The data with the arguments added in
      */
     addArgs(type) {
@@ -51,7 +52,8 @@ class MentionVerifiers extends Button {
 
     /**
      * Method to run when this button is pressed
-     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
+     *     command was executed
      * @param {string} type The type of mention verifiers button. 1 or 2.
      */
     async run(interaction, type) {
@@ -78,8 +80,7 @@ class MentionVerifiers extends Button {
             return;
         }
 
-        // user can click, proceed
-        // disable buttons
+        // user can click, proceed disable buttons
         interaction.update({
             components: [
                 new ActionRowBuilder()
@@ -95,9 +96,7 @@ class MentionVerifiers extends Button {
             ],
         });
 
-        // create log
-        // calculate time
-        // TODO: consolidate this with the other date calculation
+        // create log calculate time TODO: consolidate this with the other date calculation
         const oneDay = 1000 * 60 * 60 * 24;
         const oneHour = 1000 * 60 * 60;
         const now = Date.now();

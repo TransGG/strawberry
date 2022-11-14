@@ -28,7 +28,10 @@ class GuildMemberAdd extends Event {
             return;
         }
 
-        /* This magic number is used in the link button. It looks like a channel id. Comes from original theo code. */
+        /*
+         * This magic number is used in the link button. It looks like a channel id. Comes from
+         * original theo code.
+         */
         const magicNumber = '987358841245151262';
 
         member.send({

@@ -41,7 +41,8 @@ class TheoEdit extends Modal {
 
     /**
      * Method to run when this modal is submitted
-     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal was submitted
+     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal
+     *     was submitted
      * @param {string} messageId The id of the message to edit
      */
     async run(interaction, messageId) {

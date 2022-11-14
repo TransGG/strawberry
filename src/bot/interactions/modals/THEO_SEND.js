@@ -41,7 +41,8 @@ class TheoSend extends Modal {
 
     /**
      * Method to run when this modal is submitted
-     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal was submitted
+     * @param {ModalSubmitInteraction} interaction The interaction that was emitted when this modal
+     *     was submitted
      */
     async run(interaction) {
         function escapeMarkdown(text) {

@@ -2,8 +2,8 @@ import { Events } from 'discord.js';
 import Event from '../Event.js';
 
 /**
- * Handler for guildMemberRemove event. Event occurs when a guild member leaves the guild, whether it be a voluntary
- * leave, kick, or ban.
+ * Handler for guildMemberRemove event. Event occurs when a guild member leaves the guild, whether
+ * it be a voluntary leave, kick, or ban.
  */
 class GuildMemberRemove extends Event {
     /**
@@ -19,7 +19,8 @@ class GuildMemberRemove extends Event {
      */
     // eslint-disable-next-line no-unused-vars
     async run(member) {
-        // this code always returns before doing anything, so comment it out until we get back to this
+        // this code always returns before doing anything, so comment it out until we get back to
+        // this
 
         // if (member.user.bot) { return; }
 

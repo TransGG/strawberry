@@ -1,5 +1,13 @@
 import {
-    ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, channelMention, EmbedBuilder, italic, roleMention, userMention,
+    ActionRowBuilder,
+    bold,
+    ButtonBuilder,
+    ButtonStyle,
+    channelMention,
+    EmbedBuilder,
+    italic,
+    roleMention,
+    userMention,
 } from 'discord.js';
 import config from '../../../../../config/config.js';
 import Button from '../../Button.js';
@@ -9,7 +17,8 @@ import Button from '../../Button.js';
  */
 class VerifyUser extends Button {
     /**
-     * @param {string} name The name to use to identify this button and to serve as its customId. Must be unique.
+     * @param {string} name The name to use to identify this button and to serve as its customId.
+     * Must be unique.
      */
     constructor(name = 'VERIFY_USER') {
         super(name);
@@ -27,7 +36,8 @@ class VerifyUser extends Button {
 
     /**
      * Method to run when this button is pressed
-     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash command was executed
+     * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
+     *     command was executed
      */
     async run(interaction) {
         const threadName = interaction.channel.name.split(' | ');
@@ -46,7 +56,8 @@ class VerifyUser extends Button {
         }
 
         // check to see if the message the button is attached to is a prompt on an older version
-        if (interaction.message.components[0].components[0].data.custom_id === 'VERIFY_USER' && interaction.message.content) {
+        if (interaction.message.components[0].components[0].data.custom_id === 'VERIFY_USER'
+            && interaction.message.content) {
             await interaction.message.edit({
                 components: [
                     new ActionRowBuilder()
