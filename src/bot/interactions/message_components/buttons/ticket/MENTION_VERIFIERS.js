@@ -140,4 +140,5 @@ class MentionVerifiers extends Button {
         });
     }
 }
+
 export default MentionVerifiers;

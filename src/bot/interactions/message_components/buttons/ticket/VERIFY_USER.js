@@ -244,4 +244,5 @@ class VerifyUser extends Button {
         });
     }
 }
+
 export default VerifyUser;

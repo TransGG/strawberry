@@ -32,4 +32,5 @@ class KickUserModal extends Button {
         await interaction.showModal(interaction.client.getModal('KICK_USER'));
     }
 }
+
 export default KickUserModal;

@@ -236,4 +236,5 @@ class StartVerification extends Button {
         });
     }
 }
+
 export default StartVerification;

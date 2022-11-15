@@ -65,4 +65,5 @@ class VerifierActions extends Button {
         });
     }
 }
+
 export default VerifierActions;

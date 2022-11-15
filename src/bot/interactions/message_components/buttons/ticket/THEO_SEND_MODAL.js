@@ -32,4 +32,5 @@ class TheoSendModal extends Button {
         await interaction.showModal(interaction.client.getModal('THEO_SEND'));
     }
 }
+
 export default TheoSendModal;
