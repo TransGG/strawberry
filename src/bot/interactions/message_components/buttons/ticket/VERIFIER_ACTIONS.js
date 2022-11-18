@@ -4,8 +4,8 @@ import {
     ButtonStyle,
     EmbedBuilder,
 } from 'discord.js';
-import config from '../../../../../config/config.js';
 import Button from '../../Button.js';
+import { isVerifier } from '../../../../../verification/controllers/member.js';
 
 /**
  * Handler for VERIFIER_ACTIONS button. Brings up menu for verifiers to choose actions from.
@@ -36,7 +36,7 @@ class VerifierActions extends Button {
      */
     async run(interaction) {
         // Check if the current member is a verifier
-        if (!interaction.member.roles.cache.has(config.roles.verifier)) {
+        if (!isVerifier(interaction.member)) {
             await interaction.reply({
                 content: 'You are not a verifier',
                 ephemeral: true,
@@ -44,10 +44,11 @@ class VerifierActions extends Button {
             return;
         }
 
+        // send verifier actions message
         const actions = new EmbedBuilder()
             .setDescription('Which action would you like to take?')
             .setFooter({
-                text: `${interaction.client.user.tag}`,
+                text: interaction.client.user.tag,
                 iconURL: interaction.client.user.avatarURL(),
             });
 

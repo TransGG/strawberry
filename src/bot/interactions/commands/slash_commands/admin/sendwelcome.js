@@ -39,6 +39,7 @@ class SendWelcome extends SlashCommand {
      */
     async run(interaction) {
         // TODO: format all the discord links create components
+        // TODO: pull this out to a handler
         const rulesImgEmbed = new EmbedBuilder()
             .setColor(0x6F6DB8)
             .setImage('https://i.imgur.com/gzTtYiQ.png');

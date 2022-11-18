@@ -60,11 +60,11 @@ const development = {
     privateThread: ChannelType.PublicThread, // test server does not have server premium level for private threads
     guild: '987229949041725520', // ets
     channels: {
-        lobby: '987230161764225044', // yeah these are all the test channel
-        verifyLogs: '987230161764225044',
-        verifyLogsSecondary: '987230161764225044',
-        welcome: '987230161764225044',
-        rules: '987230161764225044',
+        lobby: '987230161764225044', // test
+        verifyLogs: '1023658079675498568', // test 2
+        verifyLogsSecondary: '1024037750116204675', // test 3
+        welcome: '1023658079675498568', // test 2
+        rules: '987230161764225044', // test
         roles: '987230161764225044',
         introduce: '987230161764225044',
     },

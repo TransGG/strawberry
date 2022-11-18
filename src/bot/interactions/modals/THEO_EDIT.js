@@ -4,6 +4,7 @@ import {
     TextInputBuilder,
     TextInputStyle,
 } from 'discord.js';
+import { escape } from '../../../formatters/escape.js';
 import Modal from '../Modal.js';
 
 /**
@@ -46,30 +47,16 @@ class TheoEdit extends Modal {
      * @param {string} messageId The id of the message to edit
      */
     async run(interaction, messageId) {
-        function escapeMarkdown(text) {
-            const unescaped = text.replace(/\\(\*|_|`|~|\\)/g, '$1');
-            const escaped = unescaped.replace(/(\*|_|`|~|\\)/g, '\\$1');
-            return escaped;
-        }
-
-        await interaction.reply({
-            content: 'Message Edited.',
-            ephemeral: true,
-        });
-
         const message = await interaction.channel.messages.fetch(messageId);
         if (!message) {
-            await interaction.reply({
-                content: 'Message not found.',
-                ephemeral: true,
-            });
+            await interaction.reply({ content: 'Message not found.', ephemeral: true });
             return;
         }
 
         const messageInput = interaction.fields.getTextInputValue('message');
-        await message.edit({
-            content: escapeMarkdown(messageInput),
-        });
+        await message.edit({ content: escape(messageInput) });
+
+        await interaction.reply({ content: 'Message edited.', ephemeral: true });
     }
 }
 

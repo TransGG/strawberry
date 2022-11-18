@@ -4,6 +4,7 @@ import {
     TextInputBuilder,
     TextInputStyle,
 } from 'discord.js';
+import { escape } from '../../../formatters/escape.js';
 import Modal from '../Modal.js';
 
 /**
@@ -45,21 +46,14 @@ class TheoSend extends Modal {
      *     was submitted
      */
     async run(interaction) {
-        function escapeMarkdown(text) {
-            const unescaped = text.replace(/\\(\*|_|`|~|\\)/g, '$1');
-            const escaped = unescaped.replace(/(\*|_|`|~|\\)/g, '\\$1');
-            return escaped;
-        }
+        const message = interaction.fields.getTextInputValue('message');
+        await interaction.channel.send({
+            content: escape(message),
+        });
 
-        // Question: are the backticks deliberate?
         await interaction.reply({
             content: 'Message sent as in the current channel\nIf you would like to edit or delete this message, right click the message and choose `Apps > Edit Message` or `Apps > Delete Message` respectively.',
             ephemeral: true,
-        });
-
-        const message = interaction.fields.getTextInputValue('message');
-        await interaction.channel.send({
-            content: escapeMarkdown(message),
         });
     }
 }
