@@ -21,7 +21,7 @@ async function mentionVerifiers(resolve, reject, ticket, applicant, client, type
         return;
     }
 
-    if (!isApplicantAnswered(ticket)) {
+    if (!await isApplicantAnswered(ticket)) {
         await reject('You have not sent any messages in this channel yet, please answer the questions in the message above before clicking "Finished Answering!" or ask a question before clicking "I Need Help Please."\nThank you ❤️');
         return;
     }

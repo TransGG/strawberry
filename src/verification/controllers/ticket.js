@@ -242,7 +242,7 @@ function sendMentionVerifiers(ticket, applicant, client, helpMessage) {
  * @returns True if the ticket has answers from the applicant, false otherwise
  */
 async function isApplicantAnswered(ticket) {
-    return await fetchMessages(ticket)?.size > 1;
+    return (await fetchMessages(ticket))?.size > 1;
 }
 
 export {
