@@ -1,4 +1,3 @@
-import config from '../../../../../config/config.js';
 import SlashCommandWithSubcommands from '../../SlashCommandWithSubcommands.js';
 
 /**
@@ -8,8 +7,8 @@ class Theo extends SlashCommandWithSubcommands {
     /**
      * @param {string} name The name of this slash command
      */
-    constructor(name = 'theo', guild = config.guild) {
-        super(name, guild);
+    constructor(name = 'theo') {
+        super(name);
     }
 }
 
