@@ -2,7 +2,7 @@ import { bold, codeBlock } from 'discord.js';
 import config from '../../config/config.js';
 import { createDenyKickLog } from '../controllers/log.js';
 import { kick, sendDM } from '../controllers/member.js';
-import { fetchApplicant } from '../controllers/ticket.js';
+import { archiveTicket, fetchApplicant } from '../controllers/ticket.js';
 
 /**
  * Denies an applicant's verification/kicks an active applicant
@@ -44,6 +44,8 @@ async function denyKick(resolve, reject, ticket, verifier, userReason, logReason
 
     // success
     await resolve(`Kicked ${applicant.user.tag} from the server.`);
+
+    await archiveTicket(ticket, 'Member was kicked during verification');
 }
 
 export default denyKick;
