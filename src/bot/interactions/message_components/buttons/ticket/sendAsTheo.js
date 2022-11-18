@@ -2,14 +2,14 @@ import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import Button from '../../Button.js';
 
 /**
- * Handler for KICK_USER_MODAL button. Shows a modal from which a verifier may kick a user
+ * Handler for sendAsTheo button. Displays a modal that will send a message
  */
-class KickUserModal extends Button {
+class SendAsTheo extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId.
      *     Must be unique.
      */
-    constructor(name = 'KICK_USER_MODAL') {
+    constructor(name = 'sendAsTheo') {
         super(name);
     }
 
@@ -19,8 +19,8 @@ class KickUserModal extends Button {
     getData() {
         return new ButtonBuilder()
             .setCustomId(this.name)
-            .setLabel('Kick the User')
-            .setStyle(ButtonStyle.Danger);
+            .setLabel('Send a Message as Theo')
+            .setStyle(ButtonStyle.Secondary);
     }
 
     /**
@@ -29,8 +29,8 @@ class KickUserModal extends Button {
      *     command was executed
      */
     async run(interaction) {
-        await interaction.showModal(interaction.client.getModal('KICK_USER'));
+        await interaction.showModal(interaction.client.getModal('sendMessage'));
     }
 }
 
-export default KickUserModal;
+export default SendAsTheo;

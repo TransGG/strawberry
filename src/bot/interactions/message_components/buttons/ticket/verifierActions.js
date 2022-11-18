@@ -8,14 +8,14 @@ import Button from '../../Button.js';
 import { isVerifier } from '../../../../../verification/controllers/member.js';
 
 /**
- * Handler for VERIFIER_ACTIONS button. Brings up menu for verifiers to choose actions from.
+ * Handler for verifierActions button. Brings up menu for verifiers to choose actions from.
  */
 class VerifierActions extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId.
      *     Must be unique.
      */
-    constructor(name = 'VERIFIER_ACTIONS') {
+    constructor(name = 'verifierActions') {
         super(name);
     }
 
@@ -57,9 +57,9 @@ class VerifierActions extends Button {
             components: [
                 new ActionRowBuilder()
                     .addComponents(
-                        interaction.client.getButton('VERIFY_USER'),
-                        interaction.client.getButton('KICK_USER_MODAL'),
-                        interaction.client.getButton('THEO_SEND_MODAL'),
+                        interaction.client.getButton('verifyUser'),
+                        interaction.client.getButton('kickUserButton'),
+                        interaction.client.getButton('sendAsTheo'),
                     ),
             ],
             ephemeral: true,

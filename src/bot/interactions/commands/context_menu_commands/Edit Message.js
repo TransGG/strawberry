@@ -38,7 +38,7 @@ class EditMessage extends ContextMenuCommand {
             return;
         }
 
-        const modal = interaction.client.getModal('THEO_EDIT').addArgs(interaction.targetMessage.id);
+        const modal = interaction.client.getModal('editMessage').addArgs(interaction.targetMessage.id);
 
         await interaction.showModal(modal);
     }

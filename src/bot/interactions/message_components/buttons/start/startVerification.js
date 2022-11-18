@@ -9,14 +9,14 @@ import startVerification from '../../../../../verification/managers/startVerific
 import Button from '../../Button.js';
 
 /**
- * Handler for START_VERIFICATION button. Puts a user into the verification process
+ * Handler for startVerification button. Puts a user into the verification process
  */
 class StartVerification extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId.
      *     Must be unique.
      */
-    constructor(name = 'START_VERIFICATION') {
+    constructor(name = 'startVerification') {
         super(name);
     }
 

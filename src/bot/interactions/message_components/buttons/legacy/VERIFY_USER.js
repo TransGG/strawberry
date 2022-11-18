@@ -1,10 +1,11 @@
 import {
     ButtonBuilder,
     ButtonStyle,
+    Events,
 } from 'discord.js';
 import Button from '../../Button.js';
-import verifyUser from '../../../../../verification/managers/verifyUser.js';
 import { buildPromptComponents } from '../../../../../verification/controllers/ticket.js';
+import reemitInteraction from '../../../../utils/reemit.js';
 
 /**
  * Handler for VERIFY_USER button. Verifies a user
@@ -50,19 +51,10 @@ class VerifyUser extends Button {
             return;
         }
 
-        await verifyUser(
-            (message) => interaction.reply({
-                content: message,
-                allowedMentions: {
-                    parse: [],
-                },
-            }),
-            (message) => interaction.reply({
-                content: message || 'Verification failed: no message given',
-                ephemeral: true,
-            }),
-            interaction.channel,
-            interaction.member,
+        reemitInteraction(
+            Events.InteractionCreate,
+            interaction,
+            interaction.client.getButton('verifyUser'),
         );
     }
 }

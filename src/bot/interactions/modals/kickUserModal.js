@@ -8,13 +8,13 @@ import denyKick from '../../../verification/managers/denyKick.js';
 import Modal from '../Modal.js';
 
 /**
- * Handler for KICK_USER modal. Modal to kick a user and provide reasons
+ * Handler for kickUserModal modal. Modal to kick a user and provide reasons
  */
-class KickUser extends Modal {
+class KickUserModal extends Modal {
     /**
      * @param {string} name The name of this modal
      */
-    constructor(name = 'KICK_USER') {
+    constructor(name = 'kickUserModal') {
         super(name);
     }
 
@@ -74,4 +74,4 @@ class KickUser extends Modal {
     }
 }
 
-export default KickUser;
+export default KickUserModal;

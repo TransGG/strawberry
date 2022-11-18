@@ -8,13 +8,13 @@ import { escape } from '../../../formatters/escape.js';
 import Modal from '../Modal.js';
 
 /**
- * Handler for THEO_EDIT modal. Helper modal for input for Edit Message ctx menu command.
+ * Handler for editMessage modal. Helper modal for input for Edit Message ctx menu command.
  */
-class TheoEdit extends Modal {
+class EditMessage extends Modal {
     /**
      * @param {string} name The name of this modal
      */
-    constructor(name = 'THEO_EDIT') {
+    constructor(name = 'editMessage') {
         super(name);
     }
 
@@ -60,4 +60,4 @@ class TheoEdit extends Modal {
     }
 }
 
-export default TheoEdit;
+export default EditMessage;

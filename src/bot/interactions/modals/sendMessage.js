@@ -8,13 +8,13 @@ import { escape } from '../../../formatters/escape.js';
 import Modal from '../Modal.js';
 
 /**
- * Handler for THEO_SEND modal. Accepts input to create a message to send
+ * Handler for sendMessage modal. Accepts input to create a message to send
  */
-class TheoSend extends Modal {
+class SendMessage extends Modal {
     /**
      * @param {string} name The name of this modal
      */
-    constructor(name = 'THEO_SEND') {
+    constructor(name = 'sendMessage') {
         super(name);
     }
 
@@ -23,7 +23,7 @@ class TheoSend extends Modal {
      */
     getData() {
         return new ModalBuilder()
-            .setCustomId('THEO_SEND')
+            .setCustomId(this.name)
             .setTitle('Send a Message as Theo!')
             .addComponents([
                 new ActionRowBuilder()
@@ -58,4 +58,4 @@ class TheoSend extends Modal {
     }
 }
 
-export default TheoSend;
+export default SendMessage;

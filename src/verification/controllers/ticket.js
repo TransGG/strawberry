@@ -108,9 +108,9 @@ function isBelongsToMember(ticket, member) {
 function buildPromptComponents(client, mentionVerifiersDisabled = false) {
     return new ActionRowBuilder()
         .addComponents(
-            client.getButton('VERIFIER_ACTIONS'),
-            client.getButton('MENTION_VERIFIERS').addArgs(1).setDisabled(mentionVerifiersDisabled),
-            client.getButton('MENTION_VERIFIERS').addArgs(2).setDisabled(mentionVerifiersDisabled),
+            client.getButton('verifierActions'),
+            client.getButton('mentionVerifiers').addArgs(1).setDisabled(mentionVerifiersDisabled),
+            client.getButton('mentionVerifiers').addArgs(2).setDisabled(mentionVerifiersDisabled),
         );
 }
 

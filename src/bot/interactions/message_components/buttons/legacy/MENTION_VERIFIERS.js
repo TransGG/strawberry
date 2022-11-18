@@ -1,8 +1,9 @@
 import {
     ButtonBuilder,
     ButtonStyle,
+    Events,
 } from 'discord.js';
-import mentionVerifiers from '../../../../../verification/managers/mentionVerifiers.js';
+import reemitInteraction from '../../../../utils/reemit.js';
 import TakesArguments from '../../../TakesArguments.js';
 import Button from '../../Button.js';
 
@@ -22,6 +23,7 @@ class MentionVerifiers extends Button {
      * @returns {ButtonBuilder} The data that describes the button format to the Discord API.
      */
     getData(type) {
+        console.error(`${this.name}: should really not be getting data of a legacy button!`);
         const stringify = String(type);
         if (stringify === '1') {
             return new ButtonBuilder()
@@ -51,22 +53,12 @@ class MentionVerifiers extends Button {
      * Method to run when this button is pressed
      * @param {ButtonInteraction} interaction The interaction that was emitted when this slash
      *     command was executed
-     * @param {string} type The type of mention verifiers button. 1 or 2.
      */
-    async run(interaction, type) {
-        await mentionVerifiers(
-            // disable buttons on resolve
-            (components) => interaction.update({
-                components,
-            }),
-            (message) => interaction.reply({
-                content: message,
-                ephemeral: true,
-            }),
-            interaction.channel,
-            interaction.member,
-            interaction.client,
-            type,
+    async run(interaction) {
+        reemitInteraction(
+            Events.InteractionCreate,
+            interaction,
+            interaction.client.getButton('mentionVerifiers'),
         );
     }
 }

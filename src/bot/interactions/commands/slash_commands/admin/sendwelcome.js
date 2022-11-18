@@ -77,7 +77,7 @@ class SendWelcome extends SlashCommand {
                     .setURL(messageLink(config.channels.lobby, magicMessage, config.guild))
                     .setLabel('Scroll To Top!')
                     .setStyle(ButtonStyle.Link),
-                interaction.client.getButton('START_VERIFICATION'),
+                interaction.client.getButton('startVerification'),
             );
 
         // send message
