@@ -1,5 +1,55 @@
-import { Events } from 'discord.js';
+import { AuditLogEvent, Events } from 'discord.js';
+import config from '../../config/config.js';
+import { isClosed } from '../../verification/controllers/ticket.js';
+import { fetchMostRecentTicket } from '../../verification/controllers/tickets.js';
+import closeTicket, { closeTypes } from '../../verification/managers/closeTicket.js';
 import Event from '../Event.js';
+
+/**
+ * Determines if the member was removed due to a kick
+ * @param {GuildMember} member The member to determine the leave state of
+ * @returns {Promise<boolean>} True if the member was removed due to a kick, false otherwise
+ */
+async function isMemberWasKicked(member) {
+    const kickLogs = await member.guild.fetchAuditLogs({
+        limit: 1,
+        type: AuditLogEvent.MemberKick,
+    });
+
+    const kickLog = kickLogs.entries.first();
+
+    return kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt;
+}
+
+/**
+ * Determines if the member was removed due to a ban
+ * @param {GuildMember} member The member to determine the leave state of
+ * @returns {Promise<boolean>} True if the member was removed due to a ban, false otherwise
+ */
+async function isMemberWasBanned(member) {
+    const banLogs = await member.guild.fetchAuditLogs({
+        limit: 1,
+        type: AuditLogEvent.MemberBanAdd,
+    });
+
+    const banLog = banLogs.entries.first();
+
+    return banLog && banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt;
+}
+
+/**
+ * Determines if a member left voluntarily (not banned or kicked)
+ * @param {GuildMember} member The member to determine the leave state of
+ * @returns {Promise<boolean>} True if the member left voluntarily, false otherwise
+ */
+async function isMemberLeftVoluntary(member) {
+    // member left voluntarily if member was not kicked and not banned
+    if (!(await isMemberWasKicked(member)) && !(await isMemberWasBanned(member))) {
+        return true;
+    }
+
+    return false;
+}
 
 /**
  * Handler for guildMemberRemove event. Event occurs when a guild member leaves the guild, whether
@@ -17,24 +67,15 @@ class GuildMemberRemove extends Event {
     /**
      * @param {GuildMember} member The member that was removed
      */
-    // eslint-disable-next-line no-unused-vars
     async run(member) {
-        // this code always returns before doing anything, so comment it out until we get back to
-        // this
+        const ticket = fetchMostRecentTicket(
+            member.client.channels.cache.get(config.channels.lobby).threads,
+            member,
+        );
 
-        // if (member.user.bot) { return; }
-
-        // // Check if they have a thread open, and if so close it.
-
-        // if (!member.guild.channel) { return; }
-
-        // const existingThread = member.guild.channel.threads.cache.find((x) => {
-        //     if (splitUp[1] === member.user.id) { return splitUp[1]; }
-        // });
-
-        // if (existingThread && !existingThread.archived) {
-        //     existingThread.setArchived(true, 'User left guild, auto archived thread.');
-        // }
+        if (ticket && !isClosed(ticket) && await isMemberLeftVoluntary(member)) {
+            await closeTicket(() => { }, () => { }, ticket, closeTypes.leave);
+        }
     }
 }
 
