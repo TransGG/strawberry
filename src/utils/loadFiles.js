@@ -64,7 +64,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
 
                 const Class = (await import(pathToFileURL(filePath))).default;
                 const instance = new Class(...instanceArgs);
-                if (!(Object.hasOwn(instance, 'name'))) {
+                if (!('name' in instance)) {
                     throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
                 }
                 if (collection.has(instance.name)) {
