@@ -53,8 +53,8 @@ class SendWelcome extends SlashCommand {
         const notesReportEmbed = new EmbedBuilder()
             .setColor(0x6F6DB8)
             .setTitle('Notes / Report to staff')
-            .setDescription('1. Please be the bigger person—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\n2. If you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n> This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 \n\n*(This does not report the message to discord, just our server staff)*\n\n3. Similarly, if you are unsure if something is allowed, feel free to ask.')
-            .setImage('https://cdn.discordapp.com/attachments/987358841245151262/987842342406983710/report.gif');
+            .setDescription('**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just our server staff*')
+            .setImage('https://i.imgur.com/jxEcGvl.gif');
 
         const mentalHealthEmbed = new EmbedBuilder()
             .setColor(0x6F6DB8)
