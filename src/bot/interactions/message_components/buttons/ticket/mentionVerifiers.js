@@ -1,10 +1,9 @@
-import {
-    ButtonBuilder,
-    ButtonStyle,
-} from 'discord.js';
+import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import mentionVerifiers from '../../../../../verification/managers/mentionVerifiers.js';
 import TakesArguments from '../../../TakesArguments.js';
 import Button from '../../Button.js';
+
+const maxHeartId = '968321960557809674'; // id of emoji :max_heart: from TransPlace
 
 /**
  * Handler for mentionVerifiers button. Summons verifiers to the verification ticket.
@@ -56,9 +55,18 @@ class MentionVerifiers extends Button {
     async run(interaction, type) {
         await mentionVerifiers(
             // disable buttons on resolve
-            (components) => interaction.update({
-                components,
-            }),
+            async (components) => {
+                await interaction.update({
+                    components,
+                });
+
+                // we don't use the built-in emoji formatter here because it makes it less apparent
+                // an emoji is supposed to be there if emoji is not found
+                return interaction.followUp({
+                    content: `Verifiers have been pinged. Please wait for them to respond <:max_heart:${maxHeartId}>`,
+                    ephemeral: true,
+                });
+            },
             (message) => interaction.reply({
                 content: message,
                 ephemeral: true,
