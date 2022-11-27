@@ -1,12 +1,8 @@
 import {
-    ActionRowBuilder,
     ApplicationCommandType,
-    ButtonBuilder,
-    ButtonStyle,
     ContextMenuCommandBuilder,
-    messageLink,
 } from 'discord.js';
-import config from '../../../../config/config.js';
+import { buildWelcomeComponents, welcomeEmbeds } from '../../../../content/welcome.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
 /**
@@ -37,19 +33,11 @@ class UpdateWelcome extends ContextMenuCommand {
      *     when this command was executed
      */
     async run(interaction) {
-        if (interaction.targetMessage.components[0].components[1].data.custom_id === 'START_VERIFICATION') {
-            const magicMessage = '987842342247608410';
-            const row = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setURL(messageLink(config.channels.lobby, magicMessage, config.guild))
-                        .setLabel('Scroll To Top!')
-                        .setStyle(ButtonStyle.Link),
-                    interaction.client.getButton('startVerification'),
-                );
-
+        if (interaction.targetMessage.components[0].components[1].data.custom_id === 'startVerification') {
+            const components = buildWelcomeComponents(interaction.client);
             await interaction.targetMessage.edit({
-                components: [row],
+                embeds: welcomeEmbeds,
+                components,
             });
 
             await interaction.reply({
@@ -58,7 +46,7 @@ class UpdateWelcome extends ContextMenuCommand {
             });
         } else {
             await interaction.reply({
-                content: 'Update failed: could not find button',
+                content: 'Update failed: Could not identify target message as welcome message',
                 ephemeral: true,
             });
         }
