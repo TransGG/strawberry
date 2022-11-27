@@ -8,7 +8,7 @@ import {
     userMention,
 } from 'discord.js';
 import config from '../../config/config.js';
-import { matchSnowflakes } from '../../formatters/snowflake.js';
+import { matchTrailingSnowflake } from '../../formatters/snowflake.js';
 import buildTimeInfoString from '../utils/stringBuilders.js';
 
 /**
@@ -57,13 +57,13 @@ function unarchiveTicket(ticket, reason) {
  * Parses the id of the user a verification ticket belongs to, given the ticket
  * @param {ThreadChannel|BaseGuildTextChannel|string} ticket A thread that is a verification ticket
  *     or the name of a thread that is a verification ticket
- * @returns {Snowflake} The ID of the user who the ticket belongs to
+ * @returns {?Snowflake} The ID of the user who the ticket belongs to, or null if no ID was found
  */
 function parseApplicantId(ticket) {
     if (ticket instanceof ThreadChannel || ticket instanceof BaseGuildTextChannel) {
         return parseApplicantId(ticket.name);
     } if (typeof ticket === 'string' || ticket instanceof String) {
-        return matchSnowflakes(ticket).at(-1);
+        return matchTrailingSnowflake(ticket)?.at(-1) ?? null;
     }
     throw new TypeError('Invalid type for ticket', { cause: { ticket } });
 }
@@ -95,7 +95,7 @@ async function fetchApplicant(ticket) {
  * @returns {boolean} True if the ticket belongs to member, false otherwise
  */
 function isBelongsToMember(ticket, member) {
-    return parseApplicantId(ticket) === member.id;
+    return ticket && member && parseApplicantId(ticket) === member.id;
 }
 
 /**

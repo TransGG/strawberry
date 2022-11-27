@@ -1,10 +1,11 @@
 /**
- * Matches snowflakes (the numbers Discord uses for id's)
+ * Matches snowflakes (the numbers Discord uses for id's) that appear at the very end of the string
  * @param {string} string The string to match
- * @returns {string[]}
+ * @returns {?string[]} An Array that contains a matching string and has extra properties from
+ * RegExp.exec, or null if no matches are found.
  */
-function matchSnowflakes(string) {
-    return string.match(/\d{17,20}$/);
+function matchTrailingSnowflake(string) {
+    return /\d{17,20}$/.exec(string);
     //                   |  |     |__ end of line
     //                   |  |__ 17-20 digits: long story short it's the conceivable valid snowflake
     //                   |      range
@@ -13,5 +14,5 @@ function matchSnowflakes(string) {
 
 export {
     // eslint-disable-next-line import/prefer-default-export
-    matchSnowflakes,
+    matchTrailingSnowflake,
 };
