@@ -63,7 +63,7 @@ function createDenyKickLog(
             new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setURL(channelLink(ticket.parentId, ticket.guildId))
+                        .setURL(channelLink(ticket.id, ticket.guildId))
                         .setLabel('View Thread')
                         .setStyle(ButtonStyle.Link),
                 ),
