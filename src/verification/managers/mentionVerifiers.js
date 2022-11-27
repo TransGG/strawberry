@@ -13,7 +13,7 @@ import {
  * @param {GuildMember} applicant The applicant to the ticket
  * @param {Bot} client The client that is sending the log as well as that contains buttons
  * @param {string} type Type of message to send (will display 'Please help the user' if value is '1'
- *     and 'Please verify the user' otherwise
+ *     and 'Please verify the user' if value is '2'
  */
 async function mentionVerifiers(resolve, reject, ticket, applicant, client, type) {
     if (!isBelongsToMember(ticket, applicant)) {
@@ -26,9 +26,12 @@ async function mentionVerifiers(resolve, reject, ticket, applicant, client, type
         return;
     }
 
-    let helpMessage = 'Please verify the user';
-    if (type === '1') {
+    // a little sneaky difference to determine if type was an unexpected value
+    let helpMessage = 'Please verify the user:';
+    if (`${type}` === '1') {
         helpMessage = 'Please help the user';
+    } else if (`${type}` === '2') {
+        helpMessage = 'Please verify the user';
     }
 
     await sendMentionVerifiers(ticket, applicant, client, helpMessage);

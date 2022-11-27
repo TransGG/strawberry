@@ -88,6 +88,15 @@ async function fetchApplicant(ticket) {
 }
 
 /**
+ * Determines if a ticket is closed
+ * @param {ThreadChannel} ticket A verification ticket
+ * @returns {boolean} True if the ticket is closed, false otherwise
+ */
+function isClosed(ticket) {
+    return ticket.archived;
+}
+
+/**
  * Determines if a ticket belongs to a member
  * @param {BaseGuildTextChannel|string} ticket A thread that is a verification ticket or the name of
  *     a thread that is a verification ticket
@@ -175,6 +184,10 @@ function buildPromptEmbeds(applicant) {
     ];
 }
 
+function sendMessage(ticket, message) {
+    return ticket.send(message);
+}
+
 /**
  * Sends the prompt in a ticket
  * @param {TextBasedChannel} ticket A text channel
@@ -247,13 +260,15 @@ async function isApplicantAnswered(ticket) {
 
 export {
     archiveTicket,
+    phantomPing,
     parseApplicantId,
     fetchApplicant,
+    isClosed,
     isBelongsToMember,
     buildPromptComponents,
     refreshTicket,
+    sendMessage,
     sendPrompt,
     sendMentionVerifiers,
     isApplicantAnswered,
-    phantomPing,
 };
