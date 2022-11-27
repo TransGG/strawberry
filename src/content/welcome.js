@@ -23,7 +23,10 @@ const notesReportEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
     .setTitle('Notes / Report to staff')
     .setDescription('**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just our server staff*')
-    .setImage('https://i.imgur.com/jxEcGvl.gif');
+    .setImage('https://i.imgur.com/jxEcGvl.gif')
+    .setFooter({
+        text: 'If you are ever unsure if something is allowed, feel free to ask.',
+    });
 
 const mentalHealthEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
@@ -34,8 +37,11 @@ const mentalHealthEmbed = new EmbedBuilder()
 const getVerifiedEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
     .setTitle('Getting Verified')
-    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜')
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜\n\n***If the button fails: ***\n\n> Please make sure you\'ve clicked the button which looks like the image below in your discord client.')
+    .setImage('https://i.imgur.com/CW0Wpgm.png')
+    .setFooter({
+        text: 'If it still fails after that, please feel free to DM @Cleo#1003',
+    });
 
 function buildWelcomeComponents(client) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.
