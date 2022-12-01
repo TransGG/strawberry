@@ -1,7 +1,7 @@
 import config from '../../config/config.js';
 import { createVerifyTicketCreateLog } from '../controllers/log.js';
 import { isVerified } from '../controllers/member.js';
-import { phantomPing, refreshTicket } from '../controllers/ticket.js';
+import { isClosed, phantomPing, refreshTicket } from '../controllers/ticket.js';
 import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
 
 /**
@@ -22,11 +22,14 @@ async function startVerification(resolve, reject, threads, applicant) {
     // fetch existing threads, if any
     const existingTicket = fetchMostRecentTicket(threads, applicant);
     if (existingTicket) {
-        const existing = await refreshTicket(existingTicket, applicant);
+        const closed = isClosed(existingTicket);
+        if (closed) {
+            await refreshTicket(existingTicket, applicant);
+        }
         await phantomPing(existingTicket, applicant);
         await resolve(
             existingTicket,
-            existing ? 'Re-opened your ticket' : 'You already have a thread open',
+            closed ? 'Re-opened your ticket' : 'You already have a thread open',
         );
         return;
     }
