@@ -4,17 +4,18 @@ import {
     TextInputBuilder,
     TextInputStyle,
 } from 'discord.js';
-import denyKick from '../../../verification/managers/denyKick.js';
+import { denyVerification, DenyConsequence } from '../../../verification/managers/denyVerification.js';
+import VerificationError from '../../../verification/verificationError.js';
 import Modal from '../Modal.js';
 
 /**
- * Handler for kickUserModal modal. Modal to kick a user and provide reasons
+ * Handler for denyKickModal modal. Modal to kick a user and provide reasons
  */
-class KickUserModal extends Modal {
+class DenyKickModal extends Modal {
     /**
      * @param {string} name The name of this modal
      */
-    constructor(name = 'kickUserModal') {
+    constructor(name = 'denyKickModal') {
         super(name);
     }
 
@@ -24,7 +25,7 @@ class KickUserModal extends Modal {
     getData() {
         return new ModalBuilder()
             .setCustomId(this.name)
-            .setTitle('Deny a users verification.')
+            .setTitle('Deny a user\'s verification.')
             .addComponents(
                 new ActionRowBuilder()
                     .addComponents(
@@ -57,21 +58,24 @@ class KickUserModal extends Modal {
      *     was submitted
      */
     async run(interaction) {
-        await denyKick(
-            (message) => interaction.reply({
-                content: message,
-                ephemeral: true,
-            }),
-            (message) => interaction.reply({
-                content: message,
-                ephemeral: true,
-            }),
-            interaction.channel,
-            interaction.member,
-            interaction.fields.getTextInputValue('userReason'),
-            interaction.fields.getTextInputValue('logReason'),
-        );
+        await denyVerification(
+            DenyConsequence.kick,
+            {
+                ticket: interaction.channel,
+                verifier: interaction.member,
+                userReason: interaction.fields.getTextInputValue('userReason'),
+                logReason: interaction.fields.getTextInputValue('logReason'),
+            },
+            (message) => interaction.reply({ content: message, ephemeral: true }),
+        ).catch(async (error) => {
+            if (error instanceof VerificationError) {
+                await interaction.reply({ content: error.message, ephemeral: true });
+            } else {
+                await interaction.reply({ content: `Error: ${error.message}`, ephemeral: true });
+                throw error;
+            }
+        });
     }
 }
 
-export default KickUserModal;
+export default DenyKickModal;

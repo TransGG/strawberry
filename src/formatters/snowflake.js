@@ -1,4 +1,13 @@
 /**
+ * Tests if a string is a Discord snowflake
+ * @param {string} string The string to test
+ * @returns {boolean} True if the string is a snowflake, false otherwise
+ */
+function isSnowflake(string) {
+    return /\d{17,20}/.test(string);
+}
+
+/**
  * Matches snowflakes (the numbers Discord uses for id's) that appear at the very end of the string
  * @param {string} string The string to match
  * @returns {?string[]} An Array that contains a matching string and has extra properties from
@@ -13,6 +22,6 @@ function matchTrailingSnowflake(string) {
 }
 
 export {
-    // eslint-disable-next-line import/prefer-default-export
+    isSnowflake,
     matchTrailingSnowflake,
 };

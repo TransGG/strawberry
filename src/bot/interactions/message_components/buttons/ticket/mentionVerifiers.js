@@ -54,6 +54,10 @@ class MentionVerifiers extends Button {
      */
     async run(interaction, type) {
         await mentionVerifiers(
+            interaction.channel,
+            interaction.member,
+            interaction.client,
+            type,
             // disable buttons on resolve
             async (components) => {
                 await interaction.update({
@@ -71,10 +75,6 @@ class MentionVerifiers extends Button {
                 content: message,
                 ephemeral: true,
             }),
-            interaction.channel,
-            interaction.member,
-            interaction.client,
-            type,
         );
     }
 }

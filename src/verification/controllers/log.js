@@ -10,56 +10,57 @@ import {
 import buildTimeInfoString from '../utils/stringBuilders.js';
 
 /**
- * Add a log for a deny-kick
+ * Create a log for a ban where the member is passed
  * @param {TextBasedChannel} logChannel The channel to send to
- * @param {TextBasedChannel} ticket The recently-created ticket
- * @param {GuildMember} target The applicant that was kicked
- * @param {GuildMember} verifier The verifier that kicked them
- * @param {Client} client The client that is sending the log
- * @param {string} userReason The reason sent to the user
- * @param {string} logReason The reason kept in logs
+ * @param {Object} options Options for banning
+ * @param {User} options.target The member to ban
+ * @param {GuildMember} options.verifier The member who created the ban
+ * @param {Client} options.client The client that is sending the log
+ * @param {string} options.userReason The reason sent to the user
+ * @param {string} options.logReason The reason kept in logs
+ * @param {boolean} options.dmSent Whether a DM was sent
+ * @param {TextBasedChannel} options.ticket The ticket closed due to the ban
  * @returns {Promise<Message>} The message that was sent
  */
-function createDenyKickLog(
+function createBanLog(
     logChannel,
-    ticket,
-    target,
-    verifier,
-    client,
-    userReason,
-    logReason,
-    unable,
+    {
+        target, verifier, client, userReason, logReason, dmSent, ticket,
+    },
 ) {
-    // create kick log
-    const logEmbed = new EmbedBuilder()
+    // create embed
+    const embed = new EmbedBuilder()
+        .setColor(0xed4245) // color-picked from discord
+        .setTitle(`The user ${target.tag} has been banned from the server.`)
         .setAuthor({
-            name: `${target.user.tag}`,
-            iconURL: target.user.avatarURL(),
+            name: `${target.tag}`,
+            iconURL: `${target.avatarURL()}`,
         })
-        .setTitle(`The user ${target.user.tag} has been kicked from the server.`)
-        .setDescription(`Reason ${unable ? '(Unable to Send to User)' : '(Sent to User)'}: ${codeBlock(userReason)}\nLogs Reason (Not Shared):${codeBlock(logReason)}`)
+        .setDescription(`Reason ${dmSent ? '(Sent to User)' : '(Unable to Send to User)'}: ${codeBlock(userReason)}\nLogs Reason (Not Shared):${codeBlock(logReason)}`)
+        .addFields([
+            {
+                name: 'User Information',
+                value: `${target.tag} (${target.id}) ${userMention(target.id)}`,
+            },
+            {
+                name: 'Verifier Information',
+                value: `${verifier.user.tag} (${verifier.user.id}) ${userMention(verifier.user.id)}`,
+            },
+            {
+                name: 'ID\'s',
+                value: codeBlock('ini', `Verifier = ${verifier.user.id}\nUser = ${target.id}${ticket ? `\nThread = ${ticket.id}` : ''}`),
+            },
+        ])
         .setTimestamp()
         .setFooter({
-            text: client.user.tag,
-            iconURL: client.user.avatarURL(),
-        })
-        .addFields([{
-            name: 'User Information',
-            value: `${target.user.tag} (${target.user.id}) ${userMention(target.user.id)}`,
-        },
-        {
-            name: 'Verifier Information',
-            value: `${verifier.user.tag} (${verifier.user.id}) ${userMention(verifier.user.id)}`,
-        },
-        {
-            name: 'ID\'s',
-            value: codeBlock('ini', `Verifier = ${verifier.user.id}\nUser = ${target.user.id}\nThread = ${ticket.id}`),
-        },
-        ]);
+            text: `${client.user.tag}`,
+            iconURL: `${client.user.avatarURL()}`,
+        });
 
-    return logChannel.send({
-        embeds: [logEmbed],
-        components: [
+    // optionally build button if a link can be built from ticket
+    let components;
+    if (ticket) {
+        components = [
             new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
@@ -67,7 +68,85 @@ function createDenyKickLog(
                         .setLabel('View Thread')
                         .setStyle(ButtonStyle.Link),
                 ),
-        ],
+        ];
+    }
+
+    // create log
+    return logChannel.send({
+        embeds: [embed],
+        components,
+    });
+}
+/**
+ * Create a log for a kick
+ * @param {TextBasedChannel} logChannel The channel to send to
+ * @param {User} target The user that was kicked
+ * @param {GuildMember} verifier The verifier that did the kick
+ * @param {Client} client The client that is sending the log
+ * @param {string} userReason The reason sent to the user
+ * @param {string} logReason The reason kept in logs
+ * @param {boolean} dmSent Whether a DM was sent
+ * @param {TextBasedChannel} [ticket] The ticket closed due to the kick
+ * @returns {Promise<Message>} The message that was sent
+ */
+function createKickLog(
+    logChannel,
+    {
+        target,
+        verifier,
+        client,
+        userReason,
+        logReason,
+        dmSent,
+        ticket,
+    },
+) {
+    // create embed
+    const embed = new EmbedBuilder()
+        .setTitle(`The user ${target.tag} has been kicked from the server.`)
+        .setAuthor({
+            name: `${target.tag}`,
+            iconURL: `${target.avatarURL()}`,
+        })
+        .setDescription(`Reason ${dmSent ? '(Sent to User)' : '(Unable to Send to User)'}: ${codeBlock(userReason)}\nLogs Reason (Not Shared):${codeBlock(logReason)}`)
+        .addFields([
+            {
+                name: 'User Information',
+                value: `${target.tag} (${target.id}) ${userMention(target.id)}`,
+            },
+            {
+                name: 'Verifier Information',
+                value: `${verifier.user.tag} (${verifier.user.id}) ${userMention(verifier.user.id)}`,
+            },
+            {
+                name: 'ID\'s',
+                value: codeBlock('ini', `Verifier = ${verifier.user.id}\nUser = ${target.id}${ticket ? `\nThread = ${ticket.id}` : ''}`),
+            },
+        ])
+        .setTimestamp()
+        .setFooter({
+            text: `${client.user.tag}`,
+            iconURL: `${client.user.avatarURL()}`,
+        });
+
+    // optionally build button if a link can be built from ticket
+    let components;
+    if (ticket) {
+        components = [
+            new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setURL(channelLink(ticket.id, ticket.guildId))
+                        .setLabel('View Thread')
+                        .setStyle(ButtonStyle.Link),
+                ),
+        ];
+    }
+
+    // create log
+    return logChannel.send({
+        embeds: [embed],
+        components,
     });
 }
 
@@ -84,31 +163,32 @@ function createVerifyTicketCreateLog(logChannel, ticket, applicant, client) {
 
     const logEmbed = new EmbedBuilder()
         .setAuthor({
-            name: applicant.user.tag,
-            iconURL: applicant.user.avatarURL(),
+            name: `${applicant.user.tag}`,
+            iconURL: `${applicant.user.avatarURL()}`,
         })
         .setDescription(`A new verification ticket has been created for ${applicant.user.tag}`)
         .setTimestamp()
         .setFooter({
-            text: client.user.tag,
-            iconURL: client.user.avatarURL(),
+            text: `${client.user.tag}`,
+            iconURL: `${client.user.avatarURL()}`,
         })
-        .addFields([{
-            name: 'User Information',
-            value: `${applicant.user.tag} (${applicant.id}) ${userMention(applicant.id)}`,
-        },
-        {
-            name: 'Joined At',
-            value: buildTimeInfoString(applicant.joinedAt, now),
-        },
-        {
-            name: 'Created At',
-            value: buildTimeInfoString(applicant.user.createdAt, now),
-        },
-        {
-            name: 'ID\'s',
-            value: codeBlock('ini', `User = ${applicant.id}\nThread = ${ticket.id}`),
-        },
+        .addFields([
+            {
+                name: 'User Information',
+                value: `${applicant.user.tag} (${applicant.id}) ${userMention(applicant.id)}`,
+            },
+            {
+                name: 'Joined At',
+                value: buildTimeInfoString(applicant.joinedAt, now),
+            },
+            {
+                name: 'Created At',
+                value: buildTimeInfoString(applicant.user.createdAt, now),
+            },
+            {
+                name: 'ID\'s',
+                value: codeBlock('ini', `User = ${applicant.id}\nThread = ${ticket.id}`),
+            },
         ]);
 
     return logChannel.send({
@@ -142,7 +222,8 @@ function createVerifiedLog(logChannel, verifier, applicant) {
 }
 
 export {
-    createDenyKickLog,
+    createBanLog,
+    createKickLog,
     createVerifyTicketCreateLog,
     createVerifiedLog,
 };

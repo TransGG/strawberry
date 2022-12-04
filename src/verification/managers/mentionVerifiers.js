@@ -7,16 +7,16 @@ import {
 
 /**
  * Mentions the verifiers in a ticket.
- * @param {function} resolve Success callback. Takes one parameter - components: ActionRowBuilder[]
- * @param {function} reject Failure callback: Takes one parameter - message
  * @param {TextBasedChannel} ticket The verification ticket to mention verifiers in
- * @param {GuildMember} applicant The applicant to the ticket
+ * @param {GuildMember} user The user who instigated this handler
  * @param {Bot} client The client that is sending the log as well as that contains buttons
  * @param {string} type Type of message to send (will display 'Please help the user' if value is '1'
  *     and 'Please verify the user' if value is '2'
+ * @param {function} resolve Success callback. Takes one parameter - components: ActionRowBuilder[]
+ * @param {function} reject Failure callback: Takes one parameter - message
  */
-async function mentionVerifiers(resolve, reject, ticket, applicant, client, type) {
-    if (!isBelongsToMember(ticket, applicant)) {
+async function mentionVerifiers(ticket, user, client, type, resolve, reject) {
+    if (!isBelongsToMember(ticket, user)) {
         await reject('You are not allowed to use this command, this can only be used by the thread owner.');
         return;
     }
@@ -34,7 +34,7 @@ async function mentionVerifiers(resolve, reject, ticket, applicant, client, type
         helpMessage = 'Please verify the user';
     }
 
-    await sendMentionVerifiers(ticket, applicant, client, helpMessage);
+    await sendMentionVerifiers(ticket, user, client, helpMessage);
 
     await resolve([buildPromptComponents(client, true)]);
 }

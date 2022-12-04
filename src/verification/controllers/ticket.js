@@ -12,6 +12,36 @@ import { matchTrailingSnowflake } from '../../formatters/snowflake.js';
 import buildTimeInfoString from '../utils/stringBuilders.js';
 
 /**
+ * Archives a ticket
+ * @param {ThreadChannel} ticket A verification ticket
+ * @param {string} reason Reason for archiving
+ * @returns {Promise<ThreadChannel>} The verification ticket
+ */
+function archiveTicket(ticket, reason) {
+    return ticket.setArchived(true, reason);
+}
+
+/**
+ * Unarchives a ticket
+ * @param {ThreadChannel} ticket A verification ticket
+ * @param {string} reason Reason for unarchiving
+ * @returns {Promise<ThreadChannel>} The verification ticket
+ */
+function unarchiveTicket(ticket, reason) {
+    return ticket.setArchived(false, reason);
+}
+
+/**
+ * Sends a message in a ticket
+ * @param {TextBasedChannel} ticket The ticket to send to
+ * @param {string|MessagePayload|MessageCreateOptions} options The options to provide
+ * @returns {Promise<Message>} The message that was sent
+ */
+function sendMessage(ticket, options) {
+    return ticket.send(options);
+}
+
+/**
  * Fetches messages of a channel
  * @param {TextBasedChannel} channel A text channel
  * @returns {Promise<Collection<Snowflake, Message>>} All messages in this channel
@@ -33,25 +63,7 @@ async function phantomPing(channel, recipient) {
     return message.delete();
 }
 
-/**
- * Archives a ticket
- * @param {ThreadChannel} ticket A verification ticket
- * @param {string} reason Reason for archiving
- * @returns {Promise<ThreadChannel>} The verification ticket
- */
-function archiveTicket(ticket, reason) {
-    return ticket.setArchived(true, reason);
-}
-
-/**
- * Unarchives a ticket
- * @param {ThreadChannel} ticket A verification ticket
- * @param {string} reason Reason for unarchiving
- * @returns {Promise<ThreadChannel>} The verification ticket
- */
-function unarchiveTicket(ticket, reason) {
-    return ticket.setArchived(false, reason);
-}
+// //////////// The line of direct vs indirect ///////////////
 
 /**
  * Parses the id of the user a verification ticket belongs to, given the ticket
@@ -62,7 +74,8 @@ function unarchiveTicket(ticket, reason) {
 function parseApplicantId(ticket) {
     if (ticket instanceof ThreadChannel || ticket instanceof BaseGuildTextChannel) {
         return parseApplicantId(ticket.name);
-    } if (typeof ticket === 'string' || ticket instanceof String) {
+    }
+    if (typeof ticket === 'string' || ticket instanceof String) {
         return matchTrailingSnowflake(ticket)?.at(-1) ?? null;
     }
     throw new TypeError('Invalid type for ticket', { cause: { ticket } });
@@ -105,6 +118,17 @@ function isClosed(ticket) {
  */
 function isBelongsToMember(ticket, member) {
     return ticket && member && parseApplicantId(ticket) === member.id;
+}
+
+/**
+ * Determines if a candidate is a ticket
+ * @param {any} candidate The candidate to check if it's a ticket
+ * @returns {boolean} True if the candidate is a ticket, false otherwise
+ */
+function isTicket(candidate) {
+    return candidate instanceof ThreadChannel
+        && parseApplicantId(candidate)
+        && candidate.parentId === config.channels.lobby;
 }
 
 /**
@@ -184,10 +208,6 @@ function buildPromptEmbeds(applicant) {
     ];
 }
 
-function sendMessage(ticket, message) {
-    return ticket.send(message);
-}
-
 /**
  * Sends the prompt in a ticket
  * @param {TextBasedChannel} ticket A text channel
@@ -260,14 +280,15 @@ async function isApplicantAnswered(ticket) {
 
 export {
     archiveTicket,
+    sendMessage,
     phantomPing,
     parseApplicantId,
     fetchApplicant,
     isClosed,
     isBelongsToMember,
+    isTicket,
     buildPromptComponents,
     refreshTicket,
-    sendMessage,
     sendPrompt,
     sendMentionVerifiers,
     isApplicantAnswered,

@@ -45,6 +45,7 @@ const config = {
         introduce: '',
     },
     roles: {
+        staffRoles: [],
         verifier: '',
         verified: '',
         greeter: '',
@@ -69,6 +70,9 @@ const development = {
         introduce: '987230161764225044',
     },
     roles: {
+        staffRoles: [
+            '1023671868609269811', // elise
+        ],
         verifier: '1001630620629344347', // new role
         verified: '1016584910590459904', // test role
         greeter: '1023671868609269811', // elise
@@ -92,6 +96,18 @@ const production = {
         introduce: '964221571071869050',            // transplace:entrance-hall
     },
     roles: {
+        staffRoles: [
+            '981735525784358962',  // admin
+            '959916105294569503',  // verifier
+            '981735650971775077',  // moderator
+            '961350385556152370',  // minecraft mod
+            '995822941663154206',  // admin on leave
+            '1046488017151463586', // sr. mod on leave
+            '996798409061171221',  // verifier on leave
+            '996798320649457667',  // mod on leave
+            '1046488385973399704', // minecraft admin on leave
+            '1046488495138537543', // minecraft mod on leave
+        ],
         verifier: '959916105294569503',
         verified: '959748411844874240',
         greeter: '978861945253945394',
