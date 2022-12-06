@@ -30,6 +30,7 @@ const modalsPath = '../interactions/modals';
  *     preceded by the instance as an argument
  * @throws {Error} If files could not be read from the directory
  * @throws {Error} If an instance of a file's default export does not have a name property
+ * @throws {Error} If an instance of a file's default export does not have a name property
  * @throws {ReferenceError} If collection does not exist
  * @throws {TypeError} If collection is not a Map (probably should be a Collection)
  *
@@ -54,15 +55,20 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
     await Promise.all(
         files.map(async (fileName) => {
             const filePath = path.join(dirPath, fileName);
+            const relativeFilePath = path.join(dir, fileName);
 
             const stat = await fs.lstat(filePath);
             if (stat.isDirectory()) {
-                await loadNameable(collection, path.join(dir, fileName), callback);
-            }
-            if (fileName.endsWith('.js')) {
-                debug(`Loading ${path.join(dir, fileName)}`);
+                await loadNameable(collection, relativeFilePath, callback);
+            } else if (fileName.endsWith('.js')) {
+                debug(`Loading ${relativeFilePath}`);
 
                 const Class = (await import(pathToFileURL(filePath))).default;
+
+                if (!Class) {
+                    throw new Error(`No default export found in ${relativeFilePath}`);
+                }
+
                 const instance = new Class(...instanceArgs);
                 if (!('name' in instance)) {
                     throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
