@@ -37,20 +37,20 @@ const modalsPath = '../interactions/modals';
  */
 async function loadNameable(collection, dir, callback, instanceArgs = [], callbackArgs = []) {
     if (!dir) {
-        throw new Error(`Cannot load files: dir has value of ${dir}!`);
+        throw new Error(`Cannot load files: dir has value of ${dir}`);
     }
     const dirPath = path.join(__dirname, dir);
 
     // collection validity checking
     if (!collection) {
-        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'collection' does not exist!`);
+        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'collection' does not exist`);
     }
     if (!(collection instanceof Map)) {
-        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'collection' to be of type Map (probably a Collection) when 'collection' was of type ${collection.constructor.name}!`);
+        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'collection' to be of type Map (probably a Collection) when 'collection' was of type ${collection.constructor.name}`);
     }
 
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
@@ -71,7 +71,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
 
                 const instance = new Class(...instanceArgs);
                 if (!('name' in instance)) {
-                    throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
+                    throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'`);
                 }
                 if (collection.has(instance.name)) {
                     throw new DuplicateElement(filePath, instance.name, collection);
@@ -94,7 +94,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
 async function loadEvents(collection, client, dir = eventsPath) {
     verbose('Loading events');
     if (!client) {
-        throw new ReferenceError('Cannot load events: argument \'client\' does not exist!');
+        throw new ReferenceError('Cannot load events: argument \'client\' does not exist');
     }
     if (!(client instanceof Client)) {
         throw new TypeError(`Cannot load events: expected argument client to be of type Client when client was of type ${client.constructor.name}`);
@@ -177,7 +177,7 @@ async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
@@ -218,19 +218,19 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
     verbose('Loading subcommands');
     // commands validity checking
     if (!commands) {
-        throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist!');
+        throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist');
     }
     if (!(commands instanceof Map)) {
-        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a Collection)!');
+        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a Collection)');
     }
     if (commands.size === 0) {
-        throw new RangeError('Cannot load subcommands: size of commands is 0! (zero, not one you smart aleck)');
+        throw new RangeError('Cannot load subcommands: size of commands is 0 (zero, not one you smart aleck)');
     }
 
     // get files within subcommands directory
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
@@ -242,10 +242,10 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
 
                 // check command validity
                 if (!command) {
-                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the name of any commands!`);
+                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the name of any commands`);
                 }
                 if (!(command instanceof SlashCommandWithSubcommands)) {
-                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type SlashCommandWithSubcommand!`);
+                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type SlashCommandWithSubcommand`);
                 }
 
                 // create and populate children

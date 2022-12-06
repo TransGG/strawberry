@@ -63,7 +63,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
     addChildren(newChildren) {
         // type check
         if (!(newChildren instanceof Collection)) {
-            throw new TypeError('Expected argument val to be of type Collection!');
+            throw new TypeError('Expected argument val to be of type Collection');
         }
 
         // initialize #children if needed

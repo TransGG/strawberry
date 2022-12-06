@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
     Object.assign(config, production);
 } else {
-    throw new FatalError('Invalid value for environmental variable NODE_ENV! Must be either \'development\' or \'production\'!');
+    throw new FatalError('Invalid value for environmental variable NODE_ENV: Must be either \'development\' or \'production\'');
 }
 
 export default config;
