@@ -21,11 +21,12 @@ function createThread(threads, member) {
  * Creates a verification ticket for a member.
  * @param {GuildTextThreadManager} threads The thread manager for verification tickets
  * @param {GuildMember} applicant A guild member
+ * @param {String} type The type of verification to start (based from the pre verification stage)
  * @returns {Promise<ThreadChannel} The ticket that was created
  */
-async function createTicket(threads, applicant) {
+async function createTicket(threads, applicant, type) {
     const thread = await createThread(threads, applicant);
-    await sendPrompt(thread, applicant);
+    await sendPrompt(thread, applicant, type);
     return thread;
 }
 

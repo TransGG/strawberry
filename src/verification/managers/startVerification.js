@@ -10,9 +10,10 @@ import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
  * @param {function} reject Failure callback. Takes a single parameter - message
  * @param {GuildTextThreadManager} threads A ThreadManager for the verification ticket channel
  * @param {GuildMember} applicant A guild member
+ * @param {String} type The type of verification to start (based from the pre verification stage)
  * @returns {?TextBasedChannel} The verification ticket for the applicant
  */
-async function startVerification(resolve, reject, threads, applicant) {
+async function startVerification(resolve, reject, threads, applicant, type) {
     // check if user is verified
     if (isVerified(applicant)) {
         await reject('You\'ve already been verified, silly');
@@ -35,7 +36,7 @@ async function startVerification(resolve, reject, threads, applicant) {
     }
 
     // create new ticket
-    const ticket = await createTicket(threads, applicant);
+    const ticket = await createTicket(threads, applicant, type);
     await createVerifyTicketCreateLog(
         ticket.guild.channels.cache.get(config.channels.verifyLogs),
         ticket,
