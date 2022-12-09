@@ -31,23 +31,21 @@ class DenyKickModal extends Modal {
                     .addComponents(
                         new TextInputBuilder()
                             .setCustomId('userReason')
-                            .setRequired(true)
-                            .setMinLength(5)
-                            .setMaxLength(1024)
-                            .setLabel('Reason (Sent To User) (REQUIRES DMs ENABLED)')
+                            .setLabel('Reason (Sent To User)')
                             .setStyle(TextInputStyle.Paragraph)
-                            .setPlaceholder('You were kicked/your application has been rejected because...'),
+                            .setMaxLength(1000)
+                            .setPlaceholder('You were kicked/your application has been rejected because...')
+                            .setRequired(true),
                     ),
                 new ActionRowBuilder()
                     .addComponents(
                         new TextInputBuilder()
                             .setCustomId('logReason')
-                            .setRequired(false)
-                            .setMinLength(5)
-                            .setMaxLength(1024)
                             .setLabel('Logs Reason (Not Shared With User)')
                             .setStyle(TextInputStyle.Paragraph)
-                            .setPlaceholder('Optional.'),
+                            .setMaxLength(1000)
+                            .setPlaceholder('Optional.')
+                            .setRequired(false),
                     ),
             );
     }
@@ -58,6 +56,8 @@ class DenyKickModal extends Modal {
      *     was submitted
      */
     async run(interaction) {
+        await interaction.deferReply({ ephemeral: true });
+
         await denyVerification(
             DenyConsequence.kick,
             {
@@ -66,12 +66,12 @@ class DenyKickModal extends Modal {
                 userReason: interaction.fields.getTextInputValue('userReason'),
                 logReason: interaction.fields.getTextInputValue('logReason'),
             },
-            (message) => interaction.reply({ content: message, ephemeral: true }),
+            (message) => interaction.editReply({ content: message, ephemeral: true }),
         ).catch(async (error) => {
             if (error instanceof VerificationError) {
-                await interaction.reply({ content: error.message, ephemeral: true });
+                await interaction.editReply({ content: error.message, ephemeral: true });
             } else {
-                await interaction.reply({ content: `Error: ${error.message}`, ephemeral: true });
+                await interaction.editReply({ content: `Error: ${error.message}`, ephemeral: true });
                 throw error;
             }
         });

@@ -32,8 +32,8 @@ class Kick extends SlashCommand {
                 .setDescription('Reason for kick (sent to user')
                 .setRequired(true))
             .addStringOption((option) => option
-                .setName('log_reason')
-                .setDescription('Reason for kick (kept in logs)'));
+                .setName('log-reason')
+                .setDescription('Reason for kick (not shared)'));
     }
 
     /**
@@ -42,9 +42,11 @@ class Kick extends SlashCommand {
      *     slash command was executed
      */
     async run(interaction) {
+        await interaction.deferReply({ ephemeral: true });
+
         const target = interaction.options.getUser('user');
         const userReason = interaction.options.getString('reason');
-        const logReason = interaction.options.getString('log_reason') ?? ''; // since logReason is optional
+        const logReason = interaction.options.getString('log-reason') ?? ''; // since logReason is optional
 
         // if this command is ran inside a ticket belonging to the target this becomes a deny
         if (isTicket(interaction.channel)) {
@@ -57,12 +59,12 @@ class Kick extends SlashCommand {
                     logReason,
                     applicant: target,
                 },
-                (message) => interaction.reply({ content: message, ephemeral: true }),
+                (message) => interaction.editReply({ content: message, ephemeral: true }),
             ).catch(async (error) => {
                 if (error instanceof VerificationError) {
-                    await interaction.reply({ content: error.message, ephemeral: true });
+                    await interaction.editReply({ content: error.message, ephemeral: true });
                 } else {
-                    await interaction.reply({
+                    await interaction.editReply({
                         content: `Error: ${error.message}`,
                         ephemeral: true,
                     });
@@ -85,15 +87,15 @@ class Kick extends SlashCommand {
                 },
             );
 
-            await interaction.reply({
+            await interaction.editReply({
                 content: `Kicked ${target.tag} from the server.`,
                 ephemeral: true,
             });
         } catch (error) {
             if (error instanceof VerificationError) {
-                await interaction.reply({ content: error.message, ephemeral: true });
+                await interaction.editReply({ content: error.message, ephemeral: true });
             } else {
-                await interaction.reply({ content: `Error: ${error.message}`, ephemeral: true });
+                await interaction.editReply({ content: `Error: ${error.message}`, ephemeral: true });
                 throw error;
             }
         }

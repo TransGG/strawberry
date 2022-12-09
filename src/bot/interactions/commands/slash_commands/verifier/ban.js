@@ -33,7 +33,7 @@ class Ban extends SlashCommand {
                 .setRequired(true))
             .addStringOption((option) => option
                 .setName('log-reason')
-                .setDescription('Reason for ban (kept in logs)'));
+                .setDescription('Reason for ban (not shared)'));
     }
 
     /**
@@ -42,6 +42,8 @@ class Ban extends SlashCommand {
      *     slash command was executed
      */
     async run(interaction) {
+        await interaction.deferReply({ ephemeral: true });
+
         const target = interaction.options.getUser('user');
         const userReason = interaction.options.getString('reason');
         const logReason = interaction.options.getString('log-reason') ?? ''; // since logReason is optional
@@ -57,12 +59,12 @@ class Ban extends SlashCommand {
                     logReason,
                     applicant: target,
                 },
-                (message) => interaction.reply({ content: message, ephemeral: true }),
+                (message) => interaction.editReply({ content: message, ephemeral: true }),
             ).catch(async (error) => {
                 if (error instanceof VerificationError) {
-                    await interaction.reply({ content: error.message, ephemeral: true });
+                    await interaction.editReply({ content: error.message, ephemeral: true });
                 } else {
-                    await interaction.reply({
+                    await interaction.editReply({
                         content: `Error: ${error.message}`,
                         ephemeral: true,
                     });
@@ -85,15 +87,15 @@ class Ban extends SlashCommand {
                 },
             );
 
-            await interaction.reply({
+            await interaction.editReply({
                 content: `Banned ${target.tag} from the server.`,
                 ephemeral: true,
             });
         } catch (error) {
             if (error instanceof VerificationError) {
-                await interaction.reply({ content: error.message, ephemeral: true });
+                await interaction.editReply({ content: error.message, ephemeral: true });
             } else {
-                await interaction.reply({ content: `Error: ${error.message}`, ephemeral: true });
+                await interaction.editReply({ content: `Error: ${error.message}`, ephemeral: true });
                 throw error;
             }
         }
