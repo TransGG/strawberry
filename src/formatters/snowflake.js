@@ -4,7 +4,7 @@
  * @returns {boolean} True if the string is a snowflake, false otherwise
  */
 function isSnowflake(string) {
-    return /\d{17,20}/.test(string);
+    return typeof string === 'string' && /\d{17,20}/.test(string);
 }
 
 /**
