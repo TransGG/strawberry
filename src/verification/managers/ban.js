@@ -1,9 +1,9 @@
-import { GuildMember } from 'discord.js';
 import config from '../../config/config.js';
 import { verbose } from '../../config/out.js';
 import { banFromGuild } from '../controllers/guild.js';
 import { createBanLog } from '../controllers/log.js';
 import { attemptDM, isStaff } from '../controllers/member.js';
+import { resolveUser } from '../controllers/user.js';
 import VerificationError from '../verificationError.js';
 
 /**
@@ -24,14 +24,11 @@ async function ban(
         target, verifier, userReason, logReason, dmMessage, ticket,
     },
 ) {
-    // get a User that represents the target
-    let targetAsUser = target;
-    if (target instanceof GuildMember) {
-        targetAsUser = target.user;
-    }
-
     // infer guild and client from verifier
     const { guild, client } = verifier;
+
+    // resolve user
+    const targetAsUser = await resolveUser(target, client);
 
     // don't kick if the target is staff or a bot
     if (await isStaff(targetAsUser, guild)) {

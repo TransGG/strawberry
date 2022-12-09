@@ -1,6 +1,7 @@
-import { bold, codeBlock, GuildMember } from 'discord.js';
+import { bold, codeBlock } from 'discord.js';
 import { verbose } from '../../config/out.js';
-import { fetchApplicant } from '../controllers/ticket.js';
+import { parseApplicantId } from '../controllers/ticket.js';
+import { fetchUser, resolveUser } from '../controllers/user.js';
 import VerificationError from '../verificationError.js';
 import ban from './ban.js';
 import { closeTicket, CloseReason } from './closeTicket.js';
@@ -31,14 +32,12 @@ async function denyVerification(
     },
     resolve,
 ) {
-    // get a User that represents the target
-    let applicantAsUser = applicant ?? await fetchApplicant(ticket);
-    if (applicantAsUser instanceof GuildMember) {
-        applicantAsUser = applicantAsUser.user;
-    }
+    // infer guild and client from verifier
+    const { guild, client } = verifier;
 
-    // infer guild from verifier
-    const { guild } = verifier;
+    // get a User that represents the target
+    const applicantAsUser = await resolveUser(applicant, client)
+        ?? await fetchUser(parseApplicantId(ticket), client);
 
     verbose(`Denial of ticket ${ticket?.id} for applicant ${applicantAsUser?.tag} ${applicantAsUser?.id} by verifier ${verifier?.user?.tag}`);
 
