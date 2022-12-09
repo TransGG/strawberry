@@ -46,18 +46,33 @@ function sendDM(recipient, options) {
     return recipient.send(options);
 }
 
+async function fetchMember(member, guild) {
+    try {
+        return await guild.members.fetch(member);
+    } catch (error) {
+        // catch DiscordApiError Unknown Member and Unknown User (will occur when user not found)
+        if (error.code === RESTJSONErrorCodes.UnknownMember) {
+            return null;
+        }
+        throw new Error(error.message, { cause: error });
+    }
+}
+
 /**
  * Resolves a GuildMemberResolvable to a GuildMember
  * @param {GuildMemberResolvable} member The user to resolve
- * @param {Guild} guild The guild that the user is in
- * @returns {Promise<?GuildMember>} The resolved GuildMember or null none was resolved
+ * @param {GuildMemberManager} guild The guild in which the member may be a
+ *     member
+ * @returns {Promise<?GuildMember>} The resolved GuildMember or null if no resolvable member was in
+ *     the guild
  */
-function resolveMember(member, guild) {
+async function resolveMember(member, guild) {
     if (member instanceof GuildMember) {
         return member;
     }
 
-    return guild.members.fetch(member).catch(() => null);
+    // try to resolve from cache then via fetch
+    return guild.members.resolve(member) ?? fetchMember(member, guild);
 }
 
 // //////////// The line of direct vs indirect ///////////////
@@ -69,7 +84,7 @@ function resolveMember(member, guild) {
  * @returns {Promise<boolean>} True if the message was successfully sent, false otherwise
  */
 async function attemptDM(recipient, options) {
-    if (!recipient) {
+    if (!recipient || !('send' in recipient)) {
         return false;
     }
 
@@ -125,6 +140,7 @@ export {
     kickMember,
     banMember,
     sendDM,
+    fetchMember,
     attemptDM,
     isStaff,
     isVerified,
