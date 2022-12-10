@@ -19,7 +19,7 @@ async function startVerification(threads, applicant, resolve, reject) {
     }
 
     // fetch existing threads, if any
-    const existingTicket = fetchMostRecentTicket(threads, applicant);
+    const existingTicket = await fetchMostRecentTicket(threads, applicant);
     if (existingTicket) {
         const closed = isClosed(existingTicket);
         if (closed) {

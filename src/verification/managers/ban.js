@@ -38,27 +38,37 @@ async function ban(
         throw new VerificationError('Cannot ban bots');
     }
 
-    verbose(`Banning ${targetAsUser?.tag} ${targetAsUser?.id} by verifier ${verifier?.user?.tag}`);
-
-    let dmSent = false;
-    if (dmMessage) {
-        dmSent = await attemptDM(targetAsUser, dmMessage);
+    // check if there's a mutex for the user leaving
+    if (client.isUserLeaveMutex(targetAsUser.id)) {
+        throw new VerificationError('User is being modified due to leaving elsewhere');
     }
 
-    // ban member and create log
-    await Promise.all([
-        banFromGuild(
-            guild,
-            targetAsUser,
-            banOptions,
-        ),
-        createBanLog(
-            verifier.guild.channels.cache.get(config.channels.verifyLogsSecondary),
-            {
-                target: targetAsUser, verifier, client, userReason, logReason, dmSent, ticket,
-            },
-        ),
-    ]);
+    try {
+        client.addUserLeaveMutex(targetAsUser.id);
+        verbose(`Banning ${targetAsUser?.tag} ${targetAsUser?.id} by verifier ${verifier?.user?.tag}`);
+
+        let dmSent = false;
+        if (dmMessage) {
+            dmSent = await attemptDM(targetAsUser, dmMessage);
+        }
+
+        // ban member and create log
+        await Promise.all([
+            banFromGuild(
+                guild,
+                targetAsUser,
+                banOptions,
+            ),
+            createBanLog(
+                verifier.guild.channels.cache.get(config.channels.verifyLogsSecondary),
+                {
+                    target: targetAsUser, verifier, client, userReason, logReason, dmSent, ticket,
+                },
+            ),
+        ]);
+    } finally {
+        client.removeUserLeaveMutex(targetAsUser.id);
+    }
 }
 
 export default ban;

@@ -48,7 +48,7 @@ async function createTicket(threads, applicant) {
  * @param {GuildMember} member A guild member
  * @returns {?ThreadChannel} A ticket that is the most recent existing one belonging to the member
  */
-function fetchMostRecentTicket(threads, member) {
+async function fetchMostRecentTicket(threads, member) {
     return threads.cache.find((thread) => isBelongsToMember(thread, member));
 }
 
