@@ -1,6 +1,6 @@
+import fs from 'fs';
 import { SlashCommandBuilder } from 'discord.js';
 import SlashCommand from '../../SlashCommand.js';
-import packageDotJSON from '../../../../../package.json' assert {type: 'json'};
 
 /**
  * Handler for version slash command. Retrieves the version (currently from package.json)
@@ -24,11 +24,16 @@ class Version extends SlashCommand {
 
     /**
      * Method to run when this slash command is executed
-     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this slash command was
-     *     executed
+     * @param {ChatInputCommandInteraction} interaction The interaction that was emitted when this
+     *     slash command was executed
      */
     async run(interaction) {
-        await interaction.reply({ content: `Current version is ${packageDotJSON.version}`, ephemeral: true });
+        const data = JSON.parse(await fs.promises.readFile('./package.json'));
+
+        await interaction.reply({
+            content: `Current version is ${data?.version ?? 'unknown'}`,
+            ephemeral: true,
+        });
     }
 }
 
