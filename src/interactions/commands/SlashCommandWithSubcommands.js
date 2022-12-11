@@ -1,7 +1,7 @@
 import { Collection, SlashCommandBuilder } from 'discord.js';
 import SlashCommand from './SlashCommand.js';
 import { CommandChildNotFound } from '../../utils/errors.js';
-import { debug } from '../../config/out.js';
+import { verbose } from '../../config/out.js';
 
 /**
  * Parent class for handlers of slash commands that have subcommands. Has a default implementation
@@ -112,7 +112,7 @@ class SlashCommandWithSubcommands extends SlashCommand {
             });
         }
 
-        debug(`Running subcommand: ${subcommand.name}${groupName ? `, group: ${groupName} ` : ''}`);
+        verbose(`Running subcommand ${subcommand.name}${groupName ? `, group: ${groupName} ` : ''}`);
         await subcommand.run(interaction);
     }
 }

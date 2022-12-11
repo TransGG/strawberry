@@ -1,5 +1,4 @@
 import { Events } from 'discord.js';
-import { debug } from '../config/out.js';
 import Event from '../Event.js';
 
 /**

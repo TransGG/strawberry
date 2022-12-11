@@ -102,7 +102,7 @@ class Bot extends Client {
 
         await super.login(token);
 
-        verbose('Done logging in to discord');
+        verbose('Done logging in to Discord');
     }
 
     /**

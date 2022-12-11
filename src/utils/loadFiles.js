@@ -4,7 +4,7 @@ import { pathToFileURL, fileURLToPath } from 'url';
 import { Client, Collection } from 'discord.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 import { DuplicateElement } from './errors.js';
-import { debug, verbose } from '../config/out.js';
+import { verbose } from '../config/out.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -61,7 +61,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
             if (stat.isDirectory()) {
                 await loadNameable(collection, relativeFilePath, callback);
             } else if (fileName.endsWith('.js')) {
-                debug(`Loading ${relativeFilePath}`);
+                verbose(`Loading ${relativeFilePath}`);
 
                 const Class = (await import(pathToFileURL(filePath))).default;
 
@@ -192,7 +192,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
                 collection.set(fileName, groupCommands);
             }
             if (fileName.endsWith('.js')) {
-                debug(`Loading ${path.join(dir, fileName)}`);
+                verbose(`Loading ${path.join(dir, fileName)}`);
 
                 const Command = (await import(pathToFileURL(filePath))).default;
                 const cmd = new Command();

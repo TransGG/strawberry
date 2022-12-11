@@ -1,7 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord.js';
 import config from '../config/config.js';
-import { debug, verbose } from '../config/out.js';
+import { verbose } from '../config/out.js';
 
 // courtesy of
 // https://discordjs.guide/creating-your-bot/command-deployment.html#command-registration and
@@ -68,7 +68,8 @@ async function deleteApplicationCommand(commandId, guildId = null) {
  */
 async function registerApplicationCommands(commands, guildId = null) {
     verbose(`Registering application commands: guildId set to ${guildId}`);
-    debug('Application commands to register:\n', commands);
+    verbose('Application commands to register:');
+    verbose(commands);
 
     const commandsData = commands.map((command) => command.toJSON());
 
