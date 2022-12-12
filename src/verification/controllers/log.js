@@ -7,7 +7,7 @@ import {
     EmbedBuilder,
     userMention,
 } from 'discord.js';
-import buildTimeInfoString from '../utils/stringBuilders.js';
+import buildTimeInfoString from '../../formatters/stringBuilders.js';
 
 /**
  * Create a log for a ban where the member is passed

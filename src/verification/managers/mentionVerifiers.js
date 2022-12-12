@@ -1,5 +1,5 @@
+import { buildPromptComponents } from '../../content/verification.js';
 import {
-    buildPromptComponents,
     isApplicantAnswered,
     isBelongsToMember,
     sendMentionVerifiers,
@@ -36,7 +36,7 @@ async function mentionVerifiers(ticket, user, client, type, resolve, reject) {
 
     await sendMentionVerifiers(ticket, user, client, helpMessage);
 
-    await resolve([buildPromptComponents(client, true)]);
+    await resolve(buildPromptComponents(client, true));
 }
 
 export default mentionVerifiers;

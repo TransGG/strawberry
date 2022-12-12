@@ -3,7 +3,7 @@ import config from '../../config/config.js';
 import { createVerifiedLog } from '../controllers/log.js';
 import { assignRole, isVerifier } from '../controllers/member.js';
 import { fetchApplicant, archiveTicket } from '../controllers/ticket.js';
-import sendWelcomeMessage from '../controllers/welcome.js';
+import sendGreetMessage from '../controllers/greet.js';
 
 /**
  * Closes a verification ticket
@@ -47,7 +47,7 @@ async function verifyUser(ticket, verifier, resolve, reject) {
 
     // send welcome message and create log for successful verification
     await Promise.all([
-        sendWelcomeMessage(
+        sendGreetMessage(
             ticket.guild.channels.cache.get(config.channels.welcome),
             applicant,
         ),
