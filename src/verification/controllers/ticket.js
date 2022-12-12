@@ -190,12 +190,57 @@ function sendMentionVerifiers(ticket, applicant, client, helpMessage) {
 }
 
 /**
+ * Fetches messages in a verification ticket sent by the applicant
+ * @param {TextBasedChannel} ticket A verification ticket
+ * @returns {Promise<Collection<Message>>}
+ */
+async function fetchApplicantMessages(ticket) {
+    // if the message count is greater than the cache size, fetch all the messages
+    const messages = await fetchMessages(ticket);
+
+    const applicantId = parseApplicantId(ticket);
+
+    return messages.filter((message) => message.author.id === applicantId);
+}
+
+/**
+ * Gets the total character count of all messages sent by the applicant of a ticket
+ * @param {TextBasedChannel} ticket A verification ticket
+ * @returns {Promise<number>} The total character count of all messages sent by the applicant
+ */
+async function getApplicantMessagesLength(ticket) {
+    // get applicant messages
+    const applicantMessages = await fetchApplicantMessages(ticket);
+
+    // sum the character count of the applicant's messages
+    let total = 0;
+    applicantMessages.forEach((message) => {
+        total += message.content.length;
+    });
+
+    return total;
+}
+
+/**
  * Determines if a ticket has been answered by an applicant
  * @param {TextBasedChannel} ticket A verification ticket
- * @returns True if the ticket has answers from the applicant, false otherwise
+ * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
-async function isApplicantAnswered(ticket) {
-    return (await fetchMessages(ticket))?.size > 1;
+async function hasApplicantAnswered(ticket) {
+    const messageCharacterCountRequirement = 50;
+
+    return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
+}
+
+/**
+ * Determines if a ticket has had its applicant ask for help
+ * @param {TextBasedChannel} ticket A verification ticket
+ * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
+ */
+async function hasApplicantAskedForHelp(ticket) {
+    const messageCharacterCountRequirement = 11; // 'i need help'.length
+
+    return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
 }
 
 export {
@@ -210,5 +255,6 @@ export {
     refreshTicket,
     sendPrompt,
     sendMentionVerifiers,
-    isApplicantAnswered,
+    hasApplicantAnswered,
+    hasApplicantAskedForHelp,
 };
