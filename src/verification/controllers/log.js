@@ -159,8 +159,6 @@ function createKickLog(
  * @returns {Promise<Message>} The message that was sent
  */
 function createVerifyTicketCreateLog(logChannel, ticket, applicant, client) {
-    const now = Date.now();
-
     const logEmbed = new EmbedBuilder()
         .setAuthor({
             name: `${applicant.user.tag}`,
@@ -179,11 +177,11 @@ function createVerifyTicketCreateLog(logChannel, ticket, applicant, client) {
             },
             {
                 name: 'Joined At',
-                value: buildTimeInfoString(applicant.joinedAt, now),
+                value: buildTimeInfoString(applicant.joinedAt),
             },
             {
                 name: 'Created At',
-                value: buildTimeInfoString(applicant.user.createdAt, now),
+                value: buildTimeInfoString(applicant.user.createdAt),
             },
             {
                 name: 'ID\'s',

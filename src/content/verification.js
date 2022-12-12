@@ -10,9 +10,6 @@ import buildTimeInfoString from '../formatters/stringBuilders.js';
  * @returns {EmbedBuilder[]} The embeds used in mentioning verifiers
  */
 function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
-    // create now so that joined at and created at use the same value for their calculation
-    const now = Date.now();
-
     return [
         new EmbedBuilder()
             .setAuthor({
@@ -23,11 +20,11 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
             .addFields(
                 {
                     name: 'Joined At',
-                    value: buildTimeInfoString(applicant.joinedAt, now),
+                    value: buildTimeInfoString(applicant.joinedAt),
                 },
                 {
                     name: 'Created At',
-                    value: buildTimeInfoString(applicant.user.createdAt, now),
+                    value: buildTimeInfoString(applicant.user.createdAt),
                 },
             )
             .setTimestamp()
