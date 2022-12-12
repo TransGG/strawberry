@@ -30,6 +30,8 @@ class Bot extends Client {
 
     #contextMenuCommands = new Collection();
 
+    #userLeaveMutexes = new Set();
+
     /**
      * Run this function to get the bot going. Loads the necessary files to populate the members of
      * the Bot, connects to Discord using the Discord API, then optionally registers application
@@ -190,6 +192,33 @@ class Bot extends Client {
         }
 
         return contextMenuCommand;
+    }
+
+    /**
+     * Adds a user id to a list of users who are undergoing leave operations that are mutually
+     * exclusive with other leave operations
+     * @param {Snowflake} id The id of the user that is undergoing mutex leave operations
+     */
+    addUserLeaveMutex(id) {
+        this.#userLeaveMutexes.add(this.users.resolveId(id));
+    }
+
+    /**
+     * Removes a user id from a list of users who are undergoing leave operations that are mutually
+     * exclusive with other leave operations
+     * @param {Snowflake} id The id of the user that is undergoing mutex leave operations
+     */
+    removeUserLeaveMutex(id) {
+        this.#userLeaveMutexes.delete(this.users.resolveId(id));
+    }
+
+    /**
+     * Checks if a user id is in a list of users who are undergoing leave operations that are
+     * mutually exclusive with other leave operations
+     * @param {Snowflake} id The id of the user that is undergoing mutex leave operations
+     */
+    isUserLeaveMutex(id) {
+        return this.#userLeaveMutexes.has(id);
     }
 }
 

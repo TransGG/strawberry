@@ -1,63 +1,61 @@
 import { inlineCode } from 'discord.js';
 import { verbose } from '../../config/out.js';
 import { archiveTicket, isClosed, sendMessage } from '../controllers/ticket.js';
+import VerificationError from '../verificationError.js';
 
-const closeTypes = {
-    verified: 'verified',
-    leave: 'leave',
-    kick: 'kick',
-    ban: 'ban',
-    archive: 'archive',
+const CloseReason = Object.freeze({
+    unknown: Symbol('unknown'),
+    verified: Symbol('verified'),
+    leave: Symbol('leave'),
+    kick: Symbol('kick'),
+    ban: Symbol('ban'),
+    archive: Symbol('archive'),
+});
+
+const closeMessages = {
+    [CloseReason.unknown]: inlineCode('Ticket closed - no reason given'),
+    [CloseReason.verified]: inlineCode('Ticket closed - user was verified'),
+    [CloseReason.leave]: inlineCode('Ticket closed - user left'),
+    [CloseReason.kick]: inlineCode('Ticket closed - user was kicked'),
+    [CloseReason.ban]: inlineCode('Ticket closed - user was banned'),
+    [CloseReason.archive]: inlineCode('Ticket closed - archive by verifier'),
+};
+
+const closeReasons = {
+    [CloseReason.unknown]: 'Unknown reason',
+    [CloseReason.verified]: 'User was verified',
+    [CloseReason.leave]: 'User left server',
+    [CloseReason.kick]: 'User was kicked',
+    [CloseReason.ban]: 'User was banned',
+    [CloseReason.archive]: 'Archived by verifier',
 };
 
 /**
- * Closes a verification ticket
- * @param {function} resolve Success callback
- * @param {function} reject Failure callback
- * @param {ThreadChannel} ticket The ticket to be closed
- * @param {string} type The type of close (must match a member of closeTypes)
+ * Resolves a type into a matching element of closeTypes or the unknown closeType if type doesn't
+ * match any element.
+ * @param {any} reason The reason to resolve
+ * @returns {Symbol} A CloseReason
  */
-async function closeTicket(resolve, reject, ticket, type) {
-    if (isClosed(ticket)) {
-        await reject('Ticket was already archived');
-        return;
-    }
-
-    let closeMessage;
-    let reason;
-    switch (type) {
-        case closeTypes.verified:
-            closeMessage = inlineCode('Ticket closed - user was verified');
-            reason = 'User was verified';
-            break;
-        case closeTypes.leave:
-            closeMessage = inlineCode('Ticket closed - user left');
-            reason = 'User left server';
-            break;
-        case closeTypes.kick:
-            closeMessage = inlineCode('Ticket closed - user was kicked');
-            reason = 'User was kicked';
-            break;
-        case closeTypes.ban:
-            closeMessage = inlineCode('Ticket closed - user was banned');
-            reason = 'User was banned';
-            break;
-        case closeTypes.archive:
-            closeMessage = inlineCode('Ticket closed - archive by verifier');
-            reason = 'Archived by verifier';
-            break;
-        default:
-            console.error(`Unknown close reason: ${type}`);
-            closeMessage = inlineCode('Ticket closed - no reason given');
-            reason = 'Unknown reason';
-            break;
-    }
-    verbose(`Closing ticket ${ticket?.id}: ${reason}`);
-    await sendMessage(ticket, closeMessage);
-    await archiveTicket(ticket, reason);
-
-    await resolve('Closed ticket successfully');
+function resolveReason(reason) {
+    return (reason && Object.values(CloseReason).includes(reason)) ? reason : CloseReason.unknown;
 }
 
-export default closeTicket;
-export { closeTypes };
+/**
+ * Closes a verification ticket
+ * @param {ThreadChannel} ticket The ticket to be closed
+ * @param {number} closeReason The reason for closing (must be a CloseReason)
+ * @throws {Error} If the ticket was already closed
+ */
+async function closeTicket(ticket, closeReason) {
+    if (isClosed(ticket)) {
+        throw new VerificationError('Ticket was already archived');
+    }
+
+    const resolvedReason = resolveReason(closeReason);
+
+    verbose(`Closing ticket ${ticket?.id}: ${closeReasons[resolvedReason]}`);
+    await sendMessage(ticket, closeMessages[resolvedReason]);
+    await archiveTicket(ticket, closeReasons[resolvedReason]);
+}
+
+export { closeTicket, CloseReason };

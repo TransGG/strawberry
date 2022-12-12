@@ -3,7 +3,7 @@ import config from '../../config/config.js';
 import { createVerifiedLog } from '../controllers/log.js';
 import { assignRole, isVerifier } from '../controllers/member.js';
 import { fetchApplicant, archiveTicket } from '../controllers/ticket.js';
-import sendWelcomeMessage from '../controllers/welcome.js';
+import sendGreetMessage from '../controllers/greet.js';
 
 /**
  * Closes a verification ticket
@@ -24,12 +24,12 @@ async function verify(member) {
 /**
  * If the user is a verifier and the ticket's applicant is in the server, verifies the ticket's
  * applicant, sends welcome message and log message, and closes the ticket
- * @param {function} resolve Success callback. Takes a single parameter - message
- * @param {function} reject Reject callback. Takes a two parameters - error, message
  * @param {ThreadChannel} ticket An open verification ticket
  * @param {GuildMember} verifier The guild member that initiated the verify user process
+ * @param {function} resolve Success callback. Takes a single parameter - message
+ * @param {function} reject Reject callback. Takes a two parameters - error, message
  */
-async function verifyUser(resolve, reject, ticket, verifier) {
+async function verifyUser(ticket, verifier, resolve, reject) {
     // reject if conditions aren't met
     if (!isVerifier(verifier)) {
         await reject('You are not a verifier');
@@ -47,7 +47,7 @@ async function verifyUser(resolve, reject, ticket, verifier) {
 
     // send welcome message and create log for successful verification
     await Promise.all([
-        sendWelcomeMessage(
+        sendGreetMessage(
             ticket.guild.channels.cache.get(config.channels.welcome),
             applicant,
         ),

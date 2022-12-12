@@ -40,6 +40,8 @@ class StartVerification extends Button {
 
         // start verification
         await startVerification(
+            interaction.channel.threads,
+            interaction.member,
             (ticket, message) => {
                 verbose(`Created ticket with id ${ticket.id} for ${interaction.user.tag} ${interaction.member.id}`);
                 return interaction.reply({
@@ -62,8 +64,6 @@ class StartVerification extends Button {
                         && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
                 ephemeral: true,
             }),
-            interaction.channel.threads,
-            interaction.member,
         );
     }
 }

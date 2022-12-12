@@ -1,3 +1,4 @@
+import { GuildMember, RESTJSONErrorCodes } from 'discord.js';
 import config from '../../config/config.js';
 
 /**
@@ -18,18 +19,102 @@ async function assignRole(member, id) {
  * @param {string} reason Reason for kicking user
  * @returns {Promise<GuildMember>} The member that was kicked
  */
-function kick(member, reason) {
+function kickMember(member, reason) {
     return member.kick(reason);
 }
 
 /**
- * Sends a direct message to the recipient
+ * Bans a guild member
+ * @param {GuildMember} member A guild member
+ * @param {Object} [options] Options for the ban
+ * @param {number} [options.deleteMessageSeconds] Number of seconds of messages to delete, must
+ *     be between 0 and 604800 (7 days), inclusive
+ * @param {string} [options.reason] The reason for the ban
+ * @returns {Promise<GuildMember>} The member that was kicked
+ */
+function banMember(member, options) {
+    return member.ban(options);
+}
+
+/**
+ * Sends a direct message to a recipient
  * @param {GuildMember|User} recipient The recipient of the direct message
  * @param {string|MessagePayload|MessageCreateOptions} options The options to provide
- * @returns {Promise<Message} The message that was sent
+ * @returns {Promise<Message>} The message that was sent
  */
 function sendDM(recipient, options) {
     return recipient.send(options);
+}
+
+async function fetchMember(member, guild) {
+    try {
+        return await guild.members.fetch(member);
+    } catch (error) {
+        // catch DiscordApiError Unknown Member and Unknown User (will occur when user not found)
+        if (error.code === RESTJSONErrorCodes.UnknownMember) {
+            return null;
+        }
+        throw new Error(error.message, { cause: error });
+    }
+}
+
+/**
+ * Resolves a GuildMemberResolvable to a GuildMember
+ * @param {GuildMemberResolvable} member The user to resolve
+ * @param {GuildMemberManager} guild The guild in which the member may be a
+ *     member
+ * @returns {Promise<?GuildMember>} The resolved GuildMember or null if no resolvable member was in
+ *     the guild
+ */
+async function resolveMember(member, guild) {
+    if (member instanceof GuildMember) {
+        return member;
+    }
+
+    // try to resolve from cache then via fetch
+    return guild.members.resolve(member) ?? fetchMember(member, guild);
+}
+
+// //////////// The line of direct vs indirect ///////////////
+
+/**
+ * Attempts to send a direct message to a recipient and returns the success or failure
+ * @param {GuildMember|User} recipient The recipient of the direct message
+ * @param {string|MessagePayload|MessageCreateOptions} options The options to provide
+ * @returns {Promise<boolean>} True if the message was successfully sent, false otherwise
+ */
+async function attemptDM(recipient, options) {
+    if (!recipient || !('send' in recipient)) {
+        return false;
+    }
+
+    try {
+        await sendDM(recipient, options);
+        return true;
+    } catch (error) {
+        if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
+            return false;
+        }
+
+        // I don't know all possible failures so assume all other errors are a failure to DM
+        console.error('Unknown error encountered when sending DM:');
+        console.error(error);
+        return false;
+    }
+}
+
+/**
+ * Determines if a user is on staff
+ * @param {GuildMember|User|Snowflake} member The user to check if they are staff
+ * @param {Guild} guild The guild that the user might be staff of
+ * @returns {Promise<boolean>} True if the user is staff, false otherwise
+ */
+async function isStaff(member, guild) {
+    const resolvedMember = await resolveMember(member, guild);
+
+    return resolvedMember?.roles && resolvedMember.roles.cache.some(
+        (role, roleId) => config.roles.staffRoles.includes(roleId),
+    );
 }
 
 /**
@@ -52,8 +137,12 @@ function isVerifier(member) {
 
 export {
     assignRole,
-    kick,
+    kickMember,
+    banMember,
     sendDM,
+    fetchMember,
+    attemptDM,
+    isStaff,
     isVerified,
     isVerifier,
 };
