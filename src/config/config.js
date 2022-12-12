@@ -16,7 +16,7 @@ const config = {
     verbose: false,
     debugOut: () => { },
     verboseOut: () => { },
-    clientId: '999892254808350811',
+    clientId: '1003943782913417267',
     token: process.env.TOKEN,
 };
 
