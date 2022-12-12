@@ -58,9 +58,12 @@ class VerifierActions extends Button {
                 new ActionRowBuilder()
                     .addComponents(
                         interaction.client.getButton('verifyUser'),
+                        interaction.client.getButton('sendAsTheo'),
+                    ),
+                new ActionRowBuilder()
+                    .addComponents(
                         interaction.client.getButton('denyKickButton'),
                         interaction.client.getButton('denyBanButton'),
-                        interaction.client.getButton('sendAsTheo'),
                     ),
             ],
             ephemeral: true,

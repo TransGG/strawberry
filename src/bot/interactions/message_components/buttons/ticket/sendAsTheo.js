@@ -19,7 +19,7 @@ class SendAsTheo extends Button {
     getData() {
         return new ButtonBuilder()
             .setCustomId(this.name)
-            .setLabel('Send a Message as Theo')
+            .setLabel('Send as Theo')
             .setStyle(ButtonStyle.Secondary);
     }
 
