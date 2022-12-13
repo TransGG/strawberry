@@ -1,5 +1,5 @@
-import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
+import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import { FatalError } from '../bot/utils/errors.js';
 
 // for easier reading
@@ -26,9 +26,6 @@ import { FatalError } from '../bot/utils/errors.js';
  * @property {Snowflake} roles.greeter                - Greeter: role to be notified of new members
  */
 const config = {
-    debug: false,
-    verbose: false,
-    debugOut: () => { },
     verboseOut: () => { },
     clientId: '',
     token: process.env.TOKEN,
@@ -120,7 +117,7 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
     Object.assign(config, production);
 } else {
-    throw new FatalError('Invalid value for environmental variable NODE_ENV! Must be either \'development\' or \'production\'!');
+    throw new FatalError('Invalid value for environmental variable NODE_ENV: Must be either \'development\' or \'production\'');
 }
 
 export default config;
