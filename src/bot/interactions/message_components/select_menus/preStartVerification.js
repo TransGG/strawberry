@@ -8,6 +8,7 @@ import {
 import SelectMenu from '../SelectMenu.js';
 import { verbose } from '../../../../config/out.js';
 import startVerification from '../../../../verification/managers/startVerification.js';
+import { buildOptions } from '../../../../content/questions.js';
 
 /**
  * Handler for preStartVerification select menu.
@@ -28,23 +29,8 @@ class preStartVerification extends SelectMenu {
     getData() {
         return new SelectMenuBuilder()
             .setCustomId(this.name)
-            .setPlaceholder('Placeholder Text')
-            .addOptions([{
-                label: 'Trans / Enby',
-                description: 'Do you identify as trans / enby?',
-                value: 'isTrans',
-            },
-            {
-                label: 'Cis + LGBTQ+',
-                description: 'Do you identify as Cis + LGBTQ+',
-                value: 'isCisAndLGBTQ',
-            },
-            {
-                label: 'Cis non LGBTQ+',
-                description: 'Do you identify as only cis?',
-                value: 'isCisNonLGBTQ',
-            },
-            ]);
+            .setPlaceholder('What do you identify as?')
+            .addOptions(buildOptions());
     }
 
     /**
@@ -53,18 +39,13 @@ class preStartVerification extends SelectMenu {
      *     menu was used
      */
     async run(interaction) {
-        await interaction.reply({
-            content: `You selected ${interaction.values.join(', ')}!`,
-            ephemeral: true,
-        });
-
         verbose(`Request to start verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`);
 
         // start verification
         await startVerification(
             (ticket, message) => {
                 verbose(`Created ticket with id ${ticket.id} for ${interaction.user.tag} ${interaction.member.id}`);
-                return interaction.reply({
+                return interaction.update({
                     content: message,
                     components: [
                         new ActionRowBuilder()
@@ -84,7 +65,7 @@ class preStartVerification extends SelectMenu {
             }),
             interaction.channel.threads,
             interaction.member,
-            interaction.values,
+            interaction.values.join(' '),
         );
     }
 }

@@ -1,40 +1,49 @@
-const defaultChoice = [
-    '1. Do you identify as transgender; and/or any other part of the LGBTQ+ community? (Please be specific in your answer)',
-    '2. Do you have any friends who are already a part of our Discord? (If yes, please send their username)',
-    '3. What’s your main goal / motivation in joining the TransPlace Discord?',
-    '4. If you could change one thing about the dynamic of the LGBTQ+ community, what would it be?',
-    '5. What is gatekeeping in relation to the trans community?',
+const always = [
+    'Do you agree to the server rule / Discord Community Guidelines & Discord ToS?',
+    'What name would you like to be referred as (Dosen\'t need to be your legal name)',
+    'What are your pronouns?',
+    'What is your favorite rule?',
 ];
 
-const isTrans = [
-    '1. What made you discover you were transgender?',
-    '2. Anything you do or wish to do that makes you feel euphoric about your identity?',
-    '3. What’s your main goal / motivation in joining the TransPlace Discord?',
-    '4. What is gatekeeping in relation to the trans community?',
+const questionsObject = [{
+    select: 'Transgender / Genderfluid / Non-Binary',
+    id: 'isTrans',
+    questions: ['What made you discover you were Transgender / Genderfluid / Non-Binary'],
+},
+{
+    select: 'Cisgender / Other LGBTQ+',
+    id: 'isCis',
+    questions: [
+        'Why did you decide to join a trans server instead of any general LGTBQ+ server?',
+        'What would be an example of invalidating someone\'s identity?',
+        'Do you identify as a member of the LGBTQ+ community? If so, where do you identify? (Bi/pan/ace/aro/etc.)',
+    ],
+},
 ];
 
-const isCisAndLGBTQ = [
-    '1. Why did you decide to join a trans server instead of any general LGBTQ+ server?',
-    '2. What would be an example of invalidating someone\'s identity?',
-    '3. What is one thing only another lgbtq+ person would know? This can be as lighthearted or as serious as you want. ',
-    '4. What is gatekeeping in relation to the trans community?',
-];
+function buildQuestions(id) {
+    const question = questionsObject.find((q) => q.id === id);
+    if (question) {
+        return [...always, ...question.questions].map((q, i) => `${i + 1}. ${q}`);
+    }
+    return always.map((q, i) => `${i + 1}. ${q}`);
+}
 
-const isCisNonLGBTQ = [
-    '1. Why did you decide to join a trans discord server?',
-    '2. What would be an example of invalidating someone\'s identity?',
-    '3. What is gatekeeping in relation to the trans community?',
-    '4. What is your opinion on Neopronouns and or Non-Binary identities?',
-];
+function buildOptions() {
+    return questionsObject.map((q) => ({
+        label: q.select,
+        description: `Do you identify as ${q.select}`,
+        value: q.id,
+    }));
+}
 
 const questions = {
-    defaultChoice,
-    isTrans,
-    isCisAndLGBTQ,
-    isCisNonLGBTQ,
+    always,
+    questionsObject,
 };
 
 export {
-    // eslint-disable-next-line import/prefer-default-export
     questions,
+    buildQuestions,
+    buildOptions,
 };

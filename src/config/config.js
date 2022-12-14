@@ -57,19 +57,19 @@ const development = {
     verboseOut: console.info,
     clientId: '999892254808350811', // elsie
     verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
-    privateThread: ChannelType.PublicThread, // test server does not have server premium level for private threads
+    privateThread: ChannelType.PrivateThread, // test server does not have server premium level for private threads
     guild: '987229949041725520', // ets
     channels: {
         lobby: '987230161764225044', // test
-        verifyLogs: '1023658079675498568', // test 2
-        verifyLogsSecondary: '1024037750116204675', // test 3
-        welcome: '1023658079675498568', // test 2
+        verifyLogs: '1052688123684982945', // test 2
+        verifyLogsSecondary: '1052688123684982945', // test 3
+        welcome: '1052688123684982945', // test 2
         rules: '987230161764225044', // test
         roles: '987230161764225044',
         introduce: '987230161764225044',
     },
     roles: {
-        verifier: '1001630620629344347', // new role
+        verifier: '1046271388782186590', // new role
         verified: '1016584910590459904', // test role
         greeter: '1023671868609269811', // elise
     },

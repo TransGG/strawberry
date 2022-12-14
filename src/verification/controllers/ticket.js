@@ -10,7 +10,7 @@ import {
 import config from '../../config/config.js';
 import { matchTrailingSnowflake } from '../../formatters/snowflake.js';
 import buildTimeInfoString from '../utils/stringBuilders.js';
-import { questions } from '../../content/questions.js';
+import { questions, buildQuestions } from '../../content/questions.js';
 
 /**
  * Fetches messages of a channel
@@ -169,13 +169,33 @@ async function refreshTicket(ticket, member) {
  * @returns {EmbedBuilder[]} The embeds for a prompt
  */
 function buildPromptEmbeds(applicant, type) {
-    console.log(questions);
-    console.log(type);
+    // create now so that joined at and created at use the same value for their calculation
+    const now = Date.now();
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
-            .setDescription(`Hi! As a part of the verification process, we ask that you answer the following questions. Do note that there are no right or wrong to answers these questions, but please try and give thorough / detailed responses.\n\n***Short / One word answers can result in having your join request rejected.***\n\`\`\`markdown\n${questions[type] ? questions[type].join('\n\n') : questions.defaultChoice.join('\n\n')}\n\`\`\``)
-            .setFooter({ text: 'After you have answered all of the questions, please click the "Finished Answering!" button below which will add our verifier staff to your thread. If you have any problems while answering, please click the "I Need Help Please" button instead.' }),
+            .setColor(0xB8CCE6)
+            .setDescription(`Hi! As a part of the verification process, we ask that you quickly answer the following questions.\nPlease note that there are no right or wrong to answers these questions, but please try and give thorough / detailed responses to be verified quickly.\n\`\`\`markdown\n${buildQuestions(type).join('\n\n')}\n\`\`\``)
+            .setFooter({ text: 'After you have answered all of the questions, please click the "Finished Answering!" button below which will add our verifier staff to your thread.\nIf you have any problems while answering, please click the "I Need Help Please" button instead.' })
+            .setImage('https://i.imgur.com/CBbbw0d.png'),
+        new EmbedBuilder()
+            .setAuthor({
+                name: applicant.user.tag,
+            })
+            .setTitle('User Information')
+            .setColor(0xE6B8D8)
+            .setThumbnail(applicant.user.displayAvatarURL())
+            .addFields(
+                {
+                    name: 'Joined At',
+                    value: buildTimeInfoString(applicant.joinedAt, now),
+                },
+                {
+                    name: 'Created At',
+                    value: buildTimeInfoString(applicant.user.createdAt, now),
+                },
+            )
+            .setImage('https://i.imgur.com/CBbbw0d.png'),
     ];
 }
 
@@ -208,33 +228,17 @@ function sendPrompt(ticket, applicant, type) {
  */
 function sendMentionVerifiers(ticket, applicant, client, helpMessage) {
     // create log
-    // create now so that joined at and created at use the same value for their calculation
-    const now = Date.now();
 
     // create log embed
     const message = roleMention(config.roles.verifier);
     const embeds = [
         new EmbedBuilder()
-            .setAuthor({
-                name: applicant.user.tag,
-                iconURL: applicant.user.avatarURL(),
-            })
             .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
             .setTimestamp()
             .setFooter({
                 text: client.user.tag,
                 iconURL: client.user.avatarURL(),
-            })
-            .addFields(
-                {
-                    name: 'Joined At',
-                    value: buildTimeInfoString(applicant.joinedAt, now),
-                },
-                {
-                    name: 'Created At',
-                    value: buildTimeInfoString(applicant.user.createdAt, now),
-                },
-            ),
+            }),
     ];
     return ticket.send({
         content: message,
