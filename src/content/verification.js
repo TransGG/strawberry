@@ -18,16 +18,6 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
                 iconURL: applicant.user.avatarURL(),
             })
             .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
-            .addFields(
-                {
-                    name: 'Joined At',
-                    value: buildTimeInfoString(applicant.joinedAt),
-                },
-                {
-                    name: 'Created At',
-                    value: buildTimeInfoString(applicant.user.createdAt),
-                },
-            )
             .setTimestamp()
             .setFooter({
                 text: client.user.tag,
