@@ -4,7 +4,7 @@ import {
     Events,
 } from 'discord.js';
 import Button from '../../Button.js';
-import { buildPromptComponents } from '../../../../../verification/controllers/ticket.js';
+import { buildPromptComponents } from '../../../../../content/verification.js';
 import reemitInteraction from '../../../../utils/reemit.js';
 
 /**
@@ -39,9 +39,7 @@ class VerifyUser extends Button {
         if (interaction.message.components[0].components[0].data.custom_id === 'VERIFY_USER'
             && interaction.message.content) {
             await interaction.message.edit({
-                components: [
-                    buildPromptComponents(interaction.client, true),
-                ],
+                components: buildPromptComponents(interaction.client, true),
             });
 
             await interaction.reply({

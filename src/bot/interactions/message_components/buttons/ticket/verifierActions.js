@@ -1,11 +1,7 @@
-import {
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-    EmbedBuilder,
-} from 'discord.js';
+import { ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
 import Button from '../../Button.js';
 import { isVerifier } from '../../../../../verification/controllers/member.js';
+import { buildVerifierActionComponents } from '../../../../../content/verification.js';
 
 /**
  * Handler for verifierActions button. Brings up menu for verifiers to choose actions from.
@@ -45,7 +41,7 @@ class VerifierActions extends Button {
         }
 
         // send verifier actions message
-        const actions = new EmbedBuilder()
+        const actionPrompt = new EmbedBuilder()
             .setDescription('Which action would you like to take?')
             .setFooter({
                 text: interaction.client.user.tag,
@@ -53,15 +49,8 @@ class VerifierActions extends Button {
             });
 
         await interaction.reply({
-            embeds: [actions],
-            components: [
-                new ActionRowBuilder()
-                    .addComponents(
-                        interaction.client.getButton('verifyUser'),
-                        interaction.client.getButton('kickUserButton'),
-                        interaction.client.getButton('sendAsTheo'),
-                    ),
-            ],
+            embeds: [actionPrompt],
+            components: buildVerifierActionComponents(interaction.client),
             ephemeral: true,
         });
     }

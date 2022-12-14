@@ -2,14 +2,14 @@ import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import Button from '../../Button.js';
 
 /**
- * Handler for sendAsTheo button. Displays a modal that will send a message
+ * Handler for denyBanButton button. Bans the verification applicant of the ticket this is ran in.
  */
-class SendAsTheo extends Button {
+class DenyBanButton extends Button {
     /**
      * @param {string} name The name to use to identify this button and to serve as its customId.
      *     Must be unique.
      */
-    constructor(name = 'sendAsTheo') {
+    constructor(name = 'denyBanButton') {
         super(name);
     }
 
@@ -19,8 +19,8 @@ class SendAsTheo extends Button {
     getData() {
         return new ButtonBuilder()
             .setCustomId(this.name)
-            .setLabel('Send as Theo')
-            .setStyle(ButtonStyle.Secondary);
+            .setLabel('Ban')
+            .setStyle(ButtonStyle.Danger);
     }
 
     /**
@@ -29,8 +29,7 @@ class SendAsTheo extends Button {
      *     command was executed
      */
     async run(interaction) {
-        await interaction.showModal(interaction.client.getModal('sendMessage'));
+        await interaction.showModal(interaction.client.getModal('denyBanModal'));
     }
 }
-
-export default SendAsTheo;
+export default DenyBanButton;

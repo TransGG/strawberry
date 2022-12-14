@@ -6,14 +6,13 @@ import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
 
 /**
  * Entry point for starting verification
- * @param {function} resolve Success callback. Takes two parameters - thread, applicant
- * @param {function} reject Failure callback. Takes a single parameter - message
  * @param {GuildTextThreadManager} threads A ThreadManager for the verification ticket channel
  * @param {GuildMember} applicant A guild member
- * @param {String} type The type of verification to start (based from the pre verification stage)
- * @returns {?TextBasedChannel} The verification ticket for the applicant
+ * @param {function} resolve Success callback. Takes two parameters - thread, applicant
+ * @param {function} reject Failure callback. Takes a single parameter - message
  */
 async function startVerification(resolve, reject, threads, applicant, type) {
+async function startVerification(threads, applicant, resolve, reject) {
     // check if user is verified
     if (isVerified(applicant)) {
         await reject('You\'ve already been verified, silly');
@@ -21,7 +20,7 @@ async function startVerification(resolve, reject, threads, applicant, type) {
     }
 
     // fetch existing threads, if any
-    const existingTicket = fetchMostRecentTicket(threads, applicant);
+    const existingTicket = await fetchMostRecentTicket(threads, applicant);
     if (existingTicket) {
         const closed = isClosed(existingTicket);
         if (closed) {

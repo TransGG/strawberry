@@ -2,9 +2,9 @@ import path from 'path';
 import fs from 'fs/promises';
 import { pathToFileURL, fileURLToPath } from 'url';
 import { Client, Collection } from 'discord.js';
+import { verbose } from '../../config/out.js';
 import SlashCommandWithSubcommands from '../interactions/commands/SlashCommandWithSubcommands.js';
 import { DuplicateElement } from './errors.js';
-import { debug, verbose } from '../../config/out.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -30,42 +30,48 @@ const modalsPath = '../interactions/modals';
  *     preceded by the instance as an argument
  * @throws {Error} If files could not be read from the directory
  * @throws {Error} If an instance of a file's default export does not have a name property
+ * @throws {Error} If an instance of a file's default export does not have a name property
  * @throws {ReferenceError} If collection does not exist
  * @throws {TypeError} If collection is not a Map (probably should be a Collection)
  *
  */
 async function loadNameable(collection, dir, callback, instanceArgs = [], callbackArgs = []) {
     if (!dir) {
-        throw new Error(`Cannot load files: dir has value of ${dir}!`);
+        throw new Error(`Cannot load files: dir has value of ${dir}`);
     }
     const dirPath = path.join(__dirname, dir);
 
     // collection validity checking
     if (!collection) {
-        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'collection' does not exist!`);
+        throw new ReferenceError(`Cannot load files in ${dirPath}: argument 'collection' does not exist`);
     }
     if (!(collection instanceof Map)) {
-        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'collection' to be of type Map (probably a Collection) when 'collection' was of type ${collection.constructor.name}!`);
+        throw new TypeError(`Cannot load files in ${dirPath}: expected argument 'collection' to be of type Map (probably a Collection) when 'collection' was of type ${collection.constructor.name}`);
     }
 
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
             const filePath = path.join(dirPath, fileName);
+            const relativeFilePath = path.join(dir, fileName);
 
             const stat = await fs.lstat(filePath);
             if (stat.isDirectory()) {
-                await loadNameable(collection, path.join(dir, fileName), callback);
-            }
-            if (fileName.endsWith('.js')) {
-                debug(`Loading ${path.join(dir, fileName)}`);
+                await loadNameable(collection, relativeFilePath, callback);
+            } else if (fileName.endsWith('.js')) {
+                verbose(`Loading ${relativeFilePath}`);
 
                 const Class = (await import(pathToFileURL(filePath))).default;
+
+                if (!Class) {
+                    throw new Error(`No default export found in ${relativeFilePath}`);
+                }
+
                 const instance = new Class(...instanceArgs);
-                if (!(Object.hasOwn(instance, 'name'))) {
-                    throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'!`);
+                if (!('name' in instance)) {
+                    throw new Error(`Tried to instantiate class ${Class.name} found at ${filePath} but the instance did not have a value for required property 'name'`);
                 }
                 if (collection.has(instance.name)) {
                     throw new DuplicateElement(filePath, instance.name, collection);
@@ -88,7 +94,7 @@ async function loadNameable(collection, dir, callback, instanceArgs = [], callba
 async function loadEvents(collection, client, dir = eventsPath) {
     verbose('Loading events');
     if (!client) {
-        throw new ReferenceError('Cannot load events: argument \'client\' does not exist!');
+        throw new ReferenceError('Cannot load events: argument \'client\' does not exist');
     }
     if (!(client instanceof Client)) {
         throw new TypeError(`Cannot load events: expected argument client to be of type Client when client was of type ${client.constructor.name}`);
@@ -171,7 +177,7 @@ async function loadContextMenuCommands(collection, dir = contextMenuCommandsPath
 async function loadSubcommandsActually(collection, dir, inGroup = false) {
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
@@ -186,7 +192,7 @@ async function loadSubcommandsActually(collection, dir, inGroup = false) {
                 collection.set(fileName, groupCommands);
             }
             if (fileName.endsWith('.js')) {
-                debug(`Loading ${path.join(dir, fileName)}`);
+                verbose(`Loading ${path.join(dir, fileName)}`);
 
                 const Command = (await import(pathToFileURL(filePath))).default;
                 const cmd = new Command();
@@ -212,19 +218,19 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
     verbose('Loading subcommands');
     // commands validity checking
     if (!commands) {
-        throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist!');
+        throw new ReferenceError('Cannot load subcommands: argument \'commands\' does not exist');
     }
     if (!(commands instanceof Map)) {
-        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a Collection)!');
+        throw new TypeError('Cannot load subcommands: expected argument \'commands\' to be a Map (probably a Collection)');
     }
     if (commands.size === 0) {
-        throw new RangeError('Cannot load subcommands: size of commands is 0! (zero, not one you smart aleck)');
+        throw new RangeError('Cannot load subcommands: size of commands is 0 (zero, not one you smart aleck)');
     }
 
     // get files within subcommands directory
     const dirPath = path.join(__dirname, dir);
     const files = await fs.readdir(dirPath).catch((error) => {
-        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})!`, { cause: error });
+        throw new Error(`Couldn't load files: promise rejection when loading files for ${dirPath} (resolved from ${dir})`, { cause: error });
     });
     await Promise.all(
         files.map(async (fileName) => {
@@ -236,10 +242,10 @@ async function loadSubcommands(commands, dir = subcommandsPath) {
 
                 // check command validity
                 if (!command) {
-                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the name of any commands!`);
+                    throw new Error(`Found directory ${fileName} in ${dirPath}, but ${fileName} does not match the name of any commands`);
                 }
                 if (!(command instanceof SlashCommandWithSubcommands)) {
-                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type SlashCommandWithSubcommand!`);
+                    throw new TypeError(`Retrieved command for key ${fileName} but the value was not of type SlashCommandWithSubcommand`);
                 }
 
                 // create and populate children

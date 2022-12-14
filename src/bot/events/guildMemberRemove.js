@@ -2,7 +2,7 @@ import { AuditLogEvent, Events } from 'discord.js';
 import config from '../../config/config.js';
 import { isClosed } from '../../verification/controllers/ticket.js';
 import { fetchMostRecentTicket } from '../../verification/controllers/tickets.js';
-import closeTicket, { closeTypes } from '../../verification/managers/closeTicket.js';
+import { closeTicket, CloseReason } from '../../verification/managers/closeTicket.js';
 import Event from '../Event.js';
 
 /**
@@ -68,13 +68,20 @@ class GuildMemberRemove extends Event {
      * @param {GuildMember} member The member that was removed
      */
     async run(member) {
-        const ticket = fetchMostRecentTicket(
-            member.client.channels.cache.get(config.channels.lobby).threads,
-            member,
-        );
+        if (!this.client.isUserLeaveMutex(member.user.id)) {
+            try {
+                this.client.addUserLeaveMutex(member.user.id);
+                const ticket = await fetchMostRecentTicket(
+                    member.client.channels.cache.get(config.channels.lobby).threads,
+                    member,
+                );
 
-        if (ticket && !isClosed(ticket) && await isMemberLeftVoluntary(member)) {
-            await closeTicket(() => { }, () => { }, ticket, closeTypes.leave);
+                if (ticket && !isClosed(ticket) && await isMemberLeftVoluntary(member)) {
+                    await closeTicket(ticket, CloseReason.leave);
+                }
+            } finally {
+                this.client.removeUserLeaveMutex(member.user.id);
+            }
         }
     }
 }

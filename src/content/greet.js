@@ -6,7 +6,7 @@ import {
     roleMention,
     userMention,
 } from 'discord.js';
-import config from '../../config/config.js';
+import config from '../config/config.js';
 
 // TODO: read these from a file
 
@@ -164,20 +164,20 @@ function pickFact() {
 }
 
 /**
- * Builds welcome message content
+ * Builds greet message content
  * @param {GuildMember} applicant A member of the server
  * @returns {string} The welcome message content
  */
-function buildWelcomeMessageContent(applicant) {
+function buildGreetMessageContent(applicant) {
     return `${roleMention(config.roles.greeter)}, ${pickGreeterMessage(userMention(applicant.id))}`;
 }
 
 /**
- * Builds a welcome embed for a recently verified user
+ * Builds a greet embed for a recently verified user
  * @param {GuildMember} applicant A member of the server
  * @returns {Embed[]|APIEmbed[]} Embeds for a welcome message
  */
-function buildWelcomeEmbeds(applicant) {
+function buildGreetEmbeds(applicant) {
     return [
         new EmbedBuilder()
             .setColor(0xF5F5F5)
@@ -192,17 +192,7 @@ function buildWelcomeEmbeds(applicant) {
     ];
 }
 
-/**
- * Sends a welcome message for a user
- * @param {BaseGuildTextChannel} channel A text channel
- * @param {GuildMember} applicant A member of the server
- * @returns {Promise<Message>} The message that was sent
- */
-function sendWelcomeMessage(channel, applicant) {
-    return channel.send({
-        content: buildWelcomeMessageContent(applicant),
-        embeds: buildWelcomeEmbeds(applicant),
-    });
-}
-
-export default sendWelcomeMessage;
+export {
+    buildGreetMessageContent,
+    buildGreetEmbeds,
+};

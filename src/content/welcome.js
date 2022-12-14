@@ -37,11 +37,7 @@ const mentalHealthEmbed = new EmbedBuilder()
 const getVerifiedEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
     .setTitle('Getting Verified')
-    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜\n\n***If the button fails: ***\n\n> Please make sure you\'ve clicked the button which looks like the image below in your discord client.')
-    .setImage('https://i.imgur.com/CW0Wpgm.png')
-    .setFooter({
-        text: 'If it still fails after that, please feel free to DM @Cleo#1003',
-    });
+    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜');
 
 function buildWelcomeComponents(client) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.

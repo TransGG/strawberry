@@ -65,7 +65,8 @@
             {
                 "vars": "all",
                 "args": "after-used",
-                "ignoreRestSiblings": true
+                "ignoreRestSiblings": true,
+                "argsIgnorePattern": "resolve|reject"
             }
         ],
         "linebreak-style": "off",

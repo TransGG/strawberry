@@ -16,7 +16,7 @@ function buildTimeInfoString(time, now = new Date()) {
     const nowDate = now instanceof Date ? now : new Date(now);
     const diff = nowDate - timeDate;
 
-    return `${timestamp(timeDate, TimestampStyles.LongDateTime)} (${Math.floor(diff / oneDay)} days and ${Math.floor((diff % oneDay) / oneHour)} hours old)`;
+    return `${timestamp(timeDate, TimestampStyles.LongDateTime)} (${Math.floor(diff / oneDay)} days, ${Math.floor(diff / oneHour)} hours old)`;
 }
 
 export default buildTimeInfoString;

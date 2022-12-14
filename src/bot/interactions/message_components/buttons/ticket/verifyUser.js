@@ -34,6 +34,8 @@ class VerifyUser extends Button {
      */
     async run(interaction) {
         await verifyUser(
+            interaction.channel,
+            interaction.member,
             (message) => interaction.reply({
                 content: message,
                 allowedMentions: {
@@ -44,8 +46,6 @@ class VerifyUser extends Button {
                 content: message || 'Verification failed: no message given',
                 ephemeral: true,
             }),
-            interaction.channel,
-            interaction.member,
         );
     }
 }
