@@ -4,6 +4,7 @@ import {
     roleMention,
     ThreadChannel,
     userMention,
+    ActionRowBuilder,
 } from 'discord.js';
 import config from '../../config/config.js';
 import { buildMentionVerifiersEmbeds, buildPromptComponents, buildPromptEmbeds } from '../../content/verification.js';
@@ -119,6 +120,17 @@ function isBelongsToMember(ticket, member) {
 }
 
 /**
+ * Determines if a candidate is a ticket
+ * @param {any} candidate The candidate to check if it's a ticket
+ * @returns {boolean} True if the candidate is a ticket, false otherwise
+ */
+function isTicket(candidate) {
+    return candidate instanceof ThreadChannel
+        && parseApplicantId(candidate)
+        && candidate.parentId === config.channels.lobby;
+}
+
+/**
  * Sends a message for refreshing the ticket
  * @returns {Promise<Message>} The message that was sent
  */
@@ -148,14 +160,14 @@ async function refreshTicket(ticket, member) {
  * Sends the prompt in a ticket
  * @param {TextBasedChannel} ticket A text channel
  * @param {GuildMember} applicant The applicant
- * @param {String} type The type of verification to start (based from the pre verification stage)
  * @returns {Promise<Message>} The prompt that was sent
+ * @param {string} type The type of prompt to send
  */
 function sendPrompt(ticket, applicant, type) {
     return ticket.send({
         content: userMention(applicant.id),
         embeds: buildPromptEmbeds(applicant, type),
-        components: [buildPromptComponents(ticket.client)],
+        components: buildPromptComponents(ticket.client),
     });
 }
 
@@ -241,6 +253,7 @@ export {
     fetchApplicant,
     isClosed,
     isBelongsToMember,
+    isTicket,
     refreshTicket,
     sendPrompt,
     sendMentionVerifiers,

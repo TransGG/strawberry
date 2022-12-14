@@ -70,7 +70,7 @@ const development = {
         staffRoles: [
             '1023671868609269811', // elise
         ],
-        verifier: '1001630620629344347', // new role
+        verifier: '1046271388782186590', // new role
         verified: '1016584910590459904', // test role
         greeter: '1023671868609269811', // elise
     },

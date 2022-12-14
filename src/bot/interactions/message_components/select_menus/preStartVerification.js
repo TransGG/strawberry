@@ -43,6 +43,8 @@ class preStartVerification extends SelectMenu {
 
         // start verification
         await startVerification(
+            interaction.channel.threads,
+            interaction.member,
             (ticket, message) => {
                 verbose(`Created ticket with id ${ticket.id} for ${interaction.user.tag} ${interaction.member.id}`);
                 return interaction.update({
@@ -60,11 +62,11 @@ class preStartVerification extends SelectMenu {
                 });
             },
             (message) => interaction.reply({
-                content: message || ('Failed to start verification: no reason given. Please contact a staff member' && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
+                content: message
+                    || ('Failed to start verification: no reason given. Please contact a staff member'
+                        && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
                 ephemeral: true,
             }),
-            interaction.channel.threads,
-            interaction.member,
             interaction.values.join(' '),
         );
     }

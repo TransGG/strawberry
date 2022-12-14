@@ -11,8 +11,8 @@ import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
  * @param {function} resolve Success callback. Takes two parameters - thread, applicant
  * @param {function} reject Failure callback. Takes a single parameter - message
  */
-async function startVerification(resolve, reject, threads, applicant, type) {
-async function startVerification(threads, applicant, resolve, reject) {
+
+async function startVerification(threads, applicant, resolve, reject, type) {
     // check if user is verified
     if (isVerified(applicant)) {
         await reject('You\'ve already been verified, silly');

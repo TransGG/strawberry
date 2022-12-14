@@ -5,11 +5,10 @@ import {
 import {
     verbose,
 } from '../../../../../config/out.js';
-import preStartVerification from '../../select_menus/preStartVerification.js';
 import Button from '../../Button.js';
 import {
     buildPromptSelectComponents,
-} from '../../../../../verification/controllers/ticket.js';
+} from '../../../../../content/verification.js';
 
 /**
  * Handler for startVerification button. Puts a user into the verification process
@@ -39,35 +38,14 @@ class StartVerification extends Button {
      *     command was executed
      */
     async run(interaction) {
-        verbose(`Request to start verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`);
-
-        // start verification
-        await startVerification(
-            interaction.channel.threads,
-            interaction.member,
-            (ticket, message) => {
-                verbose(`Created ticket with id ${ticket.id} for ${interaction.user.tag} ${interaction.member.id}`);
-                return interaction.reply({
-                    content: message,
-                    components: [
-                        new ActionRowBuilder()
-                            .addComponents(
-                                new ButtonBuilder()
-                                    .setURL(channelLink(ticket.id, ticket.guildId))
-                                    .setLabel('View Thread')
-                                    .setStyle(ButtonStyle.Link),
-                            ),
-                    ],
-                    ephemeral: true,
-                });
-            },
-            (message) => interaction.reply({
-                content: message
-                    || ('Failed to start verification: no reason given. Please contact a staff member'
-                        && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
-                ephemeral: true,
-            }),
-        );
+        verbose(`Request to start pre-verification select for ${interaction.user.tag} ${interaction.member.id}`);
+        await interaction.reply({
+            content: 'Please select one of the following you best identify with, choosing one option over another will not affect your verification in any way, rather will only slightly change the questions to best fit your identity.',
+            components: [
+                buildPromptSelectComponents(interaction.client),
+            ],
+            ephemeral: true,
+        });
     }
 }
 
