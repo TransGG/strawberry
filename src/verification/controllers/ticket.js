@@ -4,7 +4,6 @@ import {
     roleMention,
     ThreadChannel,
     userMention,
-    ActionRowBuilder,
 } from 'discord.js';
 import config from '../../config/config.js';
 import { buildMentionVerifiersEmbeds, buildPromptComponents, buildPromptEmbeds } from '../../content/verification.js';
@@ -160,13 +159,13 @@ async function refreshTicket(ticket, member) {
  * Sends the prompt in a ticket
  * @param {TextBasedChannel} ticket A text channel
  * @param {GuildMember} applicant The applicant
+ * @param {string} promptCategory The category of prompt to send
  * @returns {Promise<Message>} The prompt that was sent
- * @param {string} type The type of prompt to send
  */
-function sendPrompt(ticket, applicant, type) {
+function sendPrompt(ticket, applicant, promptCategory) {
     return ticket.send({
         content: userMention(applicant.id),
-        embeds: buildPromptEmbeds(applicant, type),
+        embeds: buildPromptEmbeds(applicant, promptCategory),
         components: buildPromptComponents(ticket.client),
     });
 }

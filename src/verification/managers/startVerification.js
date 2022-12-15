@@ -10,9 +10,9 @@ import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
  * @param {GuildMember} applicant A guild member
  * @param {function} resolve Success callback. Takes two parameters - thread, applicant
  * @param {function} reject Failure callback. Takes a single parameter - message
+ * @param {string} promptCategory The category of prompt to give
  */
-
-async function startVerification(threads, applicant, resolve, reject, type) {
+async function startVerification(threads, applicant, resolve, reject, promptCategory) {
     // check if user is verified
     if (isVerified(applicant)) {
         await reject('You\'ve already been verified, silly');
@@ -35,7 +35,7 @@ async function startVerification(threads, applicant, resolve, reject, type) {
     }
 
     // create new ticket
-    const ticket = await createTicket(threads, applicant, type);
+    const ticket = await createTicket(threads, applicant, promptCategory);
     await createVerifyTicketCreateLog(
         ticket.guild.channels.cache.get(config.channels.verifyLogs),
         ticket,

@@ -67,7 +67,7 @@ class preStartVerification extends SelectMenu {
                         && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
                 ephemeral: true,
             }),
-            interaction.values.join(' '),
+            interaction.values[0],
         );
     }
 }

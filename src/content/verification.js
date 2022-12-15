@@ -27,6 +27,20 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
 }
 
 /**
+ * Creates the components for selecting a verification prompt
+ * @param {Bot} client A client from which components can be retrieved
+ * @returns {ActionRowBuilder[]} An array of action rows containing the components
+ */
+function buildPromptSelectComponents(client) {
+    return [
+        new ActionRowBuilder()
+            .addComponents(
+                client.getSelectMenu('preStartVerification'),
+            ),
+    ];
+}
+
+/**
  * Creates the components for a verification ticket prompt
  * @param {Bot} client A client from which components can be retrieved
  * @param {boolean} [mentionVerifiersDisabled=false] Whether to disable the mention verifiers
@@ -42,18 +56,6 @@ function buildPromptComponents(client, mentionVerifiersDisabled = false) {
                 client.getButton('mentionVerifiers').addArgs(2).setDisabled(mentionVerifiersDisabled),
             ),
     ];
-}
-
-/**
- * Creates the select menu component for a verification ticket prompt
- * @param {Bot} client A client from which components can be retrieved
- * @returns {ActionRowBuilder} An array of action rows containing the components
- */
-function buildPromptSelectComponents(client) {
-    return new ActionRowBuilder()
-        .addComponents(
-            client.getSelectMenu('preStartVerification'),
-        );
 }
 
 /**
@@ -114,8 +116,8 @@ function buildVerifierActionComponents(client) {
 
 export {
     buildMentionVerifiersEmbeds,
+    buildPromptSelectComponents,
     buildPromptEmbeds,
     buildPromptComponents,
     buildVerifierActionComponents,
-    buildPromptSelectComponents,
 };
