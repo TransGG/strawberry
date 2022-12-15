@@ -229,7 +229,7 @@ async function getApplicantMessagesLength(ticket) {
  * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
 async function hasApplicantAnswered(ticket) {
-    const messageCharacterCountRequirement = 50;
+    const messageCharacterCountRequirement = 15;
 
     return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
 }
@@ -240,7 +240,7 @@ async function hasApplicantAnswered(ticket) {
  * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
 async function hasApplicantAskedForHelp(ticket) {
-    const messageCharacterCountRequirement = 11; // 'i need help'.length
+    const messageCharacterCountRequirement = 10; // 'i need help'.length
 
     return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
 }
