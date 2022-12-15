@@ -159,12 +159,13 @@ async function refreshTicket(ticket, member) {
  * Sends the prompt in a ticket
  * @param {TextBasedChannel} ticket A text channel
  * @param {GuildMember} applicant The applicant
+ * @param {string} promptCategory The category of prompt to send
  * @returns {Promise<Message>} The prompt that was sent
  */
-function sendPrompt(ticket, applicant) {
+function sendPrompt(ticket, applicant, promptCategory) {
     return ticket.send({
         content: userMention(applicant.id),
-        embeds: buildPromptEmbeds(applicant),
+        embeds: buildPromptEmbeds(applicant, promptCategory),
         components: buildPromptComponents(ticket.client),
     });
 }
@@ -227,7 +228,7 @@ async function getApplicantMessagesLength(ticket) {
  * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
 async function hasApplicantAnswered(ticket) {
-    const messageCharacterCountRequirement = 50;
+    const messageCharacterCountRequirement = 15;
 
     return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
 }
@@ -238,7 +239,7 @@ async function hasApplicantAnswered(ticket) {
  * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
 async function hasApplicantAskedForHelp(ticket) {
-    const messageCharacterCountRequirement = 11; // 'i need help'.length
+    const messageCharacterCountRequirement = 10; // 'i need help'.length
 
     return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
 }
