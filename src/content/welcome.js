@@ -17,7 +17,7 @@ const rulesEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
     .setTitle('Rules')
     .setDescription('1. **Keep on-topic in all channels.** We understand conversations naturally drift; however, if they do not self-correct after a while, a mod may step in to help do so.\n\n2. **No age-restricted or obscene content.** Our community remains appropriate for anyone over the age of 13, any content deemed unfit for this is disallowed. This includes text, images or links. [Read More](https://canary.discord.com/channels/959551566388547676/987831168755961976/987831169783562300)\n\n3. **No shocking or overly violent/gory content.** If something straddles the line, ask a mod, CW, or don’t post it at all.\n\n4. **No spam or self-promotion.** (server invites, advertisements. etc.) Unless given explicit permission from a staff member. This includes DMing fellow members.\n\n5. **Treat everyone with respect.** Absolutely no harassment, witch hunting, sexism, racism or hate speech will be tolerated. [Read More](https://canary.discord.com/channels/959551566388547676/987831379456839730/987831380429914142)\n\n6. **Keep in mind effective conflict resolution and interpersonal skills.** [Read More](https://canary.discord.com/channels/959551566388547676/987831703345176606/987831705425551430)\n\n7. **Hate has no home here.** No hate speech, slurs, homophobia or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.) [Read More](https://canary.discord.com/channels/959551566388547676/987831957230583869/987831958988030002)\n\n8. **Please keep all conversations in English.** Short phrases or jokes in another language are allowed, but we cannot effectively moderate non-English extensive discussions.\n\n**By joining this server you agree to the following guidelines**\n[Discord ToS](https://discord.com/terms)\n[Discord Community Guidelines](https://discord.com/guidelines)')
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+    .setImage('https://i.imgur.com/CBbbw0d.png'); // tiny image that ensures constant embed width
 
 const notesReportEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
@@ -37,7 +37,8 @@ const mentalHealthEmbed = new EmbedBuilder()
 const getVerifiedEmbed = new EmbedBuilder()
     .setColor(0x6F6DB8)
     .setTitle('Getting Verified')
-    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜');
+    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜')
+    .setImage('https://i.imgur.com/CBbbw0d.png');
 
 function buildWelcomeComponents(client) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.
