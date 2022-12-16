@@ -44,7 +44,7 @@ class VerifierActions extends Button {
         const actionPrompt = new EmbedBuilder()
             .setDescription('Which action would you like to take?')
             .setFooter({
-                text: interaction.client.user.tag,
+                text: `${interaction.client.user.tag}`,
                 iconURL: interaction.client.user.avatarURL(),
             });
 

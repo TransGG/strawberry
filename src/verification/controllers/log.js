@@ -34,7 +34,7 @@ function createBanLog(
         .setTitle(`The user ${target.tag} has been banned from the server.`)
         .setAuthor({
             name: `${target.tag}`,
-            iconURL: `${target.avatarURL()}`,
+            iconURL: target.avatarURL(),
         })
         .setDescription(`Reason ${dmSent ? '(Sent to User)' : '(Unable to Send to User)'}: ${codeBlock(userReason)}\nLogs Reason (Not Shared):${codeBlock(logReason)}`)
         .addFields([
@@ -54,7 +54,7 @@ function createBanLog(
         .setTimestamp()
         .setFooter({
             text: `${client.user.tag}`,
-            iconURL: `${client.user.avatarURL()}`,
+            iconURL: client.user.avatarURL(),
         });
 
     // optionally build button if a link can be built from ticket
@@ -106,7 +106,7 @@ function createKickLog(
         .setTitle(`The user ${target.tag} has been kicked from the server.`)
         .setAuthor({
             name: `${target.tag}`,
-            iconURL: `${target.avatarURL()}`,
+            iconURL: target.avatarURL(),
         })
         .setDescription(`Reason ${dmSent ? '(Sent to User)' : '(Unable to Send to User)'}: ${codeBlock(userReason)}\nLogs Reason (Not Shared):${codeBlock(logReason)}`)
         .addFields([
@@ -126,7 +126,7 @@ function createKickLog(
         .setTimestamp()
         .setFooter({
             text: `${client.user.tag}`,
-            iconURL: `${client.user.avatarURL()}`,
+            iconURL: client.user.avatarURL(),
         });
 
     // optionally build button if a link can be built from ticket
@@ -162,13 +162,13 @@ function createVerifyTicketCreateLog(logChannel, ticket, applicant, client) {
     const logEmbed = new EmbedBuilder()
         .setAuthor({
             name: `${applicant.user.tag}`,
-            iconURL: `${applicant.user.avatarURL()}`,
+            iconURL: applicant.user.avatarURL(),
         })
         .setDescription(`A new verification ticket has been created for ${applicant.user.tag}`)
         .setTimestamp()
         .setFooter({
             text: `${client.user.tag}`,
-            iconURL: `${client.user.avatarURL()}`,
+            iconURL: client.user.avatarURL(),
         })
         .addFields([
             {

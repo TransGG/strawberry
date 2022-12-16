@@ -13,7 +13,7 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
     return [
         new EmbedBuilder()
             .setAuthor({
-                name: applicant.user.tag,
+                name: `${applicant.user.tag}`,
                 iconURL: applicant.user.avatarURL(),
             })
             .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
@@ -29,7 +29,7 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
             )
             .setTimestamp()
             .setFooter({
-                text: client.user.tag,
+                text: `${client.user.tag}`,
                 iconURL: client.user.avatarURL(),
             }),
     ];
