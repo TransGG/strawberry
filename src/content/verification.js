@@ -1,6 +1,7 @@
 import { ActionRowBuilder, EmbedBuilder, roleMention } from 'discord.js';
 import config from '../config/config.js';
 import buildTimeInfoString from '../formatters/stringBuilders.js';
+import { buildQuestions } from './questions.js';
 
 /**
  * Builds the embeds used in mentioning verifiers
@@ -17,21 +18,25 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
                 iconURL: applicant.user.avatarURL(),
             })
             .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
-            .addFields(
-                {
-                    name: 'Joined At',
-                    value: buildTimeInfoString(applicant.joinedAt),
-                },
-                {
-                    name: 'Created At',
-                    value: buildTimeInfoString(applicant.user.createdAt),
-                },
-            )
             .setTimestamp()
             .setFooter({
                 text: `${client.user.tag}`,
                 iconURL: client.user.avatarURL(),
             }),
+    ];
+}
+
+/**
+ * Creates the components for selecting a verification prompt
+ * @param {Bot} client A client from which components can be retrieved
+ * @returns {ActionRowBuilder[]} An array of action rows containing the components
+ */
+function buildPromptSelectComponents(client) {
+    return [
+        new ActionRowBuilder()
+            .addComponents(
+                client.getSelectMenu('preStartVerification'),
+            ),
     ];
 }
 
@@ -58,33 +63,34 @@ function buildPromptComponents(client, mentionVerifiersDisabled = false) {
  * @param {GuildMember} applicant The applicant
  * @returns {EmbedBuilder[]} The embeds for a prompt
  */
-function buildPromptEmbeds(applicant) {
+function buildPromptEmbeds(applicant, type) {
     // TODO: read the questions from a file
+    const now = Date.now();
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
-            .setDescription(`Hi! Thank you for your patience with the verification process. As a part of the verification process, we ask that you answer the following questions. Do note that there are no right or wrong to answers these questions, but please try and give thorough / detailed responses. 
-    
-***Please keep in mind that 1-5 word / simple answers will oftentimes require more questions to have you verified, please try and give thoughtful / detailed responses to be verified quicker, no need to stress however if you cannot think of anything else to put, on behalf of our verification team thank you.*** :heart:
-
-\`\`\`markdown
-1. Do you agree to the server rules and to respect the Discord Community Guidelines & Discord ToS?
-
-2. Do you identify as transgender; and/or any other part of the LGBTQ+ community? (Please be specific in your answer)
-
-3. Do you have any friends who are already a part of our Discord? (If yes, please send their username)
-
-4. What’s your main goal / motivation in joining the TransPlace Discord?
-
-5. If you could change one thing about the dynamic of the LGBTQ+ community, what would it be? 
-
-6. What is gatekeeping in relation to the trans community?
-
-# If you have any social media that contains relevant post history related to the LGBTQ+ community, please link it to your discord account or send the account name or URL. 
-
-*(We may use this to help fast track your verification, but linking/sharing any accounts is not required)\`\`\`
-***If you need any help please click the "I Need Help Please." button and our verifiers will be added to your thread to help you.\nAfter you have answered all of the questions, please click the "Finished Answering!" button below which will add our verifier staff to your thread.***`)
-            .setFooter({ text: 'After answering these questions, a member of the Verification Team may reach out if the answers to the above questions are incomplete or too vague. Thank you again for your patience and we can’t wait for you to join the TransPlace Discord.' }),
+            .setColor(0xB8CCE6)
+            .setDescription(`Hi! As a part of the verification process, we ask that you quickly answer the following questions.\nPlease note that there are no right or wrong to answers these questions, but please try and give thorough / detailed responses to be verified quickly.\n\`\`\`markdown\n${buildQuestions(type).join('\n\n')}\n\`\`\``)
+            .setFooter({ text: 'After you have answered all of the questions, please click the "Finished Answering!" button below which will add our verifier staff to your thread.\nIf you have any problems while answering, please click the "I Need Help Please" button instead.' })
+            .setImage('https://i.imgur.com/CBbbw0d.png'),
+        new EmbedBuilder()
+            .setAuthor({
+                name: applicant.user.tag,
+            })
+            .setTitle('User Information')
+            .setColor(0xE6B8D8)
+            .setThumbnail(applicant.user.displayAvatarURL())
+            .addFields(
+                {
+                    name: 'Joined At',
+                    value: buildTimeInfoString(applicant.joinedAt, now),
+                },
+                {
+                    name: 'Created At',
+                    value: buildTimeInfoString(applicant.user.createdAt, now),
+                },
+            )
+            .setImage('https://i.imgur.com/CBbbw0d.png'),
     ];
 }
 
@@ -110,6 +116,7 @@ function buildVerifierActionComponents(client) {
 
 export {
     buildMentionVerifiersEmbeds,
+    buildPromptSelectComponents,
     buildPromptEmbeds,
     buildPromptComponents,
     buildVerifierActionComponents,
