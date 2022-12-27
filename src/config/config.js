@@ -84,7 +84,7 @@ const production = {
     privateThread: ChannelType.PrivateThread, // test server does not have server premium level for private threads
     guild: '959551566388547676', // transplace
     channels: {
-        lobby: '987358841245151262',                // transplace:welcome-verify
+        lobby: '1057132419150532678',                // transplace:welcome-verify
         verifyLogs: '987377031434100747',           // transplace:verify-logs
         verifyLogsSecondary: '1025521840816402442', // transplace:verify-kick-logs
         welcome: '978883070662959134',              // transplace:welcome-wagon
