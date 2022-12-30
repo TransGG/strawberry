@@ -42,6 +42,11 @@ async function verifyUser(ticket, verifier, resolve, reject) {
         return;
     }
 
+    if (applicant.roles.cache.has(config.roles.verified)) {
+        await reject('User has already been verified');
+        return;
+    }
+
     // verify user
     await verify(applicant);
 
