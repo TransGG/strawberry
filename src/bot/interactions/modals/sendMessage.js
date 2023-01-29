@@ -1,10 +1,9 @@
 import {
-    ActionRowBuilder,
-    ModalBuilder,
-    TextInputBuilder,
-    TextInputStyle,
+    ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle,
 } from 'discord.js';
+
 import { escape } from '../../../formatters/escape.js';
+import InteractionHelper from '../../utils/InteractionHelper.js';
 import Modal from '../Modal.js';
 
 /**
@@ -46,15 +45,18 @@ class SendMessage extends Modal {
      *     was submitted
      */
     async run(interaction) {
+        await InteractionHelper.deferReply(interaction, true);
+
         const message = interaction.fields.getTextInputValue('message');
         await interaction.channel.send({
             content: escape(message),
         });
 
-        await interaction.reply({
-            content: 'Message sent as in the current channel\nIf you would like to edit or delete this message, right click the message and choose `Apps > Edit Message` or `Apps > Delete Message` respectively.',
-            ephemeral: true,
-        });
+        await InteractionHelper.reply(
+            interaction,
+            'Message sent as in the current channel\nIf you would like to edit or delete this message, right click the message and choose `Apps > Edit Message` or `Apps > Delete Message` respectively.',
+            true,
+        );
     }
 }
 

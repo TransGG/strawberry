@@ -1,14 +1,16 @@
 import {
-    SelectMenuBuilder,
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
     channelLink,
+    SelectMenuBuilder,
 } from 'discord.js';
-import SelectMenu from '../SelectMenu.js';
+
 import { verbose } from '../../../../config/out.js';
-import startVerification from '../../../../verification/managers/startVerification.js';
 import { buildOptions } from '../../../../content/questions.js';
+import startVerification from '../../../../verification/managers/startVerification.js';
+import InteractionHelper from '../../../utils/InteractionHelper.js';
+import SelectMenu from '../SelectMenu.js';
 
 /**
  * Handler for preStartVerification select menu.
@@ -40,6 +42,7 @@ class preStartVerification extends SelectMenu {
      */
     async run(interaction) {
         verbose(`Request to start verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`);
+        await InteractionHelper.deferReply(interaction, true);
 
         // start verification
         await startVerification(
@@ -47,25 +50,26 @@ class preStartVerification extends SelectMenu {
             interaction.member,
             (ticket, message) => {
                 verbose(`Created ticket with id ${ticket.id} for ${interaction.user.tag} ${interaction.member.id}`);
-                return interaction.update({
-                    content: message,
-                    components: [
-                        new ActionRowBuilder()
-                            .addComponents(
-                                new ButtonBuilder()
-                                    .setURL(channelLink(ticket.id, ticket.guildId))
-                                    .setLabel('View Thread')
-                                    .setStyle(ButtonStyle.Link),
-                            ),
-                    ],
-                    ephemeral: true,
-                });
+                return InteractionHelper.reply(
+                    interaction,
+                    {
+                        content: message,
+                        components: [
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setURL(channelLink(ticket.id, ticket.guildId))
+                                        .setLabel('View Thread')
+                                        .setStyle(ButtonStyle.Link),
+                                ),
+                        ],
+                    },
+                );
             },
-            (message) => interaction.reply({
+            (message) => InteractionHelper.reply({
                 content: message
                     || ('Failed to start verification: no reason given. Please contact a staff member'
                         && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),
-                ephemeral: true,
             }),
             interaction.values[0],
         );

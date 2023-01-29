@@ -1,5 +1,7 @@
 import { ButtonBuilder, ButtonStyle } from 'discord.js';
+
 import mentionVerifiers from '../../../../../verification/managers/mentionVerifiers.js';
+import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import TakesArguments from '../../../TakesArguments.js';
 import Button from '../../Button.js';
 
@@ -53,6 +55,8 @@ class MentionVerifiers extends Button {
      * @param {string} type The type of mention verifiers button. 1 or 2.
      */
     async run(interaction, type) {
+        await InteractionHelper.deferUpdate(interaction);
+
         await mentionVerifiers(
             interaction.channel,
             interaction.member,
@@ -60,21 +64,22 @@ class MentionVerifiers extends Button {
             type,
             // disable buttons on resolve
             async (components) => {
-                await interaction.update({
-                    components,
-                });
+                await InteractionHelper.update(
+                    interaction,
+                    {
+                        components,
+                    },
+                );
 
                 // we don't use the built-in emoji formatter here because it makes it less apparent
                 // an emoji is supposed to be there if emoji is not found
-                return interaction.followUp({
-                    content: `Verifiers have been pinged. Please wait for them to respond <:max_heart:${maxHeartId}>`,
-                    ephemeral: true,
-                });
+                return InteractionHelper.reply(
+                    interaction,
+                    `Verifiers have been pinged. Please wait for them to respond <:max_heart:${maxHeartId}>`,
+                    true,
+                );
             },
-            (message) => interaction.reply({
-                content: message,
-                ephemeral: true,
-            }),
+            (message) => InteractionHelper.reply(interaction, message, true),
         );
     }
 }

@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
+
+import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
@@ -72,26 +74,27 @@ class Say extends SlashCommand {
 
         // send the message according to the parameters
         if (replyto === 'Interaction') {
-            await interaction.reply({ content: message, ephemeral });
+            await InteractionHelper.reply(interaction, message, ephemeral);
         } else if (!replyto || replyto === 'None') {
+            await InteractionHelper.deferReply(interaction, true);
+
             await interaction.channel.send(message);
-            await interaction.reply('Sent!');
+            await InteractionHelper.reply(interaction, 'Sent!');
         } else if (/^\d+$/.test(replyto)) { // replyto consists of only numbers, which we interpret as a message id
+            await InteractionHelper.deferReply(interaction, true);
             try {
                 const msgToReplyTo = await interaction.channel.messages.fetch(replyto);
                 await msgToReplyTo.reply(message);
-                await interaction.reply('Sent!');
+                await InteractionHelper.reply(interaction, 'Sent!');
             } catch {
-                await interaction.reply({
-                    content: `Message not found in this channel for id ${replyto}.`,
-                    ephemeral: true,
-                });
+                await InteractionHelper.reply(interaction, `Message not found in this channel for id ${replyto}.`, true);
             }
         } else {
-            await interaction.reply({
-                content: `Invalid input '${replyto}' for replyto. Should be one of the options or a message id.`,
-                ephemeral: true,
-            });
+            await InteractionHelper.reply(
+                interaction,
+                `Invalid input '${replyto}' for replyto. Should be one of the options or a message id.`,
+                true,
+            );
         }
     }
 }

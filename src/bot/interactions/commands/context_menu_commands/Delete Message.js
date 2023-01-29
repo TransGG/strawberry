@@ -1,4 +1,6 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
+
+import InteractionHelper from '../../../utils/InteractionHelper.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
 /**
@@ -30,16 +32,12 @@ class DeleteMessage extends ContextMenuCommand {
      */
     async run(interaction) {
         if (interaction.targetMessage.embeds.length > 0) {
-            await interaction.reply({
-                content: 'You cannot delete an embed.',
-                ephemeral: true,
-            });
+            await InteractionHelper.reply(interaction, 'You cannot delete an embed.', true);
         } else {
+            await InteractionHelper.deferReply(interaction, true);
+
             await interaction.targetMessage.delete();
-            await interaction.reply({
-                content: 'Message deleted.',
-                ephemeral: true,
-            });
+            await InteractionHelper.reply(interaction, 'Message deleted.');
         }
     }
 }

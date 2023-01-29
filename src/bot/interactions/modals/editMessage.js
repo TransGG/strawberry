@@ -1,10 +1,7 @@
-import {
-    ActionRowBuilder,
-    ModalBuilder,
-    TextInputBuilder,
-    TextInputStyle,
-} from 'discord.js';
+import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+
 import { escape } from '../../../formatters/escape.js';
+import InteractionHelper from '../../utils/InteractionHelper.js';
 import Modal from '../Modal.js';
 
 /**
@@ -47,16 +44,18 @@ class EditMessage extends Modal {
      * @param {string} messageId The id of the message to edit
      */
     async run(interaction, messageId) {
+        await InteractionHelper.deferReply(interaction, true);
+
         const message = await interaction.channel.messages.fetch(messageId);
         if (!message) {
-            await interaction.reply({ content: 'Message not found.', ephemeral: true });
+            await InteractionHelper.reply(interaction, 'Message not found.', true);
             return;
         }
 
         const messageInput = interaction.fields.getTextInputValue('message');
         await message.edit({ content: escape(messageInput) });
 
-        await interaction.reply({ content: 'Message edited.', ephemeral: true });
+        await InteractionHelper.reply(interaction, 'Message edited.', true);
     }
 }
 
