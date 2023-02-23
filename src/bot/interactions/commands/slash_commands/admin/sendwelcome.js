@@ -1,7 +1,7 @@
-import {
-    SlashCommandBuilder,
-} from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
+
 import { buildWelcomeComponents, welcomeEmbeds } from '../../../../../content/welcome.js';
+import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
@@ -34,19 +34,19 @@ class SendWelcome extends SlashCommand {
      */
     async run(interaction) {
         const preview = interaction.options.getBoolean('preview');
-        const components = buildWelcomeComponents(interaction.client);
+
+        const messageContent = {
+            embeds: welcomeEmbeds,
+            components: buildWelcomeComponents(interaction.client),
+        };
+
         if (preview) {
-            await interaction.reply({
-                embeds: welcomeEmbeds,
-                components,
-                ephemeral: true,
-            });
+            await InteractionHelper.reply(interaction, messageContent, true);
         } else {
-            await interaction.channel.send({
-                embeds: welcomeEmbeds,
-                components,
-            });
-            await interaction.reply({ content: 'Sent!', ephemeral: true });
+            await InteractionHelper.deferReply(interaction, true);
+
+            await interaction.channel.send(messageContent);
+            await InteractionHelper.reply(interaction, 'Sent!');
         }
     }
 }

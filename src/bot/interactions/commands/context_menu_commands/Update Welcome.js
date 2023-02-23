@@ -1,8 +1,7 @@
-import {
-    ApplicationCommandType,
-    ContextMenuCommandBuilder,
-} from 'discord.js';
+import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
+
 import { buildWelcomeComponents, welcomeEmbeds } from '../../../../content/welcome.js';
+import InteractionHelper from '../../../utils/InteractionHelper.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
 /**
@@ -34,21 +33,21 @@ class UpdateWelcome extends ContextMenuCommand {
      */
     async run(interaction) {
         if (interaction.targetMessage.components[0].components[1].data.custom_id === 'startVerification') {
+            await InteractionHelper.deferReply(interaction, true);
+
             const components = buildWelcomeComponents(interaction.client);
             await interaction.targetMessage.edit({
                 embeds: welcomeEmbeds,
                 components,
             });
 
-            await interaction.reply({
-                content: 'Update succeeded.',
-                ephemeral: true,
-            });
+            await InteractionHelper.send(interaction, 'Update succeeded.');
         } else {
-            await interaction.reply({
-                content: 'Update failed: Could not identify target message as welcome message',
-                ephemeral: true,
-            });
+            await InteractionHelper.send(
+                interaction,
+                'Update failed: Could not identify target message as welcome message',
+                true,
+            );
         }
     }
 }

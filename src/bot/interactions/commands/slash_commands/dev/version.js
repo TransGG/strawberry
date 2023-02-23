@@ -1,5 +1,7 @@
-import fs from 'fs';
 import { SlashCommandBuilder } from 'discord.js';
+import fs from 'fs';
+
+import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import SlashCommand from '../../SlashCommand.js';
 
 /**
@@ -28,12 +30,15 @@ class Version extends SlashCommand {
      *     slash command was executed
      */
     async run(interaction) {
+        await InteractionHelper.deferReply(interaction, true);
+
         const data = JSON.parse(await fs.promises.readFile('./package.json'));
 
-        await interaction.reply({
-            content: `Current version is ${data?.version ?? 'unknown'}`,
-            ephemeral: true,
-        });
+        await InteractionHelper.reply(
+            interaction,
+            `Current version is ${data?.version ?? 'unknown'}`,
+            true,
+        );
     }
 }
 

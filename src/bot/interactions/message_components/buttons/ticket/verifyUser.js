@@ -1,9 +1,8 @@
-import {
-    ButtonBuilder,
-    ButtonStyle,
-} from 'discord.js';
-import Button from '../../Button.js';
+import { ButtonBuilder, ButtonStyle } from 'discord.js';
+
 import verifyUser from '../../../../../verification/managers/verifyUser.js';
+import InteractionHelper from '../../../../utils/InteractionHelper.js';
+import Button from '../../Button.js';
 
 /**
  * Handler for verifyUser button. Verifies a user
@@ -33,19 +32,25 @@ class VerifyUser extends Button {
      *     command was executed
      */
     async run(interaction) {
+        await InteractionHelper.deferReply(interaction);
+
         await verifyUser(
             interaction.channel,
             interaction.member,
-            (message) => interaction.reply({
-                content: message,
-                allowedMentions: {
-                    parse: [],
+            (message) => InteractionHelper.reply(
+                interaction,
+                {
+                    content: message,
+                    allowedMentions: {
+                        parse: [],
+                    },
                 },
-            }),
-            (message) => interaction.reply({
-                content: message || 'Verification failed: no message given',
-                ephemeral: true,
-            }),
+            ),
+            (message) => InteractionHelper.reply(
+                interaction,
+                message || 'Verification failed: no message given',
+                true,
+            ),
         );
     }
 }
