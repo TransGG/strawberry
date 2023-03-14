@@ -19,6 +19,7 @@ async function closeTicket(ticket) {
  */
 async function verify(member) {
     await assignRole(member, config.roles.verified);
+    await assignRole(member, config.roles.newbie);
 }
 
 /**
