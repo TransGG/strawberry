@@ -22,19 +22,27 @@ const questionsObjects = [
     },
 ];
 
+const postscripts = [
+];
+
 /**
  * Builds questions for verification prompt, altering the question list based on the id passed
  * @param {string} id Id of option, should match an option from prompt select select menu
  * @returns {string[]} An array of formatted questions
  */
-function buildQuestions(id) {
-    const questionObj = questionsObjects.find((questionObject) => questionObject.id === id);
-    if (questionObj) {
-        return always.concat(questionObj.questions).map(
-            (questionText, index) => `${index + 1}. ${questionText}`,
+function formatQuestions(id) {
+    let questions = always;
+
+    const questionsForId = (
+        questionsObjects.find((questionObject) => questionObject.id === id).questions
         );
+    if (questionsForId) {
+        questions = questions.concat(questionsForId);
     }
-    return always.map((q, i) => `${i + 1}. ${q}`);
+
+    return questions
+        .map((questionText, index) => `${index + 1}. ${questionText}`)
+        .concat(postscripts.map((postscript) => `# ${postscript}`));
 }
 
 /**
@@ -49,13 +57,7 @@ function buildOptions() {
     }));
 }
 
-// const questions = {
-//     always,
-//     questionsObject,
-// };
-
 export {
-    // questions,
-    buildQuestions,
+    formatQuestions,
     buildOptions,
 };
