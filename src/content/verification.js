@@ -69,14 +69,13 @@ function buildPromptEmbeds(applicant, type) {
 
     // TODO: read the questions from a file
     const now = Date.now();
-    const transHeartEmojiId = '960885444285968395';
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
             .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}`)
             .setFooter({
-                text: `Short or vague answers may result in more questions <a:TPA_Trans_Heart:${transHeartEmojiId}>`, // explicit emoji mention in case rendering fails
+                text: `Short or vague answers may result in more questions 💙`,
             })
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
