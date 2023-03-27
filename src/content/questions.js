@@ -1,23 +1,26 @@
 const always = [
     'Do you agree to the server rules / Discord Community Guidelines & Discord ToS?',
-    'What name would you like to be referred as (Doesn\'t need to be your legal name)',
+    'What name would you like to be referred to as?',
     'What are your pronouns?',
-    'What is your favorite rule?',
+    'What is your favorite rule from our server rules?',
 ];
 
 const questionsObjects = [
     {
         select: 'Transgender / Genderfluid / Non-Binary',
         id: 'isTrans',
-        questions: ['What made you discover you were Transgender / Genderfluid / Non-Binary'],
+        questions: [
+            'How did you figure out your gender identity?',
+            'What makes you the happiest about being your gender?',
+        ],
     },
     {
         select: 'Cisgender / Other LGBTQ+',
         id: 'isCis',
         questions: [
-            'Why did you decide to join a trans server instead of any general LGTBQ+ server?',
-            'What would be an example of invalidating someone\'s identity?',
-            'Do you identify as a member of the LGBTQ+ community? If so, where do you identify? (Bi/pan/ace/aro/etc.)',
+            'What made you want to be part of this trans-focused community above a general or LGBTQ+ one?',
+            'What would you do to be an ally in this community?',
+            'Do you identify as a member of the LGBTQ+ community? If so, what? (Bi/pan/ace/aro/etc.)',
         ],
     },
 ];
@@ -35,7 +38,7 @@ function formatQuestions(id) {
 
     const questionsForId = (
         questionsObjects.find((questionObject) => questionObject.id === id).questions
-        );
+    );
     if (questionsForId) {
         questions = questions.concat(questionsForId);
     }

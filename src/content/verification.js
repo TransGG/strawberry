@@ -1,8 +1,5 @@
-import {
-    ActionRowBuilder, codeBlock, EmbedBuilder, roleMention,
-} from 'discord.js';
+import { ActionRowBuilder, codeBlock, EmbedBuilder } from 'discord.js';
 
-import config from '../config/config.js';
 import buildTimeInfoString from '../formatters/stringBuilders.js';
 import { formatQuestions } from './questions.js';
 
@@ -20,7 +17,7 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
                 name: `${applicant.user.tag}`,
                 iconURL: applicant.user.avatarURL(),
             })
-            .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
+            .setDescription(`${helpMessage} ${applicant.user.tag}`)
             .setTimestamp()
             .setFooter({
                 text: `${client.user.tag}`,
@@ -72,13 +69,14 @@ function buildPromptEmbeds(applicant, type) {
 
     // TODO: read the questions from a file
     const now = Date.now();
+    const transHeartEmojiId = '960885444285968395';
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
             .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}`)
             .setFooter({
-                text: 'Short or undetailed answers will result in a longer wait or more questions 😊',
+                text: `Short or vague answers may result in more questions <a:TPA_Trans_Heart:${transHeartEmojiId}>`, // explicit emoji mention in case rendering fails
             })
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
