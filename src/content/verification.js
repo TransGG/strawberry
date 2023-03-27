@@ -1,7 +1,7 @@
-import { ActionRowBuilder, EmbedBuilder, roleMention } from 'discord.js';
-import config from '../config/config.js';
+import { ActionRowBuilder, codeBlock, EmbedBuilder } from 'discord.js';
+
 import buildTimeInfoString from '../formatters/stringBuilders.js';
-import { buildQuestions } from './questions.js';
+import { formatQuestions } from './questions.js';
 
 /**
  * Builds the embeds used in mentioning verifiers
@@ -17,7 +17,7 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
                 name: `${applicant.user.tag}`,
                 iconURL: applicant.user.avatarURL(),
             })
-            .setDescription(`${roleMention(config.roles.verifier)} ${helpMessage} ${applicant.user.tag}`)
+            .setDescription(`${helpMessage} ${applicant.user.tag}`)
             .setTimestamp()
             .setFooter({
                 text: `${client.user.tag}`,
@@ -61,23 +61,26 @@ function buildPromptComponents(client, mentionVerifiersDisabled = false) {
 /**
  * Builds embeds for a prompt
  * @param {GuildMember} applicant The applicant
+ * @param {string} type The type of questions
  * @returns {EmbedBuilder[]} The embeds for a prompt
  */
 function buildPromptEmbeds(applicant, type) {
+    const questionsSection = codeBlock('markdown', formatQuestions(type).join('\n\n'));
+
     // TODO: read the questions from a file
     const now = Date.now();
+    const transHeartEmojiId = '960885444285968395';
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
-            .setDescription(`Hi! As a part of the verification process, we ask that you quickly answer the following questions.\nPlease note that there are no right or wrong to answers these questions, but please try and give thorough / detailed responses to be verified quickly.\n\`\`\`markdown\n${buildQuestions(type).join('\n\n')}\n\`\`\``)
-            .setFooter({ text: 'After you have answered all of the questions, please click the "Finished Answering!" button below which will add our verifier staff to your thread.\nIf you have any problems while answering, please click the "I Need Help Please" button instead.' })
+            .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}`)
+            .setFooter({
+                text: `Short or vague answers may result in more questions <a:TPA_Trans_Heart:${transHeartEmojiId}>`, // explicit emoji mention in case rendering fails
+            })
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
-            .setAuthor({
-                name: applicant.user.tag,
-            })
-            .setTitle('User Information')
+            .setTitle(applicant.user.tag)
             .setColor(0xE6B8D8)
             .setThumbnail(applicant.user.displayAvatarURL())
             .addFields(

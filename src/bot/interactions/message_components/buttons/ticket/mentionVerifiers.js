@@ -75,7 +75,7 @@ class MentionVerifiers extends Button {
                 // an emoji is supposed to be there if emoji is not found
                 return InteractionHelper.reply(
                     interaction,
-                    `Verifiers have been pinged. Please wait for them to respond <:max_heart:${maxHeartId}>`,
+                    `Verifiers have been pinged. Please be patient as they go through the queue <:max_heart:${maxHeartId}>`,
                     true,
                 );
             },
