@@ -20,7 +20,7 @@ const questionsObjects = [
         questions: [
             'What made you want to be part of this trans-focused community above a general or LGBTQ+ one?',
             'What would you do to be an ally in this community?',
-            'Do you identify as a member of the LGBTQ+ community? If so, what? (Bi/pan/ace/aro/etc.)',
+            'Do you identify as a member of the LGBTQ+ community? If so, what is your identity?',
         ],
     },
 ];
