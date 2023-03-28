@@ -75,7 +75,7 @@ function buildPromptEmbeds(applicant, type) {
             .setColor(0xB8CCE6)
             .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}`)
             .setFooter({
-                text: `Short or vague answers may result in more questions 💙`,
+                text: 'Short or vague answers may result in more questions 💙',
             })
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
