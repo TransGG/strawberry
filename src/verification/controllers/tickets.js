@@ -41,7 +41,7 @@ async function createTicket(threads, applicant, promptCategory) {
     // wait 30 seconds to send the message
     setTimeout(async () => {
         await webhook.send({
-            content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\nPlease try to answer all the questions within 3 hours to avoid being kicked due to inactivity.\When you’ve finished answering, or if you need any help, just click the buttons above to add the verifiers to your thread ^^\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
+            content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\nPlease try to answer all the questions within 3 hours to avoid being kicked due to inactivity.\nWhen you’ve finished answering, or if you need any help, just click the buttons above to add the verifiers to your thread ^^\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
             username: 'Kyle ♡ [Any Pronouns]',
             avatarURL: 'https://i.imgur.com/fOJFzGz.png',
             threadId: thread.id,
