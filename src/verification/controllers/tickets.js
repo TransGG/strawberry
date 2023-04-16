@@ -46,7 +46,7 @@ async function createTicket(threads, applicant, promptCategory) {
             avatarURL: 'https://i.imgur.com/fOJFzGz.png',
             threadId: thread.id,
         });
-    }, 5000);
+    }, 23000);
 
     return thread;
 }
