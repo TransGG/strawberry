@@ -76,6 +76,33 @@ const development = {
     },
 };
 
+const devServ = {
+    debugOut: console.debug,
+    verboseOut: console.info,
+    clientId: '1044280585897640006',
+    verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays,
+    privateThread: ChannelType.PrivateThread,
+    guild: '987229949041725520',
+    channels: {
+        lobby: '1097203594631073933',
+        verifyLogs: '1097203635689107516',
+        verifyLogsSecondary: '1097203656551583865',
+        welcome: '1097203677468561541',
+        rules: '1097203694539387111',
+        roles: '1097203703930421439 ',
+        introduce: '1097203721802354868',
+    },
+    roles: {
+        staffRoles: [
+            '986220638958137355',
+        ],
+        verifier: '1046271388782186590',
+        verified: '1092270181012742144',
+        greeter: '1097204070252548097',
+    },
+};
+
+
 const production = {
     debugOut: () => { },
     verboseOut: () => { },
@@ -115,6 +142,8 @@ const production = {
 
 if (process.env.NODE_ENV === 'development') {
     Object.assign(config, development);
+} else if (process.env.NODE_ENV === 'devServ') {
+    Object.assign(config, devServ);
 } else if (process.env.NODE_ENV === 'production') {
     Object.assign(config, production);
 } else {

@@ -3,7 +3,7 @@ import {
     ButtonBuilder,
     ButtonStyle,
     channelLink,
-    SelectMenuBuilder,
+    StringSelectMenuBuilder,
 } from 'discord.js';
 
 import { verbose } from '../../../../config/out.js';
@@ -25,11 +25,11 @@ class preStartVerification extends SelectMenu {
     }
 
     /**
-     * @returns {SelectMenuBuilder} The data that describes the select menu format to the Discord
+     * @returns {StringSelectMenuBuilder} The data that describes the menu format to the Discord
      *     API.
      */
     getData() {
-        return new SelectMenuBuilder()
+        return new StringSelectMenuBuilder()
             .setCustomId(this.name)
             .setPlaceholder('What do you identify as?')
             .addOptions(buildOptions());

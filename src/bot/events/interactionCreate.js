@@ -41,7 +41,7 @@ class InteractionCreate extends Event {
             verbose(`${interaction.user.tag} ran button ${customId}, args:`, args);
 
             await button.run(interaction, ...args);
-        } else if (interaction.isSelectMenu()) { // select menus
+        } else if (interaction.isStringSelectMenu()) { // select menus
             const [customId, ...args] = TakesArguments.tokenize(interaction.customId);
             const selectMenu = interaction.client.getSelectMenu(customId);
 

@@ -1,4 +1,4 @@
-import { SelectMenuBuilder } from 'discord.js';
+import { StringSelectMenuBuilder } from 'discord.js';
 import SelectMenu from '../SelectMenu.js';
 
 /**
@@ -14,11 +14,11 @@ class Example extends SelectMenu {
     }
 
     /**
-     * @returns {SelectMenuBuilder} The data that describes the select menu format to the Discord
+     * @returns {StringSelectMenuBuilder} The data that describes the menu format to the Discord
      *     API.
      */
     getData() {
-        return new SelectMenuBuilder()
+        return new StringSelectMenuBuilder()
             .setCustomId(this.name)
             .setPlaceholder('Placeholder Text')
             .addOptions([
