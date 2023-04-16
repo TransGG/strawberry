@@ -44,6 +44,79 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
     );
 
     await resolve(ticket, 'Created a ticket for you to verify your account');
+
+    const webhooks = await ticket.parent.fetchWebhooks();
+
+    if (!webhooks.size) {
+        await ticket.parent.createWebhook({
+            name: 'Verification Kyle Proxy',
+        });
+    }
+
+    const webhook = (await ticket.parent.fetchWebhooks()).first();
+
+    // Add a 23s timer to send a welcome message to the user
+
+    setTimeout(async () => {
+        const thread = await ticket.parent.threads.fetch(ticket.id).catch(() => { });
+        if (thread && !thread.archived) {
+            const messages = await thread.messages.fetch();
+            const userMessages = messages.filter((m) => m.author.id === applicant.id);
+
+            if (userMessages.size === 0) {
+                await webhook.send({
+                    content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\n\nI just wanted to check in with you and give you a heads up that we kindly ask all questions to be answered within 3 hours to avoid being kicked for inactivity.\n\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
+                    username: 'Kyle ♡ [Any Pronouns]',
+                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    threadId: ticket.id,
+                });
+            }
+        }
+    }, 23000);
+
+    // Add a 23 + 15s timer to send a message to the user if their account is new
+
+    const member = await ticket.guild.members.fetch(applicant.id).catch(() => { });
+    if (member && member.user.createdTimestamp > Date.now() - 1814400000) {
+        setTimeout(async () => {
+            const thread = await ticket.parent.threads.fetch(ticket.id);
+            if (thread && !thread.archived) {
+                const messages = await thread.messages.fetch();
+                const userMessages = messages.filter((m) => m.author.id === applicant.id);
+
+                if (userMessages.size === 0) {
+                    await webhook.send({
+                        content: 'Also, I noticed your account is pretty new, could you explain why?\n\nAnd do you happen to have any other online accounts (Twitter/Reddit/Etc) which has more history that you could send us a link to?\n\nNw if not ^^',
+                        username: 'Kyle ♡ [Any Pronouns]',
+                        avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                        threadId: ticket.id,
+                    });
+                }
+            }
+        }, 38000);
+    }
+
+    // Add a 3h timer to remind staff to close the ticket if the user hasn't responded
+
+    setTimeout(async () => {
+        const thread = await ticket.parent.threads.fetch(ticket.id).catch(() => { });
+        if (thread && !thread.archived) {
+            const messages = await thread.messages.fetch();
+            const userMessages = messages.filter((m) => m.author.id === applicant.id);
+
+            if (userMessages.size === 0) {
+                await webhook.send({
+                    content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.roles.inactivityPing ? ` | (<@&${config.roles.inactivityPing}>)` : ''}`,
+                    username: 'Kyle ♡ [Any Pronouns]',
+                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    threadId: ticket.id,
+                    allowedMentions: {
+                        roles: [config.roles.inactivityPing],
+                    },
+                });
+            }
+        }
+    }, 10800000);
 }
 
 export default startVerification;
