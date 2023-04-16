@@ -99,9 +99,9 @@ const devServ = {
         verifier: '1046271388782186590',
         verified: '1092270181012742144',
         greeter: '1097204070252548097',
+        inactivityPing: '1046271388782186590',
     },
 };
-
 
 const production = {
     debugOut: () => { },
@@ -136,6 +136,7 @@ const production = {
         verified: '959748411844874240',
         newbie: '1085261027807088710',
         greeter: '978861945253945394',
+        inactivityPing: '1097289190682660884',
     },
 
 };
