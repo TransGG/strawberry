@@ -74,7 +74,7 @@ class MessageCreate extends Event {
                     }
                 }
             }
-        }, 5000);
+        }, 900000);
     }
 }
 
