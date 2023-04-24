@@ -100,6 +100,7 @@ const devServ = {
         verified: '1092270181012742144',
         greeter: '1097204070252548097',
         inactivityPing: '1046271388782186590',
+        emojiVoid: '1100125547297783858',
     },
 };
 
@@ -137,6 +138,7 @@ const production = {
         newbie: '1085261027807088710',
         greeter: '978861945253945394',
         inactivityPing: '1097289190682660884',
+        emojiVoid: '1093196851169218560',
     },
 
 };
