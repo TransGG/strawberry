@@ -45,7 +45,13 @@ const config = {
         staffRoles: [],
         verifier: '',
         verified: '',
+        member: '',
         greeter: '',
+        catagories: {
+            isTrans: '',
+            isQuestioning: '',
+            isCis: '',
+        },
     },
 
 };
@@ -98,9 +104,15 @@ const devServ = {
         ],
         verifier: '1046271388782186590',
         verified: '1092270181012742144',
+        member: '1105354354501881866',
         greeter: '1097204070252548097',
         inactivityPing: '1046271388782186590',
         emojiVoid: '1100125547297783858',
+        catagories: {
+            isTrans: '1105354251909206078',
+            isQuestioning: '1105354300756086794',
+            isCis: '1105354278111019048',
+        },
     },
 };
 
@@ -135,10 +147,16 @@ const production = {
         ],
         verifier: '959916105294569503',
         verified: '959748411844874240',
+        member: '1105230385769623584',
         newbie: '1085261027807088710',
         greeter: '978861945253945394',
         inactivityPing: '1097289190682660884',
         emojiVoid: '1093196851169218560',
+        catagories: {
+            isTrans: '1105349250335907870',
+            isQuestioning: '1105349324688338964',
+            isCis: '1105349438953762837',
+        },
     },
 
 };

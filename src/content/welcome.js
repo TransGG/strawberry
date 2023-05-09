@@ -34,12 +34,6 @@ const mentalHealthEmbed = new EmbedBuilder()
     .setDescription('We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have any vent/advice channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️')
     .setImage('https://i.imgur.com/CBbbw0d.png');
 
-const getVerifiedEmbed = new EmbedBuilder()
-    .setColor(0x6F6DB8)
-    .setTitle('Getting Verified')
-    .setDescription('To become verified please hit the button below ⬇️\nBy clicking this button you agree to follow the rules listed above.\nThank you, and have fun in our community 💜\n\n__***Note***__:```If you are in the server only for the emojis, and do not wish to be verified, please click the "Emojis Only" button below and we will not purge you due to inactivity.```')
-    .setImage('https://i.imgur.com/CBbbw0d.png');
-
 function buildWelcomeComponents(client) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.
        From original Theo code */
@@ -62,7 +56,6 @@ const welcomeEmbeds = [
     rulesEmbed,
     notesReportEmbed,
     mentalHealthEmbed,
-    getVerifiedEmbed,
 ];
 
 export {
