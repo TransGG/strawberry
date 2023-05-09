@@ -49,7 +49,7 @@ Permanent invite link: https://discord.gg/TransPlace`,
                 new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
-                            .setURL(channelLink(magicNumber, config.guild))
+                            .setURL('https://discord.gg/TransPlace')
                             .setLabel('Join TransPlace!')
                             .setStyle(ButtonStyle.Link),
                     ),

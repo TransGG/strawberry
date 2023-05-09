@@ -40,14 +40,8 @@ class GuildMemberUpdate extends Event {
         // Make sure they have the member role now
         if (!newMember.roles.cache.has(config.roles.member)) { return; }
 
-        const catagories = {
-            isTrans: '1105354251909206078',
-            isQuestioning: '1105354300756086794',
-            isCis: '1105354278111019048',
-        };
-
-        const category = Object.keys(catagories).find((key) => {
-            const output = newMember.roles.cache.has(catagories[key]);
+        const category = Object.keys(config.roles.catagories).find((key) => {
+            const output = newMember.roles.cache.has(config.roles.catagories[key]);
             return output;
         });
 
