@@ -183,7 +183,7 @@ function buildGreetEmbeds(applicant) {
             .setColor(0xF5F5F5)
             .setTitle(`Welcome to TransPlace, a place for trans people. ${pickEmoji()}`)
             .setDescription(
-                `${bold(`Welcome ${userMention(applicant.id)}! We're glad to finally meet you!`)}\n${italic('Why don\'t you check out some of the channels below to get started?')}\n\n${channelMention(config.channels.rules)} - Read the Rules!\n${channelMention(config.channels.roles)} - Assign some Roles!\n${channelMention(config.channels.introduce)} - Introduce Yourself!`,
+                `${bold(`Welcome ${userMention(applicant.id)}! We're glad to finally meet you!`)}\n${italic('Why don\'t you check out some of the channels below to get started?')}\n\n<id:customize> - Assign some Roles!\n${channelMention(config.channels.introduce)} - Introduce Yourself!\n${channelMention(config.channels.general)} - Start Chatting!`,
             )
             .setImage(pickImageUrl())
             .setFooter({

@@ -17,13 +17,16 @@ import { FatalError } from '../bot/utils/errors.js';
  * @property {Snowflake} channels.verifyLogs          - Main log channel for verification logs
  * @property {Snowflake} channels.verifyLogsSecondary - Secondary log channel for verification logs. Currently used for verify kick logs
  * @property {Snowflake} channels.welcome             - Secondary log channel for verification logs. Currently used for verify kick logs
- * @property {Snowflake} channels.rules               - Rules channel
- * @property {Snowflake} channels.roles               - Get roles channel
+ * @property {Snowflake} channels.general             - General channel
  * @property {Snowflake} channels.introduce           - Channel for self-introductions
- * @property {Object}    roles      - Relevant roles
- * @property {Snowflake} roles.verifier               - Verifier: the chief agents of the verification process
- * @property {Snowflake} roles.verified               - Verified: the role that is awarded to people who get verified
- * @property {Snowflake} roles.greeter                - Greeter: role to be notified of new members
+ * @property {Object}    roles   - Relevant roles
+ * @property {Snowflake} roles.verifier - Verifier: the chief agents of the verification process
+ * @property {Snowflake} roles.verified - Verified: the role that is awarded to people who get verified
+ * @property {Snowflake} roles.greeter  - Greeter: role to be notified of new members
+ * @property {Object}    roles.catagories   - Relevant role catagories
+ * @property {Snowflake} roles.catagories.isTrans       - Trans: role for trans people
+ * @property {Snowflake} roles.catagories.isQuestioning - Questioning: role for trans questioning people
+ * @property {Snowflake} roles.catagories.isCis         - Cis: role for cisgender people
  */
 const config = {
     verboseOut: () => { },
@@ -37,8 +40,7 @@ const config = {
         verifyLogs: '',
         verifyLogsSecondary: '',
         welcome: '',
-        rules: '',
-        roles: '',
+        general: '',
         introduce: '',
     },
     roles: {
@@ -68,8 +70,7 @@ const development = {
         verifyLogs: '1023658079675498568', // test 2
         verifyLogsSecondary: '1024037750116204675', // test 3
         welcome: '1023658079675498568', // test 2
-        rules: '987230161764225044', // test
-        roles: '987230161764225044',
+        general: '987230161764225044', // test
         introduce: '987230161764225044',
     },
     roles: {
@@ -94,8 +95,7 @@ const devServ = {
         verifyLogs: '1097203635689107516',
         verifyLogsSecondary: '1097203656551583865',
         welcome: '1097203677468561541',
-        rules: '1097203694539387111',
-        roles: '1097203703930421439 ',
+        general: '1097203694539387111',
         introduce: '1097203721802354868',
     },
     roles: {
@@ -128,8 +128,7 @@ const production = {
         verifyLogs: '987377031434100747',           // transplace:verify-logs
         verifyLogsSecondary: '1025521840816402442', // transplace:verify-kick-logs
         welcome: '978883070662959134',              // transplace:welcome-wagon
-        rules: '964333907447250975',                // transplace:rules-info
-        roles: '964279302877241375',                // transplace:self-roles
+        general: '960920453705257061',                // transplace:rules-info
         introduce: '964221571071869050',            // transplace:entrance-hall
     },
     roles: {
