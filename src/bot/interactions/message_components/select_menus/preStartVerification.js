@@ -66,7 +66,7 @@ class preStartVerification extends SelectMenu {
                     },
                 );
             },
-            (message) => InteractionHelper.reply({
+            (message) => interaction.editReply({
                 content: message
                     || ('Failed to start verification: no reason given. Please contact a staff member'
                         && console.error(`Rejection w/o reason when starting verification in channel ${interaction.channel.id} for ${interaction.user.tag} ${interaction.member.id}`)),

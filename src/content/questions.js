@@ -1,7 +1,4 @@
 const always = [
-    'Do you agree to the server rules / Discord Community Guidelines & Discord ToS?',
-    'What name would you like to be referred to as?',
-    'What are your pronouns?',
     'What is your favorite rule from our server rules?',
 ];
 
@@ -10,22 +7,33 @@ const questionsObjects = [
         select: 'Transgender / Genderfluid / Non-Binary',
         id: 'isTrans',
         questions: [
+            'What do E and T mean in trans contexts?',
+            'What does the word Transgender mean to you?',
             'How did you figure out your gender identity?',
-            'What makes you the happiest about being your gender?',
+        ],
+    },
+    {
+        select: 'Transgender Questioning',
+        id: 'isQuestioning',
+        questions: [
+            'If you could change three things about yourself right now, what would they be?',
+            'What does the word Transgender mean to you?',
+            'What made you begin questioning your gender identity?',
         ],
     },
     {
         select: 'Cisgender / Other LGBTQ+',
         id: 'isCis',
         questions: [
-            'What made you want to be part of this trans-focused community above a general or LGBTQ+ one?',
-            'What would you do to be an ally in this community?',
-            'Do you identify as a member of the LGBTQ+ community? If so, what is your identity?',
+            'What about this server being trans-focused made you want to join',
+            'What would you do as/being an ally in this server',
+            'What does the word Transgender mean to you?',
         ],
     },
 ];
 
 const postscripts = [
+    'Please answer these questions by sending a message in this thread',
 ];
 
 /**
@@ -45,7 +53,7 @@ function formatQuestions(id) {
 
     return questions
         .map((questionText, index) => `${index + 1}. ${questionText}`)
-        .concat(postscripts.map((postscript) => `# ${postscript}`));
+        .concat(postscripts.map((postscript) => `> ${postscript}`));
 }
 
 /**

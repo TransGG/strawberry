@@ -67,16 +67,12 @@ function buildPromptComponents(client, mentionVerifiersDisabled = false) {
 function buildPromptEmbeds(applicant, type) {
     const questionsSection = codeBlock('markdown', formatQuestions(type).join('\n\n'));
 
-    // TODO: read the questions from a file
     const now = Date.now();
     return [
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
-            .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}`)
-            .setFooter({
-                text: 'Short or vague answers may result in more questions 💙',
-            })
+            .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}\n[Click here to view our server rules.](https://canary.discord.com/channels/959551566388547676/1057132419150532678/1057157755623968810)`)
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
             .setTitle(applicant.user.tag)

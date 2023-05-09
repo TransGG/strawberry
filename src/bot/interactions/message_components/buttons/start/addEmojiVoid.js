@@ -7,7 +7,9 @@ import {
 } from '../../../../../config/out.js';
 import Button from '../../Button.js';
 import config from '../../../../../config/config.js';
-
+import { isClosed } from '../../../../../verification/controllers/ticket.js';
+import { fetchMostRecentTicket } from '../../../../../verification/controllers/tickets.js';
+import { closeTicket, CloseReason } from '../../../../../verification/managers/closeTicket.js';
 /**
  * Handler for AddEmojiVoid button.
  */
@@ -49,6 +51,15 @@ class AddEmojiVoid extends Button {
                 ephemeral: true,
             });
         } else if (!interaction.member.roles.cache.has(config.roles.verified)) {
+            const ticket = await fetchMostRecentTicket(
+                interaction.member.client.channels.cache.get(config.channels.lobby).threads,
+                interaction.member,
+            );
+
+            if (ticket && !isClosed(ticket)) {
+                await closeTicket(ticket, CloseReason.emoji);
+            }
+
             interaction.member.roles.add(config.roles.emojiVoid);
             interaction.reply({
                 content: 'You have been added to the emoji void. You will not be able to see any messages from other members until you are verified.',
