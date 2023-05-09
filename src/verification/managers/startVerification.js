@@ -65,7 +65,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
             if (userMessages.size === 0) {
                 await webhook.send({
-                    content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\n\nI just wanted to check in with you and give you a heads up that we kindly ask all questions to be answered within 3 hours to avoid being kicked for inactivity.\n> ***Also, please make sure to click \`"Finished Answering!\` when your done!***\n\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
+                    content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\n\nI just wanted to check in with you and give you a heads up that we kindly ask all questions to be answered within 3 hours to avoid being kicked for inactivity.\n\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
                     username: 'Kyle ♡ [Any Pronouns]',
                     avatarURL: 'https://i.imgur.com/fOJFzGz.png',
                     threadId: ticket.id,
