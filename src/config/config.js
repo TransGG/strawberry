@@ -129,7 +129,6 @@ const production = {
         verifyLogsSecondary: '1025521840816402442', // transplace:verify-kick-logs
         welcome: '978883070662959134',              // transplace:welcome-wagon
         general: '960920453705257061',                // transplace:rules-info
-        roles: '964279302877241375',                // transplace:self-roles
         introduce: '964221571071869050',            // transplace:entrance-hall
     },
     roles: {
