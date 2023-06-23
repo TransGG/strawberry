@@ -25,22 +25,20 @@ class MessageCreate extends Event {
             message.author.bot
             || message.channel.type !== 12
             || !message.channel.parent
-            || message.channel.parent.id !== config.channels.rules
+            || message.channel.parent.id !== config.channels.lobby
         ) {
             return;
         }
 
-        if (message.member.roles.cache.size > 1) { return; }
+        if (message.member.roles.cache.has(config.roles.verified)) { return; }
         userMap.set(message.author.id, message.id);
 
         setTimeout(async () => {
             if (userMap.get(message.author.id) === message.id) {
                 userMap.delete(message.author.id);
+
                 const thread = await message.channel.parent.threads.fetch(message.channel);
                 if (thread && !thread.archived) {
-                    const member = await message.guild.members.fetch(message.author);
-                    if (member.roles.cache.size > 1) { return; }
-
                     const messages = await message.channel.messages.fetch({ limit: 50 });
 
                     // Check if there is a reminder message
@@ -66,7 +64,7 @@ class MessageCreate extends Event {
                         const webhook = (await message.channel.parent.fetchWebhooks()).first();
 
                         await webhook.send({
-                            content: `\`[Reminder]\`\n${message.author} Please make sure to click "Finished Answering!" or "I Need Help Please." to complete the verification process. ^^`,
+                            content: `\`[Reminder]\`\n${message.author} Please make sure to click the \`"Finished Answering!"\` or \`"I Need Help Please."\` buttons at the top of the channel after you've finished answering to complete the verification process. ^^`,
                             username: 'Kyle ♡ [Any Pronouns]',
                             avatarURL: 'https://i.imgur.com/fOJFzGz.png',
                             threadId: message.channel.id,

@@ -36,6 +36,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // create new ticket
     const ticket = await createTicket(threads, applicant, promptCategory);
+    console.log(config.channels.verifyLogs);
     await createVerifyTicketCreateLog(
         ticket.guild.channels.cache.get(config.channels.verifyLogs),
         ticket,
@@ -94,6 +95,20 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
                 }
             }
         }, 38000);
+    }
+
+    if (member && member.roles.cache.has(config.roles.place)) {
+        setTimeout(async () => {
+            const thread = await ticket.parent.threads.fetch(ticket.id);
+            if (thread && !thread.archived) {
+                await webhook.send({
+                    content: 'I can see that you picked up the r/place 2023 role, could you share your reddit username / link your reddit account?',
+                    username: 'Kyle ♡ [Any Pronouns]',
+                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    threadId: ticket.id,
+                });
+            }
+        }, 60000);
     }
 
     // Add a 3h timer to remind staff to close the ticket if the user hasn't responded
