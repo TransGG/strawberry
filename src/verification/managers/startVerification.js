@@ -120,7 +120,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
             const userMessages = messages.filter((m) => m.author.id === applicant.id);
 
             if (userMessages.size === 0) {
-                await webhook.send({
+                await thread.send({
                     content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.roles.inactivityPing ? ` | (<@&${config.roles.inactivityPing}>)` : ''}`,
                     username: 'Kyle ♡ [Any Pronouns]',
                     avatarURL: 'https://i.imgur.com/fOJFzGz.png',
