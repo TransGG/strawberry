@@ -36,7 +36,6 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // create new ticket
     const ticket = await createTicket(threads, applicant, promptCategory);
-    console.log(config.channels.verifyLogs);
     await createVerifyTicketCreateLog(
         ticket.guild.channels.cache.get(config.channels.verifyLogs),
         ticket,
