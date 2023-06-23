@@ -8,6 +8,7 @@ async function startBot(clean, registerCommands, guildId) {
         intents: [
             Discord.GatewayIntentBits.Guilds,
             Discord.GatewayIntentBits.GuildMembers,
+            Discord.GatewayIntentBits.GuildMessages,
         ],
     });
 
