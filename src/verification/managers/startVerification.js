@@ -3,6 +3,7 @@ import { createVerifyTicketCreateLog } from '../controllers/log.js';
 import { isVerified } from '../controllers/member.js';
 import { isClosed, phantomPing, refreshTicket } from '../controllers/ticket.js';
 import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
+import { denyVerification, DenyConsequence } from './denyVerification.js';
 
 /**
  * Entry point for starting verification
@@ -96,6 +97,20 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
         }, 38000);
     }
 
+    if (member && member.roles.cache.has(config.roles.place)) {
+        setTimeout(async () => {
+            const thread = await ticket.parent.threads.fetch(ticket.id);
+            if (thread && !thread.archived) {
+                await webhook.send({
+                    content: 'I can see that you picked up the r/place 2023 role, could you share your reddit username / link your reddit account?',
+                    username: 'Kyle ♡ [Any Pronouns]',
+                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    threadId: ticket.id,
+                });
+            }
+        }, 60000);
+    }
+
     // Add a 3h timer to remind staff to close the ticket if the user hasn't responded
 
     setTimeout(async () => {
@@ -105,10 +120,8 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
             const userMessages = messages.filter((m) => m.author.id === applicant.id);
 
             if (userMessages.size === 0) {
-                await webhook.send({
+                await thread.send({
                     content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.roles.inactivityPing ? ` | (<@&${config.roles.inactivityPing}>)` : ''}`,
-                    username: 'Kyle ♡ [Any Pronouns]',
-                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
                     threadId: ticket.id,
                     allowedMentions: {
                         roles: [config.roles.inactivityPing],
@@ -117,6 +130,43 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
             }
         }
     }, 10800000);
+
+    // check if they have any messages in the past 24 hours
+    setTimeout(async () => {
+        const thread = await ticket.parent.threads.fetch(ticket.id).catch(() => { });
+        if (thread && !thread.archived) {
+            const messages = await thread.messages.fetch();
+            const userMessages = messages.filter((m) => m.author.id === applicant.id);
+
+            if (userMessages.size === 0) {
+                await thread.send({
+                    content: 'As there has been no messages in 24h this thread has been auto archived.',
+                    threadId: ticket.id,
+                    allowedMentions: {
+                        roles: [config.roles.inactivityPing],
+                    },
+                });
+
+                await denyVerification(
+                    DenyConsequence.kick,
+                    {
+                        ticket,
+                        verifier: applicant,
+                        userReason: 'Kicked for Inactivity, feel free to rejoin once you have time to answer the questions!~\n\nhttps://discord.gg/TransPlace',
+                        logReason: 'Kicked for Inactivity - No messages in 24h (Auto)',
+                    },
+                ).catch(async () => {
+                    await thread.send({
+                        content: `There was an error kicking the user, please kick them manually. ${config.roles.inactivityPing ? `(<@&${config.roles.inactivityPing}>)` : ''}}`,
+                        threadId: ticket.id,
+                        allowedMentions: {
+                            roles: [config.roles.inactivityPing],
+                        },
+                    });
+                });
+            }
+        }
+    }, 86400000);
 }
 
 export default startVerification;

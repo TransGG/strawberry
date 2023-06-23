@@ -102,6 +102,10 @@ function buildVerifierActionComponents(client) {
         new ActionRowBuilder()
             .addComponents(
                 client.getButton('verifyUser'),
+                client.getButton('verifyUserWithoutImages'),
+            ),
+        new ActionRowBuilder()
+            .addComponents(
                 client.getButton('sendAsTheo'),
             ),
         new ActionRowBuilder()

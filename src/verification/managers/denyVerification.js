@@ -58,7 +58,9 @@ async function denyVerification(
             },
         );
 
-        await resolve(`Kicked ${applicantAsUser.tag} from the server.`);
+        if (resolve) {
+            await resolve(`Kicked ${applicantAsUser.tag} from the server.`);
+        }
     } else if (consequence === DenyConsequence.ban) {
         if (!applicantAsUser) {
             throw new VerificationError('Unable to resolve user');
