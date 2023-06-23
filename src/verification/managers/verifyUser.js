@@ -16,10 +16,14 @@ async function closeTicket(ticket) {
 /**
  * Verifies a member
  * @param {GuildMember} member A guild member
+ * @param {string} type The type of verification
  */
-async function verify(member) {
+async function verify(member, type) {
     await assignRole(member, config.roles.verified);
     await assignRole(member, config.roles.newbie);
+    if (type === 'noImages' && config.roles.noImages) {
+        await assignRole(member, config.roles.noImages);
+    }
 }
 
 /**
@@ -29,8 +33,9 @@ async function verify(member) {
  * @param {GuildMember} verifier The guild member that initiated the verify user process
  * @param {function} resolve Success callback. Takes a single parameter - message
  * @param {function} reject Reject callback. Takes a two parameters - error, message
+ * @param {string} type The type of verification
  */
-async function verifyUser(ticket, verifier, resolve, reject) {
+async function verifyUser(ticket, verifier, resolve, reject, type) {
     // reject if conditions aren't met
     if (!isVerifier(verifier)) {
         await reject('You are not a verifier');
@@ -49,7 +54,7 @@ async function verifyUser(ticket, verifier, resolve, reject) {
     }
 
     // verify user
-    await verify(applicant);
+    await verify(applicant, type);
 
     // send welcome message and create log for successful verification
     await Promise.all([
