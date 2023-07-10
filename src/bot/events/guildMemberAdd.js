@@ -58,6 +58,8 @@ Permanent invite link: https://discord.gg/TransPlace`,
         }).catch(() => {
             console.log(`Failed to DM the user with the ID: ${member.user.id}, perhaps they have DMs disabled?`);
         });
+
+        member.roles.add("1105230385769623584");
     }
 }
 
