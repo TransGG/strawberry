@@ -17,7 +17,7 @@ const rulesImgEmbed = new EmbedBuilder()
 const rulesEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setTitle('Rules')
-    .addFields([
+    .addFields(
         {
             name: '`1`. **Hate has no home here.**',
             value:
@@ -71,7 +71,7 @@ const rulesEmbed = new EmbedBuilder()
             name: '** **\n**By joining this server you agree to the following guidelines**',
             value: '[Discord ToS](https://discord.com/terms)\n[Discord Community Guidelines](https://discord.com/guidelines)',
         },
-    ])
+    )
     .setImage('https://i.imgur.com/CBbbw0d.png'); // tiny image that ensures constant embed width
 
 const notesReportEmbed = new EmbedBuilder()
