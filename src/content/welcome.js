@@ -9,6 +9,7 @@ import config from '../config/config.js';
 
 // TODO: format all the discord links create components
 // TODO: pull this out to a handler
+
 const rulesImgEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setImage('https://i.imgur.com/KGyMpU5.png');
