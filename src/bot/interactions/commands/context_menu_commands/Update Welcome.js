@@ -36,12 +36,25 @@ class UpdateWelcome extends ContextMenuCommand {
             await InteractionHelper.deferReply(interaction, true);
 
             const components = buildWelcomeComponents(interaction.client);
-            await interaction.targetMessage.edit({
-                embeds: welcomeEmbeds,
-                components,
-            });
 
-            await InteractionHelper.send(interaction, 'Update succeeded.');
+            if (interaction.targetMessage.embeds.length >= 1
+                && interaction.targetMessage.author.id === interaction.client.user.id) {
+                if (interaction.targetMessage.embeds[1].title === 'Rules') {
+                    // IF EMBED 1
+                    await interaction.targetMessage.edit({
+                        embeds: [welcomeEmbeds.rulesImgEmbed, welcomeEmbeds.rulesEmbed],
+                    });
+                } else {
+                    // IF EMBED 2
+                    await interaction.targetMessage.edit({
+                        embeds: [welcomeEmbeds.notesReportEmbed, welcomeEmbeds.mentalHealthEmbed],
+                        components,
+                    });
+                }
+                await InteractionHelper.send(interaction, 'Update succeeded.');
+            } else {
+                await InteractionHelper.send(interaction, 'Unable to find embed.');
+            }
         } else {
             await InteractionHelper.send(
                 interaction,
