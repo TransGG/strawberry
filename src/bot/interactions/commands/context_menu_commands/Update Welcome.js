@@ -42,12 +42,12 @@ class UpdateWelcome extends ContextMenuCommand {
                 if (interaction.targetMessage.embeds[1].title === 'Rules') {
                     // IF EMBED 1
                     await interaction.targetMessage.edit({
-                        embeds: [welcomeEmbeds.rulesImgEmbed, welcomeEmbeds.rulesEmbed],
+                        embeds: [welcomeEmbeds[0], welcomeEmbeds[1]],
                     });
                 } else {
                     // IF EMBED 2
                     await interaction.targetMessage.edit({
-                        embeds: [welcomeEmbeds.notesReportEmbed, welcomeEmbeds.mentalHealthEmbed],
+                        embeds: [welcomeEmbeds[2], welcomeEmbeds[3]],
                         components,
                     });
                 }

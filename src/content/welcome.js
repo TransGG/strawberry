@@ -92,7 +92,8 @@ const mentalHealthEmbed = new EmbedBuilder()
 function buildWelcomeComponents(client) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.
        From original Theo code */
-    const magicMessage = '1057157755623968810';
+
+    const magicMessage = '1151704269175660696';
     return [
         new ActionRowBuilder()
             .addComponents(
