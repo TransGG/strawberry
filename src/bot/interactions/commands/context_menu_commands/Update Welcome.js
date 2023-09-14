@@ -33,28 +33,32 @@ class UpdateWelcome extends ContextMenuCommand {
      */
     async run(interaction) {
         if (interaction.targetMessage.components[0].components[1].data.custom_id === 'startVerification') {
-            await InteractionHelper.deferReply(interaction, true);
+            await InteractionHelper.send(interaction, 'Please use /sendwelcome for now.');
 
-            const components = buildWelcomeComponents(interaction.client);
+            // TODO: Find a way to make this work down the line maybe-
 
-            if (interaction.targetMessage.embeds.length >= 1
-                && interaction.targetMessage.author.id === interaction.client.user.id) {
-                if (interaction.targetMessage.embeds[1].title === 'Rules') {
-                    // IF EMBED 1
-                    await interaction.targetMessage.edit({
-                        embeds: [welcomeEmbeds[0], welcomeEmbeds[1]],
-                    });
-                } else {
-                    // IF EMBED 2
-                    await interaction.targetMessage.edit({
-                        embeds: [welcomeEmbeds[2], welcomeEmbeds[3]],
-                        components,
-                    });
-                }
-                await InteractionHelper.send(interaction, 'Update succeeded.');
-            } else {
-                await InteractionHelper.send(interaction, 'Unable to find embed.');
-            }
+            // await InteractionHelper.deferReply(interaction, true);
+
+            // const components = buildWelcomeComponents(interaction.client);
+
+            // if (interaction.targetMessage.embeds.length >= 1
+            //     && interaction.targetMessage.author.id === interaction.client.user.id) {
+            //     if (interaction.targetMessage.embeds[1].title === 'Rules') {
+            //         // IF EMBED 1
+            //         await interaction.targetMessage.edit({
+            //             embeds: [welcomeEmbeds[0], welcomeEmbeds[1]],
+            //         });
+            //     } else {
+            //         // IF EMBED 2
+            //         await interaction.targetMessage.edit({
+            //             embeds: [welcomeEmbeds[2], welcomeEmbeds[3]],
+            //             components,
+            //         });
+            //     }
+            //     await InteractionHelper.send(interaction, 'Update succeeded.');
+            // } else {
+            //     await InteractionHelper.send(interaction, 'Unable to find embed.');
+            // }
         } else {
             await InteractionHelper.send(
                 interaction,

@@ -21,7 +21,7 @@ const rulesEmbed = new EmbedBuilder()
         {
             name: '`1`. **Hate has no home here.**',
             value:
-            '> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any Images/Videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More](https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522)',
+                '> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any Images/Videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More](https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522)',
         },
         {
             name: '`2`. **No age-restricted, obscene, shocking, gory, or overly violent content.**',
@@ -89,11 +89,10 @@ const mentalHealthEmbed = new EmbedBuilder()
     .setDescription('We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have any vent/advice channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️')
     .setImage('https://i.imgur.com/CBbbw0d.png');
 
-function buildWelcomeComponents(client) {
+function buildWelcomeComponents(client, magicMessage) {
     /* Magic number. Appears to be the id of a message sent before the current welcome message.
        From original Theo code */
 
-    const magicMessage = '1151704269175660696';
     return [
         new ActionRowBuilder()
             .addComponents(
