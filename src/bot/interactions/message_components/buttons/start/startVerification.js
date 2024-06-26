@@ -9,6 +9,8 @@ import Button from '../../Button.js';
 import {
     buildPromptSelectComponents,
 } from '../../../../../content/verification.js';
+import config from '../../../../../config/config.js';
+import { isVerified } from '../../../../../verification/controllers/member.js';
 
 /**
  * Handler for startVerification button. Puts a user into the verification process

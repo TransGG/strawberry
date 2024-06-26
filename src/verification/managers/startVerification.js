@@ -1,9 +1,9 @@
-import config from '../../config/config.js';
-import { createVerifyTicketCreateLog } from '../controllers/log.js';
-import { isVerified } from '../controllers/member.js';
-import { isClosed, phantomPing, refreshTicket } from '../controllers/ticket.js';
-import { createTicket, fetchMostRecentTicket } from '../controllers/tickets.js';
-import { denyVerification, DenyConsequence } from './denyVerification.js';
+import config from "../../config/config.js";
+import { createVerifyTicketCreateLog } from "../controllers/log.js";
+import { isVerified } from "../controllers/member.js";
+import { isClosed, phantomPing, refreshTicket } from "../controllers/ticket.js";
+import { createTicket, fetchMostRecentTicket } from "../controllers/tickets.js";
+import { denyVerification, DenyConsequence } from "./denyVerification.js";
 
 /**
  * Entry point for starting verification

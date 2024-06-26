@@ -6,6 +6,9 @@ import VerificationError from '../verificationError.js';
 import ban from './ban.js';
 import { closeTicket, CloseReason } from './closeTicket.js';
 import kick from './kick.js';
+import config from '../../config/config.js';
+import { banFromGuild } from '../controllers/guild.js';
+import { createBanLog } from '../controllers/log.js';
 
 const DenyConsequence = Object.freeze({
     unknown: Symbol('unknown'),

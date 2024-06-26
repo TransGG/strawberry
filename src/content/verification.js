@@ -3,6 +3,8 @@ import { ActionRowBuilder, codeBlock, EmbedBuilder } from 'discord.js';
 import buildTimeInfoString from '../formatters/stringBuilders.js';
 import { formatQuestions } from './questions.js';
 
+import config from '../config/config.js';
+
 /**
  * Builds the embeds used in mentioning verifiers
  * @param {GuildMember} applicant The verification applicant

@@ -3,6 +3,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { buildWelcomeComponents, welcomeEmbeds } from '../../../../../content/welcome.js';
 import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import SlashCommand from '../../SlashCommand.js';
+import config from '../../../../../config/config.js';
 
 /**
  * Handler for sendwelcome slash command. Sends the welcome/rules message

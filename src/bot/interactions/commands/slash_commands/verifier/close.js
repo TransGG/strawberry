@@ -3,7 +3,7 @@ import { isTicket } from '../../../../../verification/controllers/ticket.js';
 import { closeTicket, CloseReason } from '../../../../../verification/managers/closeTicket.js';
 import VerificationError from '../../../../../verification/verificationError.js';
 import SlashCommand from '../../SlashCommand.js';
-
+import { isStaff } from '../../../../../verification/controllers/member.js';
 /**
  * Handler for close slash command. Closes a verification ticket
  */
