@@ -21,6 +21,8 @@ class Close extends SlashCommand {
     getData() {
         return new SlashCommandBuilder()
             .setName(this.name)
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .setDescription('Closes a verification ticket');
     }
 

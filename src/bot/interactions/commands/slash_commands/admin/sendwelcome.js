@@ -22,6 +22,8 @@ class SendWelcome extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Sends the welcome/rules message in this channel')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .addBooleanOption((option) => option
                 .setName('preview')
                 .setDescription('Whether to preview the message'));

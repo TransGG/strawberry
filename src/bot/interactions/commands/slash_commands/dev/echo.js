@@ -20,6 +20,8 @@ class Echo extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Repeats the input back at you!')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .addStringOption((option) => option.setName('message')
                 .setDescription('The message to echo')
                 .setRequired(true));

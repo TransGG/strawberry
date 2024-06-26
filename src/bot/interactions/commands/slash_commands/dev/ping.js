@@ -19,7 +19,9 @@ class Ping extends SlashCommand {
     getData() {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription('Replies with Pong!');
+            .setDescription('Replies with Pong!')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false);
     }
 
     /**

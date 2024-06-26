@@ -23,7 +23,8 @@ class UpdateWelcome extends ContextMenuCommand {
     getData() {
         return new ContextMenuCommandBuilder()
             .setName(this.name)
-            .setType(ApplicationCommandType.Message);
+            .setType(ApplicationCommandType.Message)
+            .setDefaultMemberPermissions(0);
     }
 
     /**

@@ -21,6 +21,8 @@ class Version extends SlashCommand {
     getData() {
         return new SlashCommandBuilder()
             .setName(this.name)
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .setDescription('Get bot version');
     }
 
