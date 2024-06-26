@@ -32,7 +32,9 @@ class Close extends SlashCommand {
      *     slash command was executed
      */
     async run(interaction) {
-        if (isTicket(interaction.channel)) {
+        if (await isStaff(interaction.user, interaction.guild)) {
+            interaction.reply({ content: 'You must be staff to use this command.', ephemeral: true });
+        } else if (isTicket(interaction.channel)) {
             await interaction.reply({ content: 'Closing ticket...', ephemeral: true });
             await closeTicket(interaction.channel, CloseReason.archive)
                 .catch(async (error) => {
