@@ -32,23 +32,23 @@ class GuildMemberUpdate extends Event {
         }
 
         // Make sure they are not already verified
-        if (newMember.roles.cache.has(config.roles.verified)) { return; }
+        if (newMember.roles.cache.has(config.guilds[newMember.guild.id].roles.verified)) { return; }
 
         // Make sure they didn't have the member role before
-        if (oldMember.roles.cache.has(config.roles.member)) { return; }
+        if (oldMember.roles.cache.has(config.guilds[newMember.guild.id].roles.member)) { return; }
 
         // Make sure they have the member role now
-        if (!newMember.roles.cache.has(config.roles.member)) { return; }
+        if (!newMember.roles.cache.has(config.guilds[newMember.guild.id].roles.member)) { return; }
 
-        const category = Object.keys(config.roles.catagories).find((key) => {
-            const output = newMember.roles.cache.has(config.roles.catagories[key]);
+        const category = Object.keys(config.guilds[newMember.guild.id].roles.catagories).find((key) => {
+            const output = newMember.roles.cache.has(config.guilds[newMember.guild.id].roles.catagories[key]);
             return output;
         });
 
         if (!category) { return; }
 
         const verificationChannel = newMember.guild.channels.cache.find(
-            (channel) => channel.id === config.channels.lobby,
+            (channel) => channel.id === config.guilds[newMember.guild.id].channels.lobby,
         );
 
         await startVerification(

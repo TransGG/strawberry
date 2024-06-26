@@ -11,9 +11,9 @@ function createThread(threads, member) {
     return threads.create({
         invitable: false,
         name: `${member.user.tag} | ${member.user.id}`,
-        autoArchiveDuration: config.verifyTicketAutoArchiveDuration,
+        autoArchiveDuration: config.guilds[member.guild.id].verifyTicketAutoArchiveDuration,
         reason: 'Thread for verifying a user',
-        type: config.privateThread,
+        type: config.guilds[member.guild.id].privateThread,
     });
 }
 

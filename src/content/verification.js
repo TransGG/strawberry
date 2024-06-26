@@ -72,7 +72,7 @@ function buildPromptEmbeds(applicant, type) {
         new EmbedBuilder()
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
-            .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}\n[Click here to view our server rules.](https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151704269175660696)`)
+            .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}\n[Click here to view our server rules.](${config.guilds[applicant.guild.id].links.rules})`)
             .setImage('https://i.imgur.com/CBbbw0d.png'),
         new EmbedBuilder()
             .setTitle(applicant.user.tag)

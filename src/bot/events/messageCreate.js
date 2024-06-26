@@ -25,12 +25,12 @@ class MessageCreate extends Event {
             message.author.bot
             || message.channel.type !== 12
             || !message.channel.parent
-            || message.channel.parent.id !== config.channels.lobby
+            || message.channel.parent.id !== config.guilds[message.guild.id].channels.lobby
         ) {
             return;
         }
 
-        if (message.member.roles.cache.has(config.roles.verified)) { return; }
+        if (message.member.roles.cache.has(config.guilds[message.guild.id].roles.verified)) { return; }
         userMap.set(message.author.id, message.id);
 
         setTimeout(async () => {

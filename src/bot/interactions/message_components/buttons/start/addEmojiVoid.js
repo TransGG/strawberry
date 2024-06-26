@@ -40,19 +40,19 @@ class AddEmojiVoid extends Button {
     async run(interaction) {
         verbose(`Request to go to the emoji void from: ${interaction.user.tag} ${interaction.member.id}`);
 
-        if (!config.roles.emojiVoid) {
+        if (!config.guilds[interaction.guild.id].roles.emojiVoid) {
             interaction.reply({
                 content: 'Unable to add the emoji void role. Please contact a moderator.',
                 ephemeral: true,
             });
-        } else if (interaction.member.roles.cache.has(config.roles.emojiVoid)) {
+        } else if (interaction.member.roles.cache.has(config.guilds[interaction.guild.id].roles.emojiVoid)) {
             interaction.reply({
                 content: 'You are already in the emoji void. If you believe this is an error, please contact a moderator.',
                 ephemeral: true,
             });
-        } else if (!interaction.member.roles.cache.has(config.roles.verified)) {
+        } else if (!interaction.member.roles.cache.has(config.guilds[interaction.guild.id].roles.verified)) {
             const ticket = await fetchMostRecentTicket(
-                interaction.member.client.channels.cache.get(config.channels.lobby).threads,
+                interaction.member.client.channels.cache.get(config.guilds[interaction.guild.id].channels.lobby).threads,
                 interaction.member,
             );
 
@@ -60,7 +60,7 @@ class AddEmojiVoid extends Button {
                 await closeTicket(ticket, CloseReason.emoji);
             }
 
-            interaction.member.roles.add(config.roles.emojiVoid);
+            interaction.member.roles.add(config.guilds[interaction.guild.id].roles.emojiVoid);
             interaction.reply({
                 content: 'You have been added to the emoji void. You will not be able to see any messages from other members until you are verified.',
                 ephemeral: true,
