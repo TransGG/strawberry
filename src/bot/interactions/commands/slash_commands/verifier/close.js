@@ -3,6 +3,7 @@ import { isTicket } from '../../../../../verification/controllers/ticket.js';
 import { closeTicket, CloseReason } from '../../../../../verification/managers/closeTicket.js';
 import VerificationError from '../../../../../verification/verificationError.js';
 import SlashCommand from '../../SlashCommand.js';
+import { isStaff } from '../../../../../verification/controllers/member.js';
 
 /**
  * Handler for close slash command. Closes a verification ticket
@@ -30,7 +31,9 @@ class Close extends SlashCommand {
      *     slash command was executed
      */
     async run(interaction) {
-        if (isTicket(interaction.channel)) {
+        if (await isStaff(interaction.user, interaction.guild)) {
+            interaction.reply({ content: 'You must be staff to use this command.', ephemeral: true });
+        } else if (isTicket(interaction.channel)) {
             await interaction.reply({ content: 'Closing ticket...', ephemeral: true });
             await closeTicket(interaction.channel, CloseReason.archive)
                 .catch(async (error) => {
