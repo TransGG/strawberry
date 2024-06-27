@@ -6,6 +6,9 @@ import VerificationError from '../verificationError.js';
 import ban from './ban.js';
 import { closeTicket, CloseReason } from './closeTicket.js';
 import kick from './kick.js';
+import config from '../../config/config.js';
+import { banFromGuild } from '../controllers/guild.js';
+import { createBanLog } from '../controllers/log.js';
 
 const DenyConsequence = Object.freeze({
     unknown: Symbol('unknown'),
@@ -79,6 +82,45 @@ async function denyVerification(
         );
 
         await resolve(`Banned ${applicantAsUser.tag} from the server.`);
+
+        const guildIds = config.guilds[guild.id].sync;
+
+        await Promise.all(
+            guildIds.map(async (guildId) => {
+                const syncedGuild = client.guilds.cache.get(guildId);
+
+                if (!syncedGuild) {
+                    return;
+                }
+
+                try {
+                    await Promise.all([
+                        banFromGuild(
+                            syncedGuild,
+                            applicantAsUser,
+                            { reason: `Member was banned by verifier in synced community: ${guild.name}` },
+                        ),
+                        createBanLog(
+                            syncedGuild.channels.cache.get(
+                                config.guilds[syncedGuild.id].channels.verifyLogsSecondary,
+                            ),
+                            {
+                                target: applicantAsUser,
+                                verifier,
+                                client,
+                                userReason,
+                                logReason: `${logReason}\n\nMember was banned by verifier (${verifier.id}) in synced community: ${guild.name}`,
+                                dmSent: false,
+                                ticket: undefined,
+                            },
+                        ),
+                    ]);
+                } catch (err) {
+                    console.log(err);
+                    console.log(`Failed to fetch member in ${syncedGuild.name}, user likely isn't in guild.`);
+                }
+            }),
+        );
     }
 
     // close ticket (occurs after resolve so the ticket may be modified during the resolution)
