@@ -1,6 +1,5 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
 
-import { buildWelcomeComponents, welcomeEmbeds } from '../../../../content/welcome.js';
 import InteractionHelper from '../../../utils/InteractionHelper.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
