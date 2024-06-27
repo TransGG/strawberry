@@ -60,7 +60,9 @@ async function kick(
                 kickReason,
             ),
             createKickLog(
-                verifier.guild.channels.cache.get(config.channels.verifyLogsSecondary),
+                verifier.guild.channels.cache.get(
+                    config.guilds[verifier.guild.id].channels.verifyLogsSecondary,
+                ),
                 {
                     target: targetAsUser, verifier, client, userReason, logReason, dmSent, ticket,
                 },

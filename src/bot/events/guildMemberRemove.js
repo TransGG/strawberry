@@ -72,7 +72,9 @@ class GuildMemberRemove extends Event {
             try {
                 this.client.addUserLeaveMutex(member.user.id);
                 const ticket = await fetchMostRecentTicket(
-                    member.client.channels.cache.get(config.channels.lobby).threads,
+                    member.client.channels.cache.get(
+                        config.guilds[member.guild.id].channels.lobby,
+                    ).threads,
                     member,
                 );
 

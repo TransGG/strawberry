@@ -113,7 +113,7 @@ async function isStaff(member, guild) {
     const resolvedMember = await resolveMember(member, guild);
 
     return resolvedMember?.roles && resolvedMember.roles.cache.some(
-        (role, roleId) => config.roles.staffRoles.includes(roleId),
+        (_role, roleId) => config.guilds[guild.id].roles.staffRoles.includes(roleId),
     );
 }
 
@@ -123,7 +123,7 @@ async function isStaff(member, guild) {
  * @returns Whether the user is verified
  */
 function isVerified(member) {
-    return member.roles.cache.has(config.roles.verified);
+    return member.roles.cache.has(config.guilds[member.guild.id].roles.verified);
 }
 
 /**
@@ -132,7 +132,7 @@ function isVerified(member) {
  * @returns {boolean} Whether the user is a verifier
  */
 function isVerifier(member) {
-    return member.roles.cache.has(config.roles.verifier);
+    return member.roles.cache.has(config.guilds[member.guild.id].roles.verifier);
 }
 
 export {

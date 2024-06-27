@@ -21,15 +21,15 @@ const rulesEmbed = new EmbedBuilder()
         {
             name: '`1`. **Hate has no home here.**',
             value:
-                '> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any Images/Videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More](https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522)',
+'> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any Images/Videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More]({{rule1}})',
         },
         {
             name: '`2`. **No age-restricted, obscene, shocking, gory, or overly violent content.**',
-            value: '> Our community remains appropriate for anyone over the age of 13; any content deemed unfit for this is disallowed. If something straddles the line, ask a mod, CW, or don’t post it at all. This includes text, images, or links. [Read More](https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910)',
+            value: '> Our community remains appropriate for anyone over the age of 13; any content deemed unfit for this is disallowed. If something straddles the line, ask a mod, CW, or don’t post it at all. This includes text, images, or links. [Read More]({{rule2}})',
         },
         {
             name: '`3`. **Avoid disallowed topics and phrases.**',
-            value: '> This includes, but is not limited to: **heavy venting,** **political discussions,** **piracy,** and **promoting or extensively discussing the use of recreational substances, legal or otherwise.** `(#mature-general is an exception for legal substances)` More information on these banned topics can be found in `#politics`, `#venting`, or in our list of disallowed topics and phrases [here](https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163)',
+            value: '> This includes, but is not limited to: **heavy venting,** **political discussions,** **piracy,** and **promoting or extensively discussing the use of recreational substances, legal or otherwise.** `(#mature-general is an exception for legal substances)` More information on these banned topics can be found in `#politics`, `#venting`, or in our list of disallowed topics and phrases [here]({{rule3}})',
         },
         {
             name: '`4`. **Advocating any Illegitimate/DIY Medical treatment is not permitted, especially HRT, binders, and dosages.**',
@@ -37,7 +37,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '5. **Treat everyone with respect.**',
-            value: '> Refrain from engaging in any form of discrimination against others, regardless of age, gender, identity, orientation, and so forth. Absolutely no harassment, witch hunting, sexism, racism, or any form of hate targeting generalised groups of people will be tolerated. [Read More](https://canary.discord.com/channels/959551566388547676/1151689706912882758/1151694425110609941)',
+            value: '> Refrain from engaging in any form of discrimination against others, regardless of age, gender, identity, orientation, and so forth. Absolutely no harassment, witch hunting, sexism, racism, or any form of hate targeting generalised groups of people will be tolerated. [Read More]({{rule5}})',
         },
         {
             name: '`6`. **Respect plural members, and only use PK for our allowed use cases.**',
@@ -45,7 +45,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '`7`. **Be considerate of others\' triggers.**',
-            value: '> We understand that with such a diverse and large community, it\'s not always feasible to avoid every trigger. Nevertheless, please make an effort to acknowledge and respect others\' triggers, refrain from attempting to change their mind or prove them wrong. **Remember, as this large community, your triggers are also your responsibility too.** If a chat topic triggers you (unless listed below), consider stepping back and removing yourself from the situation until the conversation topic changes.\n\n> ***Note:*** *You can hide messages with triggering content by using a double upright slash:* TW ||trigger|| - ||content||. For instance, "TW ||spiders|| - ||Check out these [Spider Images]||." **You can find a list of common triggers** [Here](https://canary.discord.com/channels/959551566388547676/1151689903319564329/1151690023331172412).',
+            value: '> We understand that with such a diverse and large community, it\'s not always feasible to avoid every trigger. Nevertheless, please make an effort to acknowledge and respect others\' triggers, refrain from attempting to change their mind or prove them wrong. **Remember, as this large community, your triggers are also your responsibility too.** If a chat topic triggers you (unless listed below), consider stepping back and removing yourself from the situation until the conversation topic changes.\n\n> ***Note:*** *You can hide messages with triggering content by using a double upright slash:* TW ||trigger|| - ||content||. For instance, "TW ||spiders|| - ||Check out these [Spider Images]||." **You can find a list of common triggers** [Here]({{rule7}}).',
         },
         {
             name: '`8.` **Avoid mini-modding or arguing with moderators in chat.**',
@@ -53,7 +53,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '`9`. **Keep in mind effective conflict resolution and interpersonal skills.**',
-            value: '> Practise effective de-escalation—everyone has different ways of doing this, but some common tactics include conceding several points and then changing the topic, agreeing to disagree, stepping back from the conversation outright, calling a chat mod to mediate, and/or being the first to apologise. [Read More](https://canary.discord.com/channels/959551566388547676/1151689755537457265/1151694463127793674)',
+            value: '> Practise effective de-escalation—everyone has different ways of doing this, but some common tactics include conceding several points and then changing the topic, agreeing to disagree, stepping back from the conversation outright, calling a chat mod to mediate, and/or being the first to apologise. [Read More]({{rule9}})',
         },
         {
             name: '`10`. **No spam or self-promotion.**',
@@ -65,7 +65,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '`12`. **Keep all conversations in English.**',
-            value: '>  Short phrases or jokes in another language are allowed, but we cannot effectively moderate non-English extensive discussions. (Non-English threads are an exception you can find the list of these threads [Here](https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186))"',
+            value: '>  Short phrases or jokes in another language are allowed, but we cannot effectively moderate non-English extensive discussions. (Non-English threads are an exception. You can find a list of those [Here]({{rule12}}))',
         },
         {
             name: '** **\n**By joining this server you agree to the following guidelines**',
@@ -90,18 +90,28 @@ const mentalHealthEmbed = new EmbedBuilder()
     .setImage('https://i.imgur.com/CBbbw0d.png');
 
 function buildWelcomeComponents(client, magicMessage) {
-    /* Magic number. Appears to be the id of a message sent before the current welcome message.
-       From original Theo code */
+    const extra = [
+        client.getButton('startVerification'),
+    ];
+
+    if (config.guilds[magicMessage.guild.id].roles.emojiVoid) {
+        extra.push(client.getButton('addEmojiVoid'));
+    }
 
     return [
         new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setURL(messageLink(config.channels.lobby, magicMessage, config.guild))
+                    .setURL(
+                        messageLink(
+                            config.guilds[magicMessage.guild.id].channels.lobby,
+                            magicMessage.id,
+                            magicMessage.guild.id,
+                        ),
+                    )
                     .setLabel('Scroll To Rules!')
                     .setStyle(ButtonStyle.Link),
-                client.getButton('startVerification'),
-                client.getButton('addEmojiVoid'),
+                ...extra,
             ),
     ];
 }

@@ -38,13 +38,17 @@ class RemoveEmojiVoid extends Button {
     async run(interaction) {
         verbose(`Request to go to the emoji void from: ${interaction.user.tag} ${interaction.member.id}`);
 
-        if (!config.roles.emojiVoid) {
+        if (!config.guilds[interaction.guild.id].roles.emojiVoid) {
             interaction.reply({
                 content: 'Unable to remove the emoji void role. Please contact a moderator.',
                 ephemeral: true,
             });
-        } else if (interaction.member.roles.cache.has(config.roles.emojiVoid)) {
-            interaction.member.roles.remove(config.roles.emojiVoid);
+        } else if (interaction.member.roles.cache.has(
+            config.guilds[interaction.guild.id].roles.emojiVoid,
+        )) {
+            interaction.member.roles.remove(
+                config.guilds[interaction.guild.id].roles.emojiVoid,
+            );
             interaction.reply({
                 content: 'You have been removed from the emoji void. You can now continue verification.',
                 ephemeral: true,
