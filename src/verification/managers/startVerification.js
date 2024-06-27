@@ -58,6 +58,11 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // Add a 23s timer to send a welcome message to the user
 
+    const member = await ticket.guild.members.fetch(applicant.id).catch(() => { });
+
+    if (!member) {
+        return;
+    }
     setTimeout(async () => {
         const thread = await ticket.parent.threads.fetch(ticket.id).catch(() => { });
         if (thread && !thread.archived) {
@@ -77,8 +82,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // Add a 23 + 15s timer to send a message to the user if their account is new
 
-    const member = await ticket.guild.members.fetch(applicant.id).catch(() => { });
-    if (member && member.user.createdTimestamp > Date.now() - 1814400000) {
+    if (member.user.createdTimestamp > Date.now() - 1814400000) {
         setTimeout(async () => {
             const thread = await ticket.parent.threads.fetch(ticket.id);
             if (thread && !thread.archived) {
@@ -97,7 +101,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
         }, 38000);
     }
 
-    if (member && member.roles.cache.has(config.guilds[member.guild.id].roles.place)) {
+    if (member.roles.cache.has(config.guilds[member.guild.id].roles.place)) {
         setTimeout(async () => {
             const thread = await ticket.parent.threads.fetch(ticket.id);
             if (thread && !thread.archived) {
