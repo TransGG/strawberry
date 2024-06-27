@@ -20,7 +20,7 @@ class EditMessage extends ContextMenuCommand {
         return new ContextMenuCommandBuilder()
             .setName(this.name)
             .setType(ApplicationCommandType.Message)
-            .setDefaultMemberPermissions(null);
+            .setDefaultMemberPermissions(0);
     }
 
     /**

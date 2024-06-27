@@ -22,6 +22,8 @@ class SendWelcome extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Sends the welcome/rules message in this channel')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .addBooleanOption((option) => option
                 .setName('preview')
                 .setDescription('Whether to preview the message'));
@@ -43,7 +45,7 @@ class SendWelcome extends SlashCommand {
             await InteractionHelper.deferReply(interaction, true);
 
             // Sent as two embeds as it's over 6000 characters
-            let msg = await interaction.channel.send({
+            const msg = await interaction.channel.send({
                 embeds: [welcomeEmbeds[0], welcomeEmbeds[1]],
             });
 

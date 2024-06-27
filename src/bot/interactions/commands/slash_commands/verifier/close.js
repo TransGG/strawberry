@@ -22,7 +22,9 @@ class Close extends SlashCommand {
     getData() {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription('Closes a verification ticket');
+            .setDescription('Closes a verification ticket')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false);
     }
 
     /**
