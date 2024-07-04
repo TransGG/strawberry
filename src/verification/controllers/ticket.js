@@ -126,7 +126,7 @@ function isBelongsToMember(ticket, member) {
 function isTicket(candidate) {
     return candidate instanceof ThreadChannel
         && parseApplicantId(candidate)
-        && candidate.parentId === config.channels.lobby;
+        && candidate.parentId === config.guilds[candidate.guild.id].channels.lobby;
 }
 
 /**
@@ -179,13 +179,13 @@ function sendPrompt(ticket, applicant, promptCategory) {
  * @returns {Promise<Message>} The message that was sent
  */
 function sendMentionVerifiers(ticket, applicant, client, helpMessage) {
-    const message = roleMention(config.roles.verifier);
+    const message = roleMention(config.guilds[applicant.guild.id].roles.verifier);
     const embeds = buildMentionVerifiersEmbeds(applicant, client, helpMessage);
     return ticket.send({
         content: message,
         embeds,
         allowedMentions: {
-            roles: [config.roles.verifier],
+            roles: [config.guilds[applicant.guild.id].roles.verifier],
         },
     });
 }

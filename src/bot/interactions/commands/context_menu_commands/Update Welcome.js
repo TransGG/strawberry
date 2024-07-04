@@ -1,6 +1,5 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
 
-import { buildWelcomeComponents, welcomeEmbeds } from '../../../../content/welcome.js';
 import InteractionHelper from '../../../utils/InteractionHelper.js';
 import ContextMenuCommand from '../ContextMenuCommand.js';
 
@@ -23,7 +22,8 @@ class UpdateWelcome extends ContextMenuCommand {
     getData() {
         return new ContextMenuCommandBuilder()
             .setName(this.name)
-            .setType(ApplicationCommandType.Message);
+            .setType(ApplicationCommandType.Message)
+            .setDefaultMemberPermissions(0);
     }
 
     /**

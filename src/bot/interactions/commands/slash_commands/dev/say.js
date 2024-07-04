@@ -21,6 +21,8 @@ class Say extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Sends a message with the given input')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .addStringOption((option) => option.setName('message')
                 .setDescription('The message to send')
                 .setRequired(true))

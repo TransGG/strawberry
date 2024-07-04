@@ -19,10 +19,10 @@ async function closeTicket(ticket) {
  * @param {string} type The type of verification
  */
 async function verify(member, type) {
-    await assignRole(member, config.roles.verified);
-    await assignRole(member, config.roles.newbie);
-    if (type === 'noImages' && config.roles.noImages) {
-        await assignRole(member, config.roles.noImages);
+    await assignRole(member, config.guilds[member.guild.id].roles.verified);
+    await assignRole(member, config.guilds[member.guild.id].roles.newbie);
+    if (type === 'noImages' && config.guilds[member.guild.id].roles.noImages) {
+        await assignRole(member, config.guilds[member.guild.id].roles.noImages);
     }
 }
 
@@ -48,7 +48,7 @@ async function verifyUser(ticket, verifier, resolve, reject, type) {
         return;
     }
 
-    if (applicant.roles.cache.has(config.roles.verified)) {
+    if (applicant.roles.cache.has(config.guilds[verifier.guild.id].roles.verified)) {
         await reject('User has already been verified');
         return;
     }
@@ -59,11 +59,11 @@ async function verifyUser(ticket, verifier, resolve, reject, type) {
     // send welcome message and create log for successful verification
     await Promise.all([
         sendGreetMessage(
-            ticket.guild.channels.cache.get(config.channels.welcome),
+            ticket.guild.channels.cache.get(config.guilds[verifier.guild.id].channels.welcome),
             applicant,
         ),
         createVerifiedLog(
-            ticket.guild.channels.cache.get(config.channels.verifyLogs),
+            ticket.guild.channels.cache.get(config.guilds[verifier.guild.id].channels.verifyLogs),
             verifier,
             applicant,
         ),

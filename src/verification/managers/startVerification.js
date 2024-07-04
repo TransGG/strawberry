@@ -38,7 +38,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
     // create new ticket
     const ticket = await createTicket(threads, applicant, promptCategory);
     await createVerifyTicketCreateLog(
-        ticket.guild.channels.cache.get(config.channels.verifyLogs),
+        ticket.guild.channels.cache.get(config.guilds[applicant.guild.id].channels.verifyLogs),
         ticket,
         applicant,
         threads.client,
@@ -58,6 +58,11 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // Add a 23s timer to send a welcome message to the user
 
+    const member = await ticket.guild.members.fetch(applicant.id).catch(() => { });
+
+    if (!member) {
+        return;
+    }
     setTimeout(async () => {
         const thread = await ticket.parent.threads.fetch(ticket.id).catch(() => { });
         if (thread && !thread.archived) {
@@ -77,8 +82,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     // Add a 23 + 15s timer to send a message to the user if their account is new
 
-    const member = await ticket.guild.members.fetch(applicant.id).catch(() => { });
-    if (member && member.user.createdTimestamp > Date.now() - 1814400000) {
+    if (member.user.createdTimestamp > Date.now() - 1814400000) {
         setTimeout(async () => {
             const thread = await ticket.parent.threads.fetch(ticket.id);
             if (thread && !thread.archived) {
@@ -97,7 +101,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
         }, 38000);
     }
 
-    if (member && member.roles.cache.has(config.roles.place)) {
+    if (member.roles.cache.has(config.guilds[member.guild.id].roles.place)) {
         setTimeout(async () => {
             const thread = await ticket.parent.threads.fetch(ticket.id);
             if (thread && !thread.archived) {
@@ -121,10 +125,10 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
             if (userMessages.size === 0) {
                 await thread.send({
-                    content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.roles.inactivityPing ? ` | (<@&${config.roles.inactivityPing}>)` : ''}`,
+                    content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.guilds[applicant.guild.id].roles.inactivityPing ? ` | (<@&${config.guilds[applicant.guild.id].roles.inactivityPing}>)` : ''}`,
                     threadId: ticket.id,
                     allowedMentions: {
-                        roles: [config.roles.inactivityPing],
+                        roles: [config.guilds[applicant.guild.id].roles.inactivityPing],
                     },
                 });
             }
@@ -143,7 +147,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
                     content: 'As there has been no messages in 24h this thread has been auto archived.',
                     threadId: ticket.id,
                     allowedMentions: {
-                        roles: [config.roles.inactivityPing],
+                        roles: [config.guilds[applicant.guild.id].roles.inactivityPing],
                     },
                 });
 
@@ -157,10 +161,10 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
                     },
                 ).catch(async () => {
                     await thread.send({
-                        content: `There was an error kicking the user, please kick them manually. ${config.roles.inactivityPing ? `(<@&${config.roles.inactivityPing}>)` : ''}}`,
+                        content: `There was an error kicking the user, please kick them manually. ${config.guilds[applicant.guild.id].roles.inactivityPing ? `(<@&${config.guilds[applicant.guild.id].roles.inactivityPing}>)` : ''}}`,
                         threadId: ticket.id,
                         allowedMentions: {
-                            roles: [config.roles.inactivityPing],
+                            roles: [config.guilds[applicant.guild.id].roles.inactivityPing],
                         },
                     });
                 });

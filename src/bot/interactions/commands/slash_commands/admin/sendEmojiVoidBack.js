@@ -22,6 +22,8 @@ class SendEmojiVoidBack extends SlashCommand {
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription('Sends the remove emoji void message in this channel')
+            .setDefaultMemberPermissions(0)
+            .setDMPermission(false)
             .addBooleanOption((option) => option
                 .setName('preview')
                 .setDescription('Whether to preview the message'));
