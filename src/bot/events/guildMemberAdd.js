@@ -34,7 +34,7 @@ In order to join our community we require that you have a discord avatar set and
 
 To see the rest of the channels within our server, please click the button below, or head back to our server to read our rules and continue our verification process, don't worry, its easy ❤.
 
-Have fun in ${member.guild.name}! We're excited to have you join our wonderful community!
+Have fun in ${member.guild.name} We're excited to have you join our wonderful community!
 
 Permanent invite link: https://discord.gg/${config.guilds[member.guild.id].invite}`,
 
