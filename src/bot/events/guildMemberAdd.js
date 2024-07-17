@@ -36,7 +36,7 @@ To see the rest of the channels within our server, please click the button below
 
 Have fun in ${member.guild.name} We're excited to have you join our wonderful community!
 
-Permanent invite link: https://discord.gg/${config.guilds[member.guild.id].invite}`,
+Permanent invite link: ${config.guilds[member.guild.id].invite}`,
 
             components: [
                 new ActionRowBuilder()
