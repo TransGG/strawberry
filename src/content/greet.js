@@ -11,8 +11,8 @@ import config from '../config/config.js';
 // TODO: read these from a file
 
 const greeterMessages = [
-    'say hello to you new best friend {user}!',
-    'everyone wake up {user} joined!',
+    'say hello to your new best friend, {user}!',
+    'everyone wake up: {user} joined!',
     "don't get too surprised but... {user} is here!",
     'your wish came true! {user} was verified!',
 ];
