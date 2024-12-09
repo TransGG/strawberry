@@ -41,7 +41,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '`6`. **Respect plural members, and only use PK for our allowed use cases.**',
-            value: '> If you see users talking with the bot tag, they\'re talking through PluralKit. Due to Discord limitations, these messages will show up with the `[BOT]` tag - however, they are not bots, they are users. **Additionally, PluralKit is only to be used as a mental health aid, not for any form of roleplay.**',
+            value: '> If you see users talking with the app tag, they\'re talking through PluralKit. Due to Discord limitations, these messages will show up with the `[APP]` tag - however, they are not apps, they are users. **Additionally, PluralKit is only to be used as a mental health aid, not for any form of roleplay.**',
         },
         {
             name: '`7`. **Be considerate of others\' triggers.**',
