@@ -30,7 +30,7 @@ class GuildMemberAdd extends Event {
         await member.send({
             content: `**Hey 👋 Welcome to ${member.guild.name}, ${member.user.username}!**
 
-In order to join our community we require that you have a discord avatar set and have claimed your discord account. Claiming your account means you must have your your e-mail verified on discord and have set a user name and password.
+In order to join our community we require that you have a discord avatar set and have claimed your discord account. Claiming your account means you must have your e-mail verified on discord and have set a user name and password.
 
 To see the rest of the channels within our server, please click the button below, or head back to our server to read our rules and continue our verification process, don't worry, its easy ❤.
 
