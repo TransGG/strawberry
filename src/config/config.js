@@ -338,6 +338,40 @@ const production = {
             },
             invite: 'https://discord.gg/QhTDQsyeD6',
         },
+        '1116634030834733077': {
+            // TransDice!
+            sync: [
+                '959551566388547676', // TransPlace
+                // Sync here is *intentionally 1-way to TransPlace*, as this is a spin-off server from TransPlace and generally will not be verifying people
+            ],
+            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+            privateThread: ChannelType.PrivateThread,
+            channels: {
+                lobby: '1342833050731548682',               // TransDice:welcome-verify
+                verifyLogs: '1342834458570657794',          // TransDice:verify-logs
+                verifyLogsSecondary: '1342835930649595995', // TransDice:verify-kick-logs
+            },
+            roles: {
+                staffRoles: [
+                    '1116668288638914641', // Blåholder
+                    '1144502144033116201', // TransPlace Staff
+                ],
+                verifier: '1116668288638914641', // Blåholder
+                verified: '1116673143013122068', // Adventurer
+                catagories: {},
+            },
+            links: {
+                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
+                rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
+                rule2: 'https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910',
+                rule3: 'https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163',
+                rule5: 'https://canary.discord.com/channels/959551566388547676/1151689706912882758/1151694425110609941',
+                rule7: 'https://canary.discord.com/channels/959551566388547676/1151689903319564329/1151690023331172412',
+                rule9: 'https://canary.discord.com/channels/959551566388547676/1151689755537457265/1151694463127793674',
+                rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
+            },
+            invite: 'https://discord.gg/YUJM2Qg55q',
+        }
     },
 };
 

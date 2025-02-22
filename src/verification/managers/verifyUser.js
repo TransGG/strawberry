@@ -20,7 +20,9 @@ async function closeTicket(ticket) {
  */
 async function verify(member, type) {
     await assignRole(member, config.guilds[member.guild.id].roles.verified);
-    await assignRole(member, config.guilds[member.guild.id].roles.newbie);
+    if (config.guilds[member.guild.id].roles.newbie) {
+        await assignRole(member, config.guilds[member.guild.id].roles.newbie);
+    }
     if (type === 'noImages' && config.guilds[member.guild.id].roles.noImages) {
         await assignRole(member, config.guilds[member.guild.id].roles.noImages);
     }
@@ -57,17 +59,21 @@ async function verifyUser(ticket, verifier, resolve, reject, type) {
     await verify(applicant, type);
 
     // send welcome message and create log for successful verification
-    await Promise.all([
-        sendGreetMessage(
-            ticket.guild.channels.cache.get(config.guilds[verifier.guild.id].channels.welcome),
-            applicant,
-        ),
+    const sendMessages = [
         createVerifiedLog(
             ticket.guild.channels.cache.get(config.guilds[verifier.guild.id].channels.verifyLogs),
             verifier,
             applicant,
         ),
-    ]);
+    ];
+
+    if (config.guilds[verifier.guild.id].channels.welcome) {
+        sendMessages.push(sendGreetMessage(
+            ticket.guild.channels.cache.get(config.guilds[verifier.guild.id].channels.welcome),
+            applicant,
+        ));
+    }
+    await Promise.all(sendMessages);
 
     // success
     await resolve(`${userMention(applicant.id)} has been verified`);
