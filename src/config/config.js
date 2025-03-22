@@ -288,7 +288,17 @@ const production = {
                     isCis: '1168292229283061760',
                 },
             },
-            invite: 'https://discord.gg/5xFg9mXTTF',
+            links: {
+                rules: 'https://canary.discord.com/channels/1087014898199969873/1255540593451335770/1258439336462909492',
+                rule1: 'https://canary.discord.com/channels/1087014898199969873/1258432882804785172/1258433967183630500',
+                rule2: 'https://canary.discord.com/channels/1087014898199969873/1258432989994680482/1258434025014431786',
+                rule3: 'https://canary.discord.com/channels/1087014898199969873/1258433032382058496/1258434063040118855',
+                rule5: 'https://canary.discord.com/channels/1087014898199969873/1258433071158395044/1258434101300691084',
+                rule7: 'https://canary.discord.com/channels/1087014898199969873/1258433115601502239/1258434279902412843',
+                rule9: 'https://canary.discord.com/channels/1087014898199969873/1258433158035013682/1258434309749215334',
+                rule12: 'https://canary.discord.com/channels/1087014898199969873/1258433194479583242/1258434330800291930',
+            },
+            invite: 'https://discord.gg/xt8WqnGffb',
         },
         '638480381552754730': {
             // Transonance
