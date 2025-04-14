@@ -60,8 +60,8 @@ const rulesEmbed = new EmbedBuilder()
             value: '> Including by not limited to `[server invites, advertisements, etc.]`, **unless given explicit permission from a staff member.** This includes sending unsolicited server invites, advertisements, or direct messages with the intention of promoting content.',
         },
         {
-            name: '`11`. **Keep on-topic in all channels.**',
-            value: '>  We understand conversations naturally drift; however, if they do not self-correct after a while, a mod may step in to help do so.',
+            name: '`11`. **Keep on-topic in all channels and keep selfies in the correct channel.**',
+            value: '>  We understand conversations naturally drift; however, if they do not self-correct after a while, a mod may step in to help do so.\n\n> Additionally, selfies are only to be posted in the **#selfies** channel, which is unlocked after you have been active in the server for a while. This is to ensure the safety of all of our members, and as such, will be specifically enforced when necessary.',
         },
         {
             name: '`12`. **Keep all conversations in English.**',
