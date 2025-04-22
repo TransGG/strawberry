@@ -2,6 +2,7 @@ import {
     ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle,
 } from 'discord.js';
 
+import config from '../../../config/config.js';
 import { escape } from '../../../formatters/escape.js';
 import InteractionHelper from '../../utils/InteractionHelper.js';
 import Modal from '../Modal.js';
@@ -48,7 +49,7 @@ class SendMessage extends Modal {
         await InteractionHelper.deferReply(interaction, true);
 
         const message = interaction.fields.getTextInputValue('message');
-        await interaction.channel.send({
+        const output = await interaction.channel.send({
             content: escape(message),
         });
 
@@ -57,6 +58,25 @@ class SendMessage extends Modal {
             'Message sent as in the current channel\nIf you would like to edit or delete this message, right click the message and choose `Apps > Edit Message` or `Apps > Delete Message` respectively.',
             true,
         );
+
+        const logChannel = interaction.guild.channels.cache.get(
+            config.guilds[interaction.guild.id].channels.theoSendLogs,
+        );
+
+        if (logChannel) {
+            logChannel.send({
+                embeds: [
+                    {
+                        author: {
+                            icon_url: interaction.user.displayAvatarURL({ static: true }),
+                            name: interaction.user.username,
+                        },
+                        title: 'Message sent as bot',
+                        description: `${message}\n\n-# [jump to message](${output.url}) — sent by \`${interaction.user.id}\``,
+                    },
+                ],
+            });
+        }
     }
 }
 
