@@ -15,6 +15,7 @@ import { FatalError } from '../bot/utils/errors.js';
  * @property {Object}    guild.channels   - Relevant channels
  * @property {Snowflake} guild.channels.lobby               - The channel unverified users start verification from
  * @property {Snowflake} guild.channels.verifyLogs          - Main log channel for verification logs
+ * @property {Snowflake} guild.channels.theoSendLogs      - Log channel for staff anonymized messages
  * @property {Snowflake} guild.channels.verifyLogsSecondary - Secondary log channel for verification logs. Currently used for verify kick logs
  * @property {Snowflake} guild.channels.welcome             - Secondary log channel for verification logs. Currently used for verify kick logs
  * @property {Snowflake} guild.channels.general             - General channel
@@ -40,6 +41,7 @@ const config = {
                 lobby: '',
                 verifyLogs: '',
                 verifyLogsSecondary: '',
+                theoSendLogs: '',
                 welcome: '',
                 general: '',
                 introduce: '',
@@ -104,6 +106,7 @@ const devs = {
                 lobby: '1097203594631073933',
                 verifyLogs: '1097203635689107516',
                 verifyLogsSecondary: '1097203656551583865',
+                theoSendLogs: '1364027965847109662',
                 welcome: '1105354623243538462',
                 general: '1097203694539387111',
                 introduce: '1097203721802354868',
@@ -142,6 +145,7 @@ const devs = {
                 lobby: '1255574457800720514',
                 verifyLogs: '1255574478264467597',
                 verifyLogsSecondary: '1255574493594914826',
+                theoSendLogs: '1364028107920642078',
                 welcome: '1255574514687803575',
                 general: '1255574526171938866',
                 introduce: '1255574539891376189',
@@ -194,6 +198,7 @@ const production = {
                 lobby: '1057132419150532678',               // TransPlace:welcome-verify
                 verifyLogs: '987377031434100747',           // TransPlace:verify-logs
                 verifyLogsSecondary: '1025521840816402442', // TransPlace:verify-kick-logs
+                theoSendLogs: '1364039747638530120',        // TransPlace:theo-send-logs
                 welcome: '978883070662959134',              // TransPlace:welcome-wagon
                 general: '960920453705257061',              // TransPlace:rules-info
                 introduce: '964221571071869050',            // TransPlace:entrance-hall
@@ -254,6 +259,7 @@ const production = {
                 lobby: '1255540593451335770',               // EnbyPlace:welcome-verify
                 verifyLogs: '1255540709419909140',          // EnbyPlace:verify-logs
                 verifyLogsSecondary: '1255540759046787093', // EnbyPlace:verify-kick-logs
+                theoSendLogs: '1364039490691268738',        // EnbyPlace:theo-send-logs
                 welcome: '1087014899290488870',             // EnbyPlace:welcome-wagon
                 general: '1087014899105923122',             // EnbyPlace:rules-info
                 introduce: '1087014899290488871',           // EnbyPlace:entrance-hall
@@ -312,6 +318,7 @@ const production = {
                 lobby: '1255543769835769999',               // Transonance:welcome-verify
                 verifyLogs: '1255543882913939527',          // Transonance:verify-logs
                 verifyLogsSecondary: '1255543905521238158', // Transonance:verify-kick-logs
+                theoSendLogs: '1364039878114807952',        // Transonance:theo-send-logs
                 welcome: '1109969065868542062',             // Transonance:welcome-wagon
                 general: '1092539304305233941',             // Transonance:rules-info
                 introduce: '1108789826351800340',           // Transonance:entrance-hall
@@ -360,6 +367,7 @@ const production = {
                 lobby: '1342833050731548682',               // TransDice:welcome-verify
                 verifyLogs: '1342834458570657794',          // TransDice:verify-logs
                 verifyLogsSecondary: '1342835930649595995', // TransDice:verify-kick-logs
+                theoSendLogs: '1364104144700309545',        // TransDice:theo-send-logs
             },
             roles: {
                 staffRoles: [
@@ -381,7 +389,7 @@ const production = {
                 rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
             },
             invite: 'https://discord.gg/YUJM2Qg55q',
-        }
+        },
     },
 };
 
