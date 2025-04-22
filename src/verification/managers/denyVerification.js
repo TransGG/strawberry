@@ -76,7 +76,7 @@ async function denyVerification(
                 verifier,
                 userReason,
                 logReason,
-                dmMessage: `Your verification ticket within ${bold(guild.name)} has been denied for the following reason:\n${codeBlock(userReason)}`,
+                dmMessage: `Your verification ticket within ${bold(guild.name)} has been denied for the following reason:\n${codeBlock(userReason)}\nIf you wish to appeal this ban, please use [this google form](<https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform>).`,
                 ticket,
             },
         );
