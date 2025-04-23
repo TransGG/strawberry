@@ -1,5 +1,6 @@
 import {
     BaseGuildTextChannel,
+    channelMention,
     RESTJSONErrorCodes,
     roleMention,
     ThreadChannel,
@@ -164,7 +165,7 @@ async function refreshTicket(ticket, member) {
  */
 function sendPrompt(ticket, applicant, promptCategory) {
     return ticket.send({
-        content: userMention(applicant.id),
+        content: `${userMention(applicant.id)} If you cannot see instructions in this message, please go to **User Settings**, navigate to **Chat**, and enable **Embeds And Link Previews**. You can view the rules in ${channelMention(config.guilds[ticket.guild.id].channels.lobby)}.`,
         embeds: buildPromptEmbeds(applicant, promptCategory),
         components: buildPromptComponents(ticket.client),
     });
