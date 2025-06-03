@@ -353,7 +353,8 @@ const production = {
                     isQuestioning: '1109912874459078867',
                     isCis: '1109912938929737909',
                 },
-            links:  {
+            },
+            links: {
                 rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
                 rule1: 'https://canary.discord.com/channels/638480381552754730/1378842074467794954/1378846359737602151',
                 rule2: 'https://canary.discord.com/channels/638480381552754730/1378844409222660126/1378845977842290858',
