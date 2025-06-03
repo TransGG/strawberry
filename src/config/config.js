@@ -236,7 +236,7 @@ const production = {
                 },
             },
             links: {
-                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
+                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1379598680251699330',
                 rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
                 rule2: 'https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910',
                 rule3: 'https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163',
@@ -355,7 +355,7 @@ const production = {
                 },
             },
             links: {
-                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
+                rules: 'https://canary.discord.com/channels/638480381552754730/1255543769835769999/1379578773745434725',
                 rule1: 'https://canary.discord.com/channels/638480381552754730/1378842074467794954/1378846359737602151',
                 rule2: 'https://canary.discord.com/channels/638480381552754730/1378844409222660126/1378845977842290858',
                 rule3: 'https://canary.discord.com/channels/638480381552754730/1378862066320015510/1378862385959272509',
