@@ -79,6 +79,7 @@ export interface Guild {
     rule2: string;
     rule3: string;
     rule5: string;
+    rule6: string;
     rule7: string;
     rule9: string;
     rule12: string;
