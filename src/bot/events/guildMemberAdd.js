@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import config from '../../config/config.js';
 import Event from '../Event.js';
+import exclaim from '../../formatters/exclaim.js';
 
 /**
  * Handler for guildMemberAdd event. Event when a user joins the server.
@@ -34,7 +35,7 @@ In order to join our community we require that you have a discord avatar set and
 
 To see the rest of the channels within our server, please click the button below, or head back to our server to read our rules and continue our verification process, don't worry, its easy ❤.
 
-Have fun in ${member.guild.name} We're excited to have you join our wonderful community!
+Have fun in ${exclaim(member.guild.name)} We're excited to have you join our wonderful community!
 
 Permanent invite link: ${config.guilds[member.guild.id].invite}`,
 
@@ -43,7 +44,7 @@ Permanent invite link: ${config.guilds[member.guild.id].invite}`,
                     .addComponents(
                         new ButtonBuilder()
                             .setURL(config.guilds[member.guild.id].invite)
-                            .setLabel(`Join ${member.guild.name}!`)
+                            .setLabel(`Join ${exclaim(member.guild.name)}`)
                             .setStyle(ButtonStyle.Link),
                     ),
             ],
