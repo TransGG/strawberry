@@ -402,6 +402,51 @@ const production = {
             },
             invite: 'https://discord.gg/YUJM2Qg55q',
         },
+        { 
+        clientId: '964615352489222225', // Theo
+        guilds: {
+        '928175231091236884' {: // CDLF
+            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+            privateThread: ChannelType.PrivateThread, // test server does not have server premium level for private threads
+            channels: {
+                lobby: '1275115292644606005',               // CDLF:welcome-verify
+                verifyLogs: '1275115394021195816',           // CDLF:verify-logs
+                verifyLogsSecondary: '1275115440753872916', // CDLF:verify-kick-logs
+                theoSendLogs: '1381052245319225425',        // CDLF:theo-send-logs
+                welcome: '1275116015466057748',              // CDLF:welcome-wagon
+                general: '928175507424563240',              // CDLF:rules-info
+                introduce: '949463502798614588',            // CDLF:entrance-hall
+            },
+            roles: {
+                staffRoles: [
+                    // [Active]
+                    '928181806774243358',  // Admin
+                    '963914918132846622',  // Moderator
+                    '949509841980903434', // Mini - Mod
+                    '1273080176892313713',  // Verifier
+
+                    // [On-Leave]
+                    '1297610758925844510',  // Admin [On-Leave]
+                    '1297611101382381589',  // Moderator [On-Leave]
+                    '1297611290700939274', // Mini - Mod [On-Leave]
+                    '1297611413543452692', // verifier [On-Leave]
+                ],
+                verifier: '1273080176892313713',
+                verified: '949441336417853520',
+                noImages: '1275118018526973982',
+                member: '1275122654088527915',
+                newbie: '1275124083335368807',
+                greeter: '1296977654192537650',
+                inactivityPing: '1275124169016606792',
+                emojiVoid: '1275124294749392906',
+                catagories: {
+                    isTrans: '1296978484198903850',
+                    isQuestioning: '1296978679074914375',
+                    isCis: '1296978602482602045',
+                },
+            },
+            invite: 'https://discord.gg/CafeDeLaFemme',
+        },
     },
 };
 
