@@ -416,6 +416,7 @@ const production = {
                 welcome: '1275116015466057748',              // CDLF:welcome-wagon
                 general: '928175507424563240',              // CDLF:rules-info
                 introduce: '949463502798614588',            // CDLF:entrance-hall
+                emojiVoid: '1381058808637427732',           // CDLF:emoji-void
             },
             roles: {
                 staffRoles: [
