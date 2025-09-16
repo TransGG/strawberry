@@ -108,6 +108,7 @@ function buildVerifierActionComponents(client) {
         new ActionRowBuilder()
             .addComponents(
                 client.getButton('sendAsTheo'),
+                client.getButton('sendAsTheoWithPing'),
             ),
         new ActionRowBuilder()
             .addComponents(
