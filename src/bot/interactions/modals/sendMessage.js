@@ -6,6 +6,7 @@ import config from '../../../config/config.js';
 import { escape } from '../../../formatters/escape.js';
 import InteractionHelper from '../../utils/InteractionHelper.js';
 import Modal from '../Modal.js';
+import { fetchApplicant } from '../../../verification/controllers/ticket.js';
 
 /**
  * Handler for sendMessage modal. Accepts input to create a message to send
@@ -14,8 +15,9 @@ class SendMessage extends Modal {
     /**
      * @param {string} name The name of this modal
      */
-    constructor(name = 'sendMessage') {
+    constructor(name = 'sendMessage', withPing = false) {
         super(name);
+        this.withPing = withPing;
     }
 
     /**
@@ -32,7 +34,7 @@ class SendMessage extends Modal {
                             .setCustomId('message')
                             .setRequired(true)
                             .setMinLength(1)
-                            .setMaxLength(1999)
+                            .setMaxLength(1950)
                             .setLabel('Message')
                             .setStyle(TextInputStyle.Paragraph)
                             .setPlaceholder('Message to send here.'),
@@ -48,9 +50,22 @@ class SendMessage extends Modal {
     async run(interaction) {
         await InteractionHelper.deferReply(interaction, true);
 
+        const applicant = await fetchApplicant(interaction.channel);
+
+        if (!applicant) {
+            await InteractionHelper.reply(
+                interaction,
+                'The applicant could not be found for this channel (they likely left the server).',
+                true,
+            );
+
+            return;
+        }
+
         const message = interaction.fields.getTextInputValue('message');
         const output = await interaction.channel.send({
-            content: escape(message),
+            content: (this.withPing ? `${applicant} ` : '') + escape(message),
+            allowedMentions: { users: [applicant.id] },
         });
 
         await InteractionHelper.reply(
