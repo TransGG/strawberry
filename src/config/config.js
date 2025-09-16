@@ -2,10 +2,10 @@ import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
 import { FatalError } from '../bot/utils/errors.js';
 import {
-    mentalHealthEmbed,
+    GAmentalHealthEmbed,
+    GArulesEmbed1,
+    GArulesEmbed2,
     notesReportEmbed,
-    TPrulesEmbed,
-    TPrulesImgEmbed,
 } from './embeds.js';
 
 // for easier reading
@@ -53,19 +53,19 @@ const config = {
     guilds: {},
 };
 
-const TPproxy = {
-    name: 'Verification Kyle Proxy',
-    displayName: 'Kyle ♡ [Any Pronouns]',
+const GAproxy = {
+    name: 'Verification Caitlyn Proxy',
+    displayName: 'Caitlyn ♡ [She/Her]',
     avatarURL: 'https://i.imgur.com/fOJFzGz.png',
-    heartEmoji: '<:max_heart:968321960557809674>',
-    welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
-    thanksEmoji: '<a:TPA_Trans_Heart:960885444285968395>',
-    bumpEmoji: '<a:TPF_Squid_Wave:968411630981496852>',
+    heartEmoji: '<:GayHeart:1135714747803783269>',
+    welcomeEmoji: '<:DemonThumbsup:1147951767682818201>',
+    thanksEmoji: '<:DemonCelebrate:1147951774683119676>',
+    bumpEmoji: '<:DemonFire:1147951717888041001>',
 };
 
-const TPrulesMessages = [
-    [TPrulesImgEmbed, TPrulesEmbed],
-    [notesReportEmbed, mentalHealthEmbed],
+const GArulesMessages = [
+    [GArulesEmbed1, GArulesEmbed2],
+    [notesReportEmbed, GAmentalHealthEmbed],
 ];
 
 const development = {
@@ -111,8 +111,8 @@ const development = {
                 rule12: 'https://google.com/1-12',
             },
             invite: 'https://google.com',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            proxy: GAproxy,
+            rulesMessages: GArulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
@@ -157,240 +157,92 @@ const development = {
                 rule12: 'https://google.com/2-12',
             },
             invite: 'https://yahoo.com',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            proxy: GAproxy,
+            rulesMessages: GArulesMessages,
         },
     },
 };
 
 const production = {
-    debugOut: () => { },
-    verboseOut: () => { },
-    clientId: '964615352489222225', // Theo
+    debugOut: () => {},
+    verboseOut: () => {},
+    clientId: '1244421306598822024', // theo
     guilds: {
-        '959551566388547676': {
-            // TransPlace
-            sync: [
-                '1087014898199969873', // EnbyPlace
-                '638480381552754730', // Transonance
-            ],
+        '1135300957572431902': {
+            // Gender Anarchy
+            sync: [],
             verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
-            privateThread: ChannelType.PrivateThread, // test server does not have server premium level for private threads
+            privateThread: ChannelType.PrivateThread,
             channels: {
-                lobby: '1057132419150532678',               // TransPlace:welcome-verify
-                verifyLogs: '987377031434100747',           // TransPlace:verify-logs
-                verifyLogsSecondary: '1025521840816402442', // TransPlace:verify-kick-logs
-                theoSendLogs: '1364039747638530120',        // TransPlace:theo-send-logs
-                welcome: '978883070662959134',              // TransPlace:welcome-wagon
-                general: '960920453705257061',              // TransPlace:rules-info
-                introduce: '964221571071869050',            // TransPlace:entrance-hall
+                lobby: '1244418752217485364',               // Gender Anarchy:welcome-verify
+                verifyLogs: '1244422429468655706',          // Gender Anarchy:verify-logs
+                verifyLogsSecondary: '1244422507776446514', // Gender Anarchy:verify-kick-logs
+                theoSendLogs: '1364040328298106910',        // Gender Anarchy:theo-send-logs
+                welcome: '',
+                general: '1135631066871378010',             // Gender Anarchy:rules
+                introduce: '1137568440622780507',           // Gender Anarchy:introductions
             },
             roles: {
                 staffRoles: [
                     // [Active]
-                    '981735525784358962',  // Admin
-                    '1229965330869391430', // Admin (Hidden)
-                    '1012954384142966807', // Sr Mod
-                    '981735650971775077',  // Moderator
-                    '1069398630944997486', // Trial Mod
-                    '959916105294569503',  // Verifier
+                    '1135440960835309610',  // Administrator
+                    '1269753219878490306',  // Senior Moderator
+                    '1135428559792508996',  // Moderator
+                    '1160658705092714576',  // Trial Moderator
+                    '1244425148480749670',  // Verifier
 
                     // [On-Leave]
-                    '995822941663154206',  // Admin [On-Leave]
-                    '1046488017151463586', // Sr Mod [On-Leave]
-                    '996798320649457667',  // Moderator [On-Leave]
-                    '1069399026614681700', // Trial Mod [On-Leave]
-                    '996798409061171221', // verifier [On-Leave]
+                    '1269746464616091651',  // Administrator [On-Leave]
+                    '1269746471230771271',  // Senior Moderator [On-Leave]
+                    '1269740835633889362',  // Moderator [On-Leave]
+                    '1269740831460556901',  // Trial Moderator [On-Leave]
+                    '1269740820957757470',  // Verifier [On-Leave]
                 ],
-                verifier: '959916105294569503',
-                verified: '959748411844874240',
-                noImages: '1105701184406306876',
-                place: '1115073100174860298',
-                member: '1105230385769623584',
-                newbie: '1085261027807088710',
-                greeter: '978861945253945394',
-                inactivityPing: '1097289190682660884',
-                emojiVoid: '1093196851169218560',
+                verifier: '1244425148480749670',
+                verified: '1135575202709909575',
+                noImages: '1204541395726106686',
+                place: '',
+                member: '1198798476813811712',
+                newbie: '',
+                greeter: '',
+                inactivityPing: '1244425552010678313',
+                emojiVoid: '',
                 catagories: {
-                    isTrans: '1105349250335907870',
-                    isQuestioning: '1105349324688338964',
-                    isCis: '1105349438953762837',
+                    isTrans: [
+                        '1135590332021624854', // Trans
+                        '1135590440310145054', // Transfem
+                        '1135590493791731722', // Transmasc
+                        '1135590532320595988', // Nonbinary
+                        '1149046767783006279', // Agender
+                        '1152386445332459540', // Pangender
+                        '1150941011250516058', // Genderfluid
+                        '1211388591725346927', // Two Spirited
+                        '1152386602836951083', // Demiboy
+                        '1152386528979464213', // Demigrl
+                        '1152386678086979655', // Demiqueer
+                    ],
+                    isQuestioning: [
+                        '1146451104763228182', // Questioning
+                    ],
+                    isCis: [
+                        '1135590367148908625', // Cis
+                        '1135590615095189625', // Queer
+                        '1135590584468385792', // Unlabeled
+                    ],
                 },
             },
             links: {
-                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1379598680251699330',
-                rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
-                rule2: 'https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910',
-                rule3: 'https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163',
-                rule5: 'https://canary.discord.com/channels/959551566388547676/1151689706912882758/1151694425110609941',
-                rule6: 'https://canary.discord.com/channels/959551566388547676/1378897773243666454/1378898091620700230',
-                rule7: 'https://canary.discord.com/channels/959551566388547676/1151689903319564329/1151690023331172412',
-                rule9: 'https://canary.discord.com/channels/959551566388547676/1151689755537457265/1151694463127793674',
-                rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
+                rules: 'https://discord.com/channels/1135300957572431902/1244418752217485364/1356767824328134727',
+                rule1: 'https://discord.com/channels/1135300957572431902/1246846234023428146',
+                rule6: 'https://discord.com/channels/1135300957572431902/1246846166822551563',
+                rule8: 'https://discord.com/channels/1135300957572431902/1246846100933968045',
+                rule16: 'https://discord.com/channels/1135300957572431902/1246846037872738435',
+                rule17: 'https://discord.com/channels/1135300957572431902/1246845980779872498',
+                rule18: 'https://discord.com/channels/1135300957572431902/1246845823950655498',
             },
-            invite: 'https://discord.gg/TransPlace',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
-        },
-        '1087014898199969873': {
-            // EnbyPlace
-            sync: [
-                '959551566388547676', // TransPlace
-                '638480381552754730', // Transonance
-            ],
-            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
-            privateThread: ChannelType.PrivateThread,
-            channels: {
-                lobby: '1255540593451335770',               // EnbyPlace:welcome-verify
-                verifyLogs: '1255540709419909140',          // EnbyPlace:verify-logs
-                verifyLogsSecondary: '1255540759046787093', // EnbyPlace:verify-kick-logs
-                theoSendLogs: '1364039490691268738',        // EnbyPlace:theo-send-logs
-                welcome: '1087014899290488870',             // EnbyPlace:welcome-wagon
-                general: '1087014899105923122',             // EnbyPlace:rules-info
-                introduce: '1087014899290488871',           // EnbyPlace:entrance-hall
-            },
-            roles: {
-                staffRoles: [
-                    // [Active]
-                    '1087014898418061367', // Admin
-                    '1087014898418061365', // Sr Mod
-                    '1087014898418061363', // Moderator
-                    '1087014898418061362', // Trial Mod
-                    '1255540964647370903', // verifier
-
-                    // [On-Leave]
-                    '1255541352813301811', // Admin [On-Leave]
-                    '1255541421348360324', // Sr Mod [On-Leave]
-                    '1255541502877368371', // Moderator [On-Leave]
-                    '1255541574851367043', // Trial Mod [On-Leave]
-                    '1255541652840255498', // verifier [On-Leave]
-                ],
-                verifier: '1255540964647370903',
-                verified: '1255542090046247004',
-                noImages: '1255542151769620501',
-                member: '1168300878982295562',
-                newbie: '1087014898220929197',
-                greeter: '1087014898241896476',
-                inactivityPing: '1255542262117568555',
-                emojiVoid: '1255542308204711988',
-                catagories: {
-                    isTrans: '1168292211461472267',
-                    isQuestioning: '1168292329900212326',
-                    isCis: '1168292229283061760',
-                },
-            },
-            links: {
-                rules: 'https://canary.discord.com/channels/1087014898199969873/1255540593451335770/1258439336462909492',
-                rule1: 'https://canary.discord.com/channels/1087014898199969873/1258432882804785172/1258433967183630500',
-                rule2: 'https://canary.discord.com/channels/1087014898199969873/1258432989994680482/1258434025014431786',
-                rule3: 'https://canary.discord.com/channels/1087014898199969873/1258433032382058496/1258434063040118855',
-                rule5: 'https://canary.discord.com/channels/1087014898199969873/1258433071158395044/1258434101300691084',
-                rule7: 'https://canary.discord.com/channels/1087014898199969873/1258433115601502239/1258434279902412843',
-                rule9: 'https://canary.discord.com/channels/1087014898199969873/1258433158035013682/1258434309749215334',
-                rule12: 'https://canary.discord.com/channels/1087014898199969873/1258433194479583242/1258434330800291930',
-            },
-            invite: 'https://discord.gg/xt8WqnGffb',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
-        },
-        '638480381552754730': {
-            // Transonance
-            sync: [
-                '959551566388547676', // TransPlace
-                '1087014898199969873', // EnbyPlace
-            ],
-            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
-            privateThread: ChannelType.PrivateThread,
-            channels: {
-                lobby: '1255543769835769999',               // Transonance:welcome-verify
-                verifyLogs: '1255543882913939527',          // Transonance:verify-logs
-                verifyLogsSecondary: '1255543905521238158', // Transonance:verify-kick-logs
-                theoSendLogs: '1364039878114807952',        // Transonance:theo-send-logs
-                welcome: '1109969065868542062',             // Transonance:welcome-wagon
-                general: '1092539304305233941',             // Transonance:rules-info
-                introduce: '1108789826351800340',           // Transonance:entrance-hall
-            },
-            roles: {
-                staffRoles: [
-                    // [Active]
-                    '1109905190372524132', // Admin
-                    '1255544133913677834', // Sr Mod
-                    '1109942209479970816', // Moderator
-                    '1255544257939374141', // Trial Mod
-                    '1255544342433632429', // Verifier
-
-                    // [On-Leave]
-                    '1255544478303784990', // Admin [On-Leave]
-                    '1255544545387745310', // Sr Mod [On-Leave]
-                    '1255544622739099670', // Moderator [On-Leave]
-                    '1255544693698199633', // Trial Mod [On-Leave]
-                    '1255544757954809967', // Verifier [On-Leave]
-                ],
-                verifier: '1255544342433632429',
-                verified: '1109907941454258257',
-                noImages: '1255544757510471790',
-                member: '1109907352578171001',
-                newbie: '1255545076860321822',
-                greeter: '1109912498469077252',
-                inactivityPing: '1255545148247507016',
-                emojiVoid: '1255545384995127423',
-                catagories: {
-                    isTrans: '1109912826866323607',
-                    isQuestioning: '1109912874459078867',
-                    isCis: '1109912938929737909',
-                },
-            },
-            links: {
-                rules: 'https://canary.discord.com/channels/638480381552754730/1255543769835769999/1379578773745434725',
-                rule1: 'https://canary.discord.com/channels/638480381552754730/1378842074467794954/1378846359737602151',
-                rule2: 'https://canary.discord.com/channels/638480381552754730/1378844409222660126/1378845977842290858',
-                rule3: 'https://canary.discord.com/channels/638480381552754730/1378862066320015510/1378862385959272509',
-                rule5: 'https://canary.discord.com/channels/638480381552754730/1379266377700872343/1379266503727386699',
-                rule6: 'https://canary.discord.com/channels/638480381552754730/1379267116041244844/1379267267896021044',
-                rule7: 'https://canary.discord.com/channels/638480381552754730/1379268480083431484/1379269108142444556',
-                rule9: 'https://canary.discord.com/channels/638480381552754730/1379294404942102588/1379294558692573277',
-                rule12: 'https://canary.discord.com/channels/638480381552754730/1379295048063123486/1379295357514682508',
-            },
-            invite: 'https://discord.gg/QhTDQsyeD6',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
-        },
-        '1116634030834733077': {
-            // TransDice!
-            sync: [
-                '959551566388547676', // TransPlace
-                // Sync here is *intentionally 1-way to TransPlace*, as this is a spin-off server from TransPlace and generally will not be verifying people
-            ],
-            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
-            privateThread: ChannelType.PrivateThread,
-            channels: {
-                lobby: '1342833050731548682',               // TransDice:welcome-verify
-                verifyLogs: '1342834458570657794',          // TransDice:verify-logs
-                verifyLogsSecondary: '1342835930649595995', // TransDice:verify-kick-logs
-                theoSendLogs: '1364104144700309545',        // TransDice:theo-send-logs
-            },
-            roles: {
-                staffRoles: [
-                    '1116668288638914641', // Blåholder
-                    '1144502144033116201', // TransPlace Staff
-                ],
-                verifier: '1116668288638914641', // Blåholder
-                verified: '1116673143013122068', // Adventurer
-                catagories: {},
-            },
-            links: {
-                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
-                rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
-                rule2: 'https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910',
-                rule3: 'https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163',
-                rule5: 'https://canary.discord.com/channels/959551566388547676/1151689706912882758/1151694425110609941',
-                rule7: 'https://canary.discord.com/channels/959551566388547676/1151689903319564329/1151690023331172412',
-                rule9: 'https://canary.discord.com/channels/959551566388547676/1151689755537457265/1151694463127793674',
-                rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
-            },
-            invite: 'https://discord.gg/YUJM2Qg55q',
-            proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            invite: 'https://discord.gg/GenderAnarchy',
+            proxy: GAproxy,
+            rulesMessages: GArulesMessages,
         },
     },
 };
@@ -401,7 +253,7 @@ if (process.env.NODE_ENV === 'development') {
     Object.assign(config, production);
 } else {
     throw new FatalError(
-        'Invalid value for environmental variable NODE_ENV: Must be either \'development\' or \'production\'',
+        'Invalid value for environmental variable NODE_ENV: Must be either "development" or "production".',
     );
 }
 
