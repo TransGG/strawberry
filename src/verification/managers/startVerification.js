@@ -50,7 +50,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     if (!webhooks.size) {
         await ticket.parent.createWebhook({
-            name: 'Verification Kyle Proxy',
+            name: config.guilds[applicant.guild.id].proxy.name,
         });
     }
 
@@ -71,9 +71,9 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
             if (userMessages.size === 0) {
                 await webhook.send({
-                    content: `Welcome ${applicant} <a:TPF_GawrGura_Wave:968391057828093952>,\n\nI just wanted to check in with you and give you a heads up that we kindly ask all questions to be answered within 3 hours to avoid being kicked for inactivity.\n\nThankies <a:TPA_Trans_Heart:960885444285968395>`,
-                    username: 'Kyle ♡ [Any Pronouns]',
-                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    content: `Welcome ${applicant} ${config.guilds[applicant.guild.id].proxy.welcomeEmoji},\n\nI just wanted to check in with you and give you a heads up that we kindly ask all questions to be answered within 3 hours to avoid being kicked for inactivity.\n\nThankies ${config.guilds[applicant.guild.id].proxy.thanksEmoji}`,
+                    username: config.guilds[applicant.guild.id].proxy.displayName,
+                    avatarURL: config.guilds[applicant.guild.id].proxy.avatarURL,
                     threadId: ticket.id,
                 });
             }
@@ -92,8 +92,8 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
                 if (userMessages.size === 0) {
                     await webhook.send({
                         content: 'Also, I noticed your account is pretty new, could you explain why?\n\nAnd do you happen to have any other online accounts (Twitter/Reddit/Etc) which has more history that you could send us a link to?\n\nNw if not ^^',
-                        username: 'Kyle ♡ [Any Pronouns]',
-                        avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                        username: config.guilds[applicant.guild.id].proxy.displayName,
+                        avatarURL: config.guilds[applicant.guild.id].proxy.avatarURL,
                         threadId: ticket.id,
                     });
                 }
@@ -107,8 +107,8 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
             if (thread && !thread.archived) {
                 await webhook.send({
                     content: 'I can see that you picked up the r/place 2023 role, could you share your reddit username / link your reddit account?',
-                    username: 'Kyle ♡ [Any Pronouns]',
-                    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                    username: config.guilds[applicant.guild.id].proxy.displayName,
+                    avatarURL: config.guilds[applicant.guild.id].proxy.avatarURL,
                     threadId: ticket.id,
                 });
             }
@@ -125,7 +125,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
             if (userMessages.size === 0) {
                 await thread.send({
-                    content: `Hi there! ${applicant}, <a:TPF_Squid_Wave:968411630981496852>\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! <a:TPA_Trans_Heart:960885444285968395>${config.guilds[applicant.guild.id].roles.inactivityPing ? ` | (<@&${config.guilds[applicant.guild.id].roles.inactivityPing}>)` : ''}`,
+                    content: `Hi there! ${applicant}, ${config.guilds[applicant.guild.id].proxy.bumpEmoji}\n\nIt looks like it's been 3 hours since we've heard from you, so we just wanted to tell you this ticket has been marked as inactive and has been set to be deleted soon.\n\nWe don't want to close your ticket or kick you out, so please let us know if you need more time to respond. Just give us a heads up and we'll be happy to wait a bit longer. \n\nThanks! ${config.guilds[applicant.guild.id].proxy.thanksEmoji}${config.guilds[applicant.guild.id].roles.inactivityPing ? ` | (<@&${config.guilds[applicant.guild.id].roles.inactivityPing}>)` : ''}`,
                     threadId: ticket.id,
                     allowedMentions: {
                         roles: [config.guilds[applicant.guild.id].roles.inactivityPing],
@@ -156,7 +156,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
                     {
                         ticket,
                         verifier: applicant,
-                        userReason: 'Kicked for Inactivity, feel free to rejoin once you have time to answer the questions!~\n\nhttps://discord.gg/TransPlace',
+                        userReason: `Kicked for Inactivity, feel free to rejoin once you have time to answer the questions!~\n\n${config.guilds[applicant.guild.id].invite}`,
                         logReason: 'Kicked for Inactivity - No messages in 24h (Auto)',
                     },
                 ).catch(async () => {

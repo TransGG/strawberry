@@ -59,7 +59,7 @@ class MessageCreate extends Event {
 
                         if (!webhooks.size) {
                             await message.channel.parent.createWebhook({
-                                name: 'Verification Kyle Proxy',
+                                name: config.guilds[message.guild.id].proxy.name,
                             });
                         }
 
@@ -67,8 +67,8 @@ class MessageCreate extends Event {
 
                         await webhook.send({
                             content: `\`[Reminder]\`\n${message.author} Please make sure to click the \`"Finished Answering!"\` or \`"I Need Help Please."\` buttons at the top of the channel after you've finished answering to complete the verification process. ^^`,
-                            username: 'Kyle ♡ [Any Pronouns]',
-                            avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+                            username: config.guilds[message.guild.id].proxy.displayName,
+                            avatarURL: config.guilds[message.guild.id].proxy.avatarURL,
                             threadId: message.channel.id,
                         });
                     }

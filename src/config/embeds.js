@@ -1,20 +1,10 @@
-import {
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-    EmbedBuilder,
-    messageLink,
-} from 'discord.js';
-import config from '../config/config.js';
+import { EmbedBuilder } from 'discord.js';
 
-// TODO: format all the discord links create components
-// TODO: pull this out to a handler
-
-const rulesImgEmbed = new EmbedBuilder()
+export const TPrulesImgEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setImage('https://i.imgur.com/KGyMpU5.png');
 
-const rulesEmbed = new EmbedBuilder()
+export const TPrulesEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setTitle('Rules')
     .addFields(
@@ -61,7 +51,7 @@ const rulesEmbed = new EmbedBuilder()
         },
         {
             name: '`11`. **Keep on-topic in all channels.**',
-            value: '>  We understand conversations naturally drift; however, if they do not self-correct after a while, a mod may step in to help do so.\n\n> *As well*, selfies are to be shared only in <#+1037517248862101504> [**\#selfies**]. This is to ensure the safety of all of our members. Access to the \#selfies channel will be granted after meeting server activity requirements.',
+            value: '>  We understand conversations naturally drift; however, if they do not self-correct after a while, a mod may step in to help do so.\n\n> *As well*, selfies are to be shared only in <#+1037517248862101504> [**#selfies**]. This is to ensure the safety of all of our members. Access to the #selfies channel will be granted after meeting server activity requirements.',
         },
         {
             name: '`12`. **Keep all conversations in English.**',
@@ -74,7 +64,7 @@ const rulesEmbed = new EmbedBuilder()
     )
     .setImage('https://i.imgur.com/CBbbw0d.png'); // tiny image that ensures constant embed width
 
-const notesReportEmbed = new EmbedBuilder()
+export const notesReportEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setTitle('Notes / Report to staff')
     .setDescription('**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just to our server staff.*')
@@ -83,47 +73,8 @@ const notesReportEmbed = new EmbedBuilder()
         text: 'If you are ever unsure if something is allowed, feel free to ask.',
     });
 
-const mentalHealthEmbed = new EmbedBuilder()
+export const mentalHealthEmbed = new EmbedBuilder()
     .setColor(0xDF585B)
     .setTitle('🔴 IMPORTANT 🔴')
     .setDescription('We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have venting channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️')
     .setImage('https://i.imgur.com/CBbbw0d.png');
-
-function buildWelcomeComponents(client, magicMessage) {
-    const extra = [
-        client.getButton('startVerification'),
-    ];
-
-    if (config.guilds[magicMessage.guild.id].roles.emojiVoid) {
-        extra.push(client.getButton('addEmojiVoid'));
-    }
-
-    return [
-        new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setURL(
-                        messageLink(
-                            config.guilds[magicMessage.guild.id].channels.lobby,
-                            magicMessage.id,
-                            magicMessage.guild.id,
-                        ),
-                    )
-                    .setLabel('Scroll To Rules!')
-                    .setStyle(ButtonStyle.Link),
-                ...extra,
-            ),
-    ];
-}
-
-const welcomeEmbeds = [
-    rulesImgEmbed,
-    rulesEmbed,
-    notesReportEmbed,
-    mentalHealthEmbed,
-];
-
-export {
-    welcomeEmbeds,
-    buildWelcomeComponents,
-};

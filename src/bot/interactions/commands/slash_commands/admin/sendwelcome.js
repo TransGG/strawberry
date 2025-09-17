@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 
-import { buildWelcomeComponents, welcomeEmbeds } from '../../../../../content/welcome.js';
+import buildWelcomeComponents from '../../../../../content/buildWelcomeComponents.js';
 import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import SlashCommand from '../../SlashCommand.js';
 import config from '../../../../../config/config.js';
@@ -37,36 +37,43 @@ class SendWelcome extends SlashCommand {
      */
     async run(interaction) {
         const preview = interaction.options.getBoolean('preview');
+        await interaction.deferReply({ ephemeral: true });
 
-        const rulesEmbed = welcomeEmbeds[1];
-        rulesEmbed.data.fields.forEach((field, index) => {
-            const match = field.value.match(/{{(.*?)}}/);
-            if (match) {
-                const extractedText = match[1];
-                const replacement = config.guilds[interaction.guild.id].links[extractedText]
-                || extractedText;
-                rulesEmbed.data.fields[index].value = field.value.replace(new RegExp(`{{${extractedText}}}`, 'g'), replacement);
+        const messages = config.guilds[interaction.guild.id].rulesMessages.map(
+            (message) => message.map((embed) => ({
+                ...embed.data,
+                fields: (embed.data.fields ?? []).map((field) => {
+                    const match = field.value.match(/{{(.*?)}}/);
+                    if (!match) {
+                        return field;
+                    }
+                    const extractedText = match[1];
+                    const replacement = config.guilds[interaction.guild.id].links[extractedText];
+                    return { ...field, value: field.value.replace(new RegExp(`{{${extractedText}}}`, 'g'), replacement) };
+                }),
+            })),
+        );
+
+        const objects = messages.map((embeds) => ({ embeds }));
+
+        objects[objects.length - 1].components = buildWelcomeComponents(
+            interaction.client,
+            interaction,
+        );
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const object of objects) {
+            if (preview) {
+                // eslint-disable-next-line no-await-in-loop
+                await InteractionHelper.reply(interaction, { ...object, components: [] }, true);
+            } else {
+                // eslint-disable-next-line no-await-in-loop
+                await interaction.channel.send(object);
             }
-        });
+        }
 
-        if (preview) {
-            await InteractionHelper.reply(interaction, {
-                embeds: [welcomeEmbeds[0], rulesEmbed],
-            }, true);
-        } else {
-            await InteractionHelper.deferReply(interaction, true);
-
-            // Sent as two embeds as it's over 6000 characters
-            const msg = await interaction.channel.send({
-                embeds: [welcomeEmbeds[0], welcomeEmbeds[1]],
-            });
-
-            await interaction.channel.send({
-                embeds: [welcomeEmbeds[2], welcomeEmbeds[3]],
-                components: buildWelcomeComponents(interaction.client, msg),
-            });
-
-            await InteractionHelper.reply(interaction, 'Sent!');
+        if (!preview) {
+            await InteractionHelper.reply(interaction, 'Sent!', true);
         }
     }
 }
