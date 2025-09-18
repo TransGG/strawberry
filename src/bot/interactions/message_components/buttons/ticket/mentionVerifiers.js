@@ -4,8 +4,7 @@ import mentionVerifiers from '../../../../../verification/managers/mentionVerifi
 import InteractionHelper from '../../../../utils/InteractionHelper.js';
 import TakesArguments from '../../../TakesArguments.js';
 import Button from '../../Button.js';
-
-const maxHeartId = '968321960557809674'; // id of emoji :max_heart: from TransPlace
+import config from "../../../../../config/config.js";
 
 /**
  * Handler for mentionVerifiers button. Summons verifiers to the verification ticket.
@@ -75,7 +74,7 @@ class MentionVerifiers extends Button {
                 // an emoji is supposed to be there if emoji is not found
                 return InteractionHelper.reply(
                     interaction,
-                    `Verifiers have been pinged. Please be patient as they go through the queue <:max_heart:${maxHeartId}> (p.s. this also disables the kick timer, so don't worry if it takes us a while to get to you)!`,
+                    `Verifiers have been pinged. Please be patient as they go through the queue ${config.guilds[interaction.guild.id].proxy.heartEmoji} (p.s. this also disables the kick timer, so don't worry if it takes us a while to get to you)!`,
                     true,
                 );
             },

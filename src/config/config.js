@@ -1,6 +1,12 @@
-import 'dotenv/config';
 import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
+import 'dotenv/config';
 import { FatalError } from '../bot/utils/errors.js';
+import {
+    mentalHealthEmbed,
+    notesReportEmbed,
+    TPrulesEmbed,
+    TPrulesImgEmbed,
+} from './embeds.js';
 
 // for easier reading
 /* eslint-disable max-len */
@@ -28,69 +34,41 @@ import { FatalError } from '../bot/utils/errors.js';
  * @property {Snowflake} guild.roles.catagories.isTrans       - Trans: role for trans people
  * @property {Snowflake} guild.roles.catagories.isQuestioning - Questioning: role for trans questioning people
  * @property {Snowflake} guild.roles.catagories.isCis         - Cis: role for cisgender people
+ * @property {Object}    guild.links   - Links for templating the rules embeds
+ * @property {Object}    guild.invite  - The guild's invite link
+ * @property {Object}    guild.proxy   - Configuration for the proxy that sends reminders/follow-up messages
+ * @property {string}    guild.proxy.name     - The name of the webhook
+ * @property {string}    guild.proxy.displayName  - The display name of the webhook
+ * @property {string}    guild.proxy.avatarURL    - The avatar URL
+ * @property {string}    guild.proxy.heartEmoji   - The string form of the heart emoji in the "verifiers have been pinged" message
+ * @property {string}    guild.proxy.welcomeEmoji - The string form of the emoji in the "welcome, {applicant}" message
+ * @property {string}    guild.proxy.thanksEmoji  - The string form of the emoji in the "answer within 3 hours, thanks" message
+ * @property {string}    guild.proxy.bumpEmoji    - The string form of the emoji in the "hi there, it's been 3 hours" message
+ * @property {any[]}     guild.rulesMessages  - An array of messages (each being an embed array) for the rules
  */
 const config = {
-    verboseOut: () => { },
+    verboseOut: () => {},
     clientId: '',
     token: process.env.TOKEN,
-    guilds: {
-        '': {
-            verifyTicketAutoArchiveDuration: 0,
-            privateThread: ChannelType.PublicThread,
-            channels: {
-                lobby: '',
-                verifyLogs: '',
-                verifyLogsSecondary: '',
-                theoSendLogs: '',
-                welcome: '',
-                general: '',
-                introduce: '',
-            },
-            roles: {
-                staffRoles: [],
-                verifier: '',
-                verified: '',
-                member: '',
-                greeter: '',
-                catagories: {
-                    isTrans: '',
-                    isQuestioning: '',
-                    isCis: '',
-                },
-            },
-        },
-    },
+    guilds: {},
 };
+
+const TPproxy = {
+    name: 'Verification Kyle Proxy',
+    displayName: 'Kyle ♡ [Any Pronouns]',
+    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+    heartEmoji: '<:max_heart:968321960557809674>',
+    welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
+    thanksEmoji: '<a:TPA_Trans_Heart:960885444285968395>',
+    bumpEmoji: '<a:TPF_Squid_Wave:968411630981496852>',
+};
+
+const TPrulesMessages = [
+    [TPrulesImgEmbed, TPrulesEmbed],
+    [notesReportEmbed, mentalHealthEmbed],
+];
 
 const development = {
-    debugOut: console.debug,
-    verboseOut: console.info,
-    clientId: '999892254808350811', // elsie
-    guilds: {
-        '987229949041725520': {
-            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
-            privateThread: ChannelType.PrivateThread,
-            channels: {
-                lobby: '987230161764225044', // test
-                verifyLogs: '1023658079675498568', // test 2
-                verifyLogsSecondary: '1024037750116204675', // test 3
-                welcome: '1023658079675498568', // test 2
-                general: '987230161764225044', // test
-                introduce: '987230161764225044',
-            },
-            roles: {
-                staffRoles: [
-                    '1023671868609269811', // elise
-                ],
-                verifier: '1046271388782186590', // new role
-                verified: '1016584910590459904', // test role
-                greeter: '1023671868609269811', // elise
-            },
-        },
-    },
-};
-
-const devs = {
     debugOut: console.debug,
     verboseOut: console.info,
     clientId: '1255572601590382725',
@@ -133,6 +111,8 @@ const devs = {
                 rule12: 'https://google.com/1-12',
             },
             invite: 'https://google.com',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
@@ -177,6 +157,8 @@ const devs = {
                 rule12: 'https://google.com/2-12',
             },
             invite: 'https://yahoo.com',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
     },
 };
@@ -247,6 +229,8 @@ const production = {
                 rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
             },
             invite: 'https://discord.gg/TransPlace',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
         '1087014898199969873': {
             // EnbyPlace
@@ -306,6 +290,8 @@ const production = {
                 rule12: 'https://canary.discord.com/channels/1087014898199969873/1258433194479583242/1258434330800291930',
             },
             invite: 'https://discord.gg/xt8WqnGffb',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
         '638480381552754730': {
             // Transonance
@@ -366,6 +352,8 @@ const production = {
                 rule12: 'https://canary.discord.com/channels/638480381552754730/1379295048063123486/1379295357514682508',
             },
             invite: 'https://discord.gg/QhTDQsyeD6',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
         '1116634030834733077': {
             // TransDice!
@@ -401,14 +389,14 @@ const production = {
                 rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
             },
             invite: 'https://discord.gg/YUJM2Qg55q',
+            proxy: TPproxy,
+            rulesMessages: TPrulesMessages,
         },
     },
 };
 
 if (process.env.NODE_ENV === 'development') {
     Object.assign(config, development);
-} else if (process.env.NODE_ENV === 'devs') {
-    Object.assign(config, devs);
 } else if (process.env.NODE_ENV === 'production') {
     Object.assign(config, production);
 } else {
