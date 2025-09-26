@@ -2,6 +2,9 @@ import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
 import { FatalError } from '../bot/utils/errors.js';
 import {
+    GAmentalHealthEmbed,
+    GArulesEmbed1,
+    GArulesEmbed2,
     mentalHealthEmbed,
     notesReportEmbed,
     TPrulesEmbed,
@@ -63,9 +66,24 @@ const TPproxy = {
     bumpEmoji: '<a:TPF_Squid_Wave:968411630981496852>',
 };
 
+const GAproxy = {
+    name: 'Verification Caitlyn Proxy',
+    displayName: 'Caitlyn ♡ [She/Her]',
+    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+    heartEmoji: '<:GayHeart:1135714747803783269>',
+    welcomeEmoji: '<:DemonThumbsup:1147951767682818201>',
+    thanksEmoji: '<:DemonCelebrate:1147951774683119676>',
+    bumpEmoji: '<:DemonFire:1147951717888041001>',
+};
+
 const TPrulesMessages = [
     [TPrulesImgEmbed, TPrulesEmbed],
     [notesReportEmbed, mentalHealthEmbed],
+];
+
+const GArulesMessages = [
+    [GArulesEmbed1, GArulesEmbed2],
+    [notesReportEmbed, GAmentalHealthEmbed],
 ];
 
 const development = {
@@ -391,6 +409,82 @@ const production = {
             invite: 'https://discord.gg/YUJM2Qg55q',
             proxy: TPproxy,
             rulesMessages: TPrulesMessages,
+        },
+        '1135300957572431902': {
+            // Gender Anarchy
+            sync: [],
+            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+            privateThread: ChannelType.PrivateThread,
+            channels: {
+                lobby: '1244418752217485364',               // Gender Anarchy:welcome-verify
+                verifyLogs: '1244422429468655706',          // Gender Anarchy:verify-logs
+                verifyLogsSecondary: '1244422507776446514', // Gender Anarchy:verify-kick-logs
+                theoSendLogs: '1364040328298106910',        // Gender Anarchy:theo-send-logs
+                welcome: '',
+                general: '1135631066871378010',             // Gender Anarchy:rules
+                introduce: '1137568440622780507',           // Gender Anarchy:introductions
+            },
+            roles: {
+                staffRoles: [
+                    // [Active]
+                    '1135440960835309610',  // Administrator
+                    '1269753219878490306',  // Senior Moderator
+                    '1135428559792508996',  // Moderator
+                    '1160658705092714576',  // Trial Moderator
+                    '1244425148480749670',  // Verifier
+
+                    // [On-Leave]
+                    '1269746464616091651',  // Administrator [On-Leave]
+                    '1269746471230771271',  // Senior Moderator [On-Leave]
+                    '1269740835633889362',  // Moderator [On-Leave]
+                    '1269740831460556901',  // Trial Moderator [On-Leave]
+                    '1269740820957757470',  // Verifier [On-Leave]
+                ],
+                verifier: '1244425148480749670',
+                verified: '1135575202709909575',
+                noImages: '1204541395726106686',
+                place: '',
+                member: '1198798476813811712',
+                newbie: '',
+                greeter: '',
+                inactivityPing: '1244425552010678313',
+                emojiVoid: '',
+                catagories: {
+                    isTrans: [
+                        '1135590332021624854', // Trans
+                        '1135590440310145054', // Transfem
+                        '1135590493791731722', // Transmasc
+                        '1135590532320595988', // Nonbinary
+                        '1149046767783006279', // Agender
+                        '1152386445332459540', // Pangender
+                        '1150941011250516058', // Genderfluid
+                        '1211388591725346927', // Two Spirited
+                        '1152386602836951083', // Demiboy
+                        '1152386528979464213', // Demigrl
+                        '1152386678086979655', // Demiqueer
+                    ],
+                    isQuestioning: [
+                        '1146451104763228182', // Questioning
+                    ],
+                    isCis: [
+                        '1135590367148908625', // Cis
+                        '1135590615095189625', // Queer
+                        '1135590584468385792', // Unlabeled
+                    ],
+                },
+            },
+            links: {
+                rules: 'https://discord.com/channels/1135300957572431902/1135631066871378010/1356769405127884860',
+                rule1: 'https://discord.com/channels/1135300957572431902/1246846234023428146',
+                rule6: 'https://discord.com/channels/1135300957572431902/1246846166822551563',
+                rule8: 'https://discord.com/channels/1135300957572431902/1246846100933968045',
+                rule16: 'https://discord.com/channels/1135300957572431902/1246846037872738435',
+                rule17: 'https://discord.com/channels/1135300957572431902/1246845980779872498',
+                rule18: 'https://discord.com/channels/1135300957572431902/1246845823950655498',
+            },
+            invite: 'https://discord.gg/GenderAnarchy',
+            proxy: GAproxy,
+            rulesMessages: GArulesMessages,
         },
     },
 };
