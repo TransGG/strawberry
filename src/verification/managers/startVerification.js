@@ -1,3 +1,4 @@
+import getWebhook from '../../bot/utils/getWebhook.js';
 import config from '../../config/config.js';
 import { createVerifyTicketCreateLog } from '../controllers/log.js';
 import { isVerified } from '../controllers/member.js';
@@ -46,15 +47,7 @@ async function startVerification(threads, applicant, resolve, reject, promptCate
 
     await resolve(ticket, 'Created a ticket for you to verify your account');
 
-    const webhooks = await ticket.parent.fetchWebhooks();
-
-    if (!webhooks.size) {
-        await ticket.parent.createWebhook({
-            name: config.guilds[applicant.guild.id].proxy.name,
-        });
-    }
-
-    const webhook = (await ticket.parent.fetchWebhooks()).first();
+    const webhook = await getWebhook(ticket.parent);
 
     // Add a 23s timer to send a welcome message to the user
 

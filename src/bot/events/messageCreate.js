@@ -1,6 +1,7 @@
 import { Events } from 'discord.js';
 import config from '../../config/config.js';
 import Event from '../Event.js';
+import getWebhook from '../utils/getWebhook.js';
 
 const userMap = new Map();
 
@@ -55,15 +56,7 @@ class MessageCreate extends Event {
                         && !components
                             .every((m) => m.components[0].components
                                 .some((c) => c.data.disabled === true))) {
-                        const webhooks = await message.channel.parent.fetchWebhooks();
-
-                        if (!webhooks.size) {
-                            await message.channel.parent.createWebhook({
-                                name: config.guilds[message.guild.id].proxy.name,
-                            });
-                        }
-
-                        const webhook = (await message.channel.parent.fetchWebhooks()).first();
+                        const webhook = await getWebhook(message.channel.parent);
 
                         await webhook.send({
                             content: `\`[Reminder]\`\n${message.author} Please make sure to click the \`"Finished Answering!"\` or \`"I Need Help Please."\` buttons at the top of the channel after you've finished answering to complete the verification process. ^^`,
