@@ -474,7 +474,7 @@ const production = {
                 },
             },
             links: {
-                rules: 'https://discord.com/channels/1135300957572431902/1135631066871378010/1356769405127884860',
+                rules: 'https://discord.com/channels/1135300957572431902/1244418752217485364/1423702859312140418',
                 rule1: 'https://discord.com/channels/1135300957572431902/1246846234023428146',
                 rule6: 'https://discord.com/channels/1135300957572431902/1246846166822551563',
                 rule8: 'https://discord.com/channels/1135300957572431902/1246846100933968045',
