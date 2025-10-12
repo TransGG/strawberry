@@ -1,15 +1,7 @@
 import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
 import { FatalError } from '../bot/utils/errors.js';
-import {
-    GAmentalHealthEmbed,
-    GArulesEmbed1,
-    GArulesEmbed2,
-    mentalHealthEmbed,
-    notesReportEmbed,
-    TPrulesEmbed,
-    TPrulesImgEmbed,
-} from './embeds.js';
+import { TPRulesMessages, GARulesMessages, CDLFRulesMessages } from './messages.js';
 
 // for easier reading
 /* eslint-disable max-len */
@@ -76,15 +68,15 @@ const GAproxy = {
     bumpEmoji: '<:DemonFire:1147951717888041001>',
 };
 
-const TPrulesMessages = [
-    [TPrulesImgEmbed, TPrulesEmbed],
-    [notesReportEmbed, mentalHealthEmbed],
-];
-
-const GArulesMessages = [
-    [GArulesEmbed1, GArulesEmbed2],
-    [notesReportEmbed, GAmentalHealthEmbed],
-];
+const CDLFproxy = {
+    name: 'Verification Jenna Proxy',
+    displayName: 'Jenna ♡ [She/Her]',
+    avatarUrl: 'https://i.imgur.com/nOm6w6r.png',
+    heartEmoji: '<:LGBTPride1:950991161093423135>',
+    welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
+    thanksEmoji: ':pray:',
+    bumpEmoji: ':eyes:',
+};
 
 const development = {
     debugOut: console.debug,
@@ -130,7 +122,7 @@ const development = {
             },
             invite: 'https://google.com',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
@@ -176,7 +168,7 @@ const development = {
             },
             invite: 'https://yahoo.com',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
     },
 };
@@ -248,7 +240,7 @@ const production = {
             },
             invite: 'https://discord.gg/TransPlace',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
         '1087014898199969873': {
             // EnbyPlace
@@ -309,7 +301,7 @@ const production = {
             },
             invite: 'https://discord.gg/xt8WqnGffb',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
         '638480381552754730': {
             // Transonance
@@ -371,7 +363,7 @@ const production = {
             },
             invite: 'https://discord.gg/QhTDQsyeD6',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
         '1116634030834733077': {
             // TransDice!
@@ -408,7 +400,7 @@ const production = {
             },
             invite: 'https://discord.gg/YUJM2Qg55q',
             proxy: TPproxy,
-            rulesMessages: TPrulesMessages,
+            rulesMessages: TPRulesMessages,
         },
         '1135300957572431902': {
             // Gender Anarchy
@@ -484,7 +476,53 @@ const production = {
             },
             invite: 'https://discord.gg/GenderAnarchy',
             proxy: GAproxy,
-            rulesMessages: GArulesMessages,
+            rulesMessages: GARulesMessages,
+        },
+        '928175231091236884': {
+            // Café de la Femme
+            sync: [],
+            verifyTicketAutoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+            privateThread: ChannelType.PrivateThread,
+            channels: {
+                lobby: '1275115292644606005',               // CDLF:cdlf-welcome-verify
+                verifyLogs: '1275115394021195816',          // CDLF:verify-logs
+                verifyLogsSecondary: '1275115440753872916', // CDLF:verify-kick-logs
+                theoSendLogs: '1381052245319225425',        // CDLF:theo-send-logs
+                welcome: '',
+                general: '928177646502805534',              // CDLF:rules
+                introduce: '949463502798614588',            // CDLF:introduce-yourself
+            },
+            roles: {
+                staffRoles: [
+                    // [Active]
+                    '928181806774243358',   // Barista [Admin]
+                    '963914918132846622',   // Hostess [Mod]
+                    '949509841980903434',   // Cashier [Mini Mod]
+                    '1273080176892313713',  // Bouncer [Verifier]
+
+                    // [On-Leave]
+                    '1297610758925844510',  // Barista [Admin Off-Duty]
+                    '1297611101382381589',  // Host/ess [Mod Off-Duty]
+                    '1297611290700939274',  // Cashier [Mini Mod Off-Duty]
+                    '1297611413543452692',  // Bouncer [Verifier Off-Duty]
+                ],
+                verifier: '1273080176892313713',
+                verified: '949441336417853520',
+                noImages: '',
+                place: '',
+                member: '1275122654088527915',
+                newbie: '',
+                greeter: '',
+                inactivityPing: '1275124169016606792',
+                emojiVoid: '1381058808637427732',
+                catagories: {},
+            },
+            links: {
+                rules: 'https://discord.com/channels/928175231091236884/1275115292644606005',
+            },
+            invite: 'https://discord.gg/CafeDeLaFemme',
+            proxy: CDLFproxy,
+            rulesMessages: CDLFRulesMessages,
         },
     },
 };

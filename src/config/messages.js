@@ -1,17 +1,15 @@
-import { EmbedBuilder } from 'discord.js';
+const TPRulesImgEmbed = {
+    color: 0xDF585B,
+    image: { url: 'https://i.imgur.com/KGyMpU5.png' },
+};
 
-export const TPrulesImgEmbed = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setImage('https://i.imgur.com/KGyMpU5.png');
-
-export const TPrulesEmbed = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('Rules')
-    .addFields(
+const TPRulesEmbed = {
+    color: 0xDF585B,
+    title: 'Rules',
+    fields: [
         {
             name: '`1`. **Hate has no home here.**',
-            value:
-'> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any images or videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More]({{rule1}})',
+            value: '> No hate speech, slurs, homophobia, gatekeeping (including transmedicalism), or transphobia is allowed under **ANY** circumstances. (Even in "joking" scenarios.). **Please refrain from sharing any images or videos containing the above content, even if the intention is to criticise the individuals responsible.** [Read More]({{rule1}})',
         },
         {
             name: '`2`. **No age-restricted, obscene, shocking, gory, or overly violent content.**',
@@ -61,28 +59,29 @@ export const TPrulesEmbed = new EmbedBuilder()
             name: '** **\n**By joining this server you agree to the following guidelines**',
             value: '[Discord ToS](https://discord.com/terms)\n[Discord Community Guidelines](https://discord.com/guidelines)',
         },
-    )
-    .setImage('https://i.imgur.com/CBbbw0d.png'); // tiny image that ensures constant embed width
+    ],
+    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+};
 
-export const notesReportEmbed = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('Notes / Report to staff')
-    .setDescription('**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just to our server staff.*')
-    .setImage('https://i.imgur.com/jxEcGvl.gif')
-    .setFooter({
-        text: 'If you are ever unsure if something is allowed, feel free to ask.',
-    });
+const notesReportEmbed = {
+    color: 0xDF585B,
+    title: 'Notes / Report to staff',
+    description: '**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just to our server staff.*',
+    image: { url: 'https://i.imgur.com/jxEcGvl.png' },
+    footer: { text: 'If you are ever unsure if something is allowed, feel free to ask.' },
+};
 
-export const mentalHealthEmbed = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('🔴 IMPORTANT 🔴')
-    .setDescription('We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have venting channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️')
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+const mentalHealthEmbed = {
+    color: 0xDF585B,
+    title: '🔴 IMPORTANT 🔴',
+    description: 'We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have venting channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️',
+    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+};
 
-export const GArulesEmbed1 = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('Rules')
-    .addFields(
+const GARulesEmbed1 = {
+    color: 0xDF585B,
+    title: 'Rules',
+    fields: [
         {
             name: '`1.` Be civil and respectful.',
             value: 'Treat others with kindness and respect at all times. Avoid offensive behavior, personal attacks, and disrespectful language. Disagreements are acceptable, but keep discussions constructive and avoid being overly confrontational. No slurs in ANY way. [Read More]({{rule1}})',
@@ -119,13 +118,14 @@ export const GArulesEmbed1 = new EmbedBuilder()
             name: '`10.` No spam.',
             value: 'Please do not spam within the server. This includes spam pinging members and roles.',
         },
-    )
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+    ],
+    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+};
 
-export const GArulesEmbed2 = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('Rules pt.2 Electric Boogaloo')
-    .addFields(
+const GARulesEmbed2 = {
+    color: 0xDF585B,
+    title: 'Rules pt.2 Electric Boogaloo',
+    fields: [
         {
             name: '`11.` No mini-modding.',
             value: 'It gets in the way of mods doing our job. If you\'re not a mod, you do not have the power to moderate effectively. [Example of mini-modding and how it\'s ineffective on the Hypixel forums.]({{rule11}})',
@@ -158,11 +158,80 @@ export const GArulesEmbed2 = new EmbedBuilder()
             name: '`19.` Moderators have discretion to do what they see fit.',
             value: 'If you\'re misbehaving, but it\'s not against any single rule, mods may take any action they see fit, within reason. If you believe a moderator has used this to abuse their power, please #contact-staff.',
         },
-    )
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+    ],
+    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+};
 
-export const GAmentalHealthEmbed = new EmbedBuilder()
-    .setColor(0xDF585B)
-    .setTitle('🔴 IMPORTANT 🔴')
-    .setDescription('We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Thank you for understanding ❤️')
-    .setImage('https://i.imgur.com/CBbbw0d.png');
+const GAMentalHealthEmbed = {
+    color: 0xDF585B,
+    title: '🔴 IMPORTANT 🔴',
+    description: 'We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Thank you for understanding ❤️',
+    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+};
+
+export const TPRulesMessages = [
+    { embeds: [TPRulesImgEmbed, TPRulesEmbed] },
+    { embeds: [notesReportEmbed, mentalHealthEmbed] },
+];
+
+export const GARulesMessages = [
+    { embeds: [GARulesEmbed1, GARulesEmbed2] },
+    { embeds: [notesReportEmbed, GAMentalHealthEmbed] },
+];
+
+export const CDLFRulesMessages = [
+    { files: ['https://media.discordapp.net/attachments/928177646502805534/998425901253541978/Rulespng4.png?ex=68ec6d14&is=68eb1b94&hm=74216ff9b2f1a43792b02b5fd0f8caa3efba2e043e9990506efa278549bf1980&=&format=png&quality=lossless&width=2400&height=600'] },
+    {
+        content: `
+**RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOP HOLES WILL BE PUNISHED.**
+
+1️⃣ Must follow Discord ToS & Community Guidelines.
+・https://discord.com/terms
+・https://discord.com/guidelines
+> In compliance with Discord ToS "Do not post sexually explicit content in user avatars, custom statuses or bios, server banners, server icons, invite splashes, emoji, stickers, or any other space that cannot be age-restricted"
+
+2️⃣ Be respectful to your fellow server members, in or out of DMs. If both parties agree to a dramatic conversation of some kind (such as arguments, politics, etc.) Take it to the Dms.
+
+3️⃣ No discrimination based on race, gender, sexuality, nationality, or any other category that one may not have control over.
+
+4️⃣ Absolutely ZERO NSFW content, subject matter, or discussions in SFW channels. This includes channels marked SFW and any channel outside of the 18+ NSFW area. 
+
+ For 18+ NSFW content access, please read: <#949909003226476584>
+
+
+5️⃣ No spamming, raiding, threats, jokes of threats/ violence, or gore. This also includes wishing death on ANYONE. 
+
+6️⃣ No political discussion or discussion about other sensitive/triggering matters. Including: discussion about groups of people who have harmed others, even if it is not condemning or condoning. 
+
+7️⃣ Keep any and all mental health related topics such as anxiety, depression, suicidal thoughts, etc. in the specified mental health channels <#950153059303051344> <#928175714442821712> <#949436159820431390> <#1054127049905819658> <#949448500469436456> 
+
+8️⃣ USE COMMON SENSE Disruptive, purposefully obnoxious, or taunting behaviors are not acceptable in the server. It is your responsibility to follow these rules as well as any actions that fall under common sense or basic online etiquette.
+`.trim(),
+    },
+    {
+        content: `
+**This server utilizes <@&972632927160655875> a bot that allows one profile to present as multiple. Due to <@466378653216014359>'s limitations, users may appear with a 'bot' tag beside their name—these are not sentient bots, these are real people. Systems using <@&972632927160655875> will need to abide by the following rules.**
+
+Want to learn about plurality? Visit this site—<https://morethanone.info/>
+
+1️⃣ System responsibility: Any punishments will fall on the entire system.
+
+2️⃣ Tag your system.
+
+3️⃣ Keep under 13 alters/littles/headmates out of the server.
+
+4️⃣ Systems with alters under 18 will not be granted NSFW Verification. 
+
+
+**As a member of the server, you are expected to be aware and up to date on these rules! Ignorance or lack of focus is not an excuse and does not pardon you from any moderator actions.**
+
+**Users who act as bystanders or provoke users may be punished as moderators see fit. This includes instances of DMing members including chasers, scammers, trolls, etc. Moderators do not have to justify their actions to anyone other than administration.**
+
+**If you have any questions relating to the rules, feel free to ask the mods in ?#ask-a-mod **
+
+**If you see an intentional rule break, ping staff asap with the <@&949479574373298287> tag**
+
+**If you see a concerning user or wanna report a user anonymously, DM an online staff member immediately**
+        `.trim(),
+    },
+];

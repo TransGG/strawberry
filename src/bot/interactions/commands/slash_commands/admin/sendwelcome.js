@@ -40,35 +40,36 @@ class SendWelcome extends SlashCommand {
         await interaction.deferReply({ ephemeral: true });
 
         const messages = config.guilds[interaction.guild.id].rulesMessages.map(
-            (message) => message.map((embed) => ({
-                ...embed.data,
-                fields: (embed.data.fields ?? []).map((field) => {
-                    const match = field.value.match(/{{(.*?)}}/);
-                    if (!match) {
-                        return field;
-                    }
-                    const extractedText = match[1];
-                    const replacement = config.guilds[interaction.guild.id].links[extractedText];
-                    return { ...field, value: field.value.replace(new RegExp(`{{${extractedText}}}`, 'g'), replacement) };
-                }),
-            })),
+            (message) => ({
+                ...message,
+                embeds: (message.embeds ?? []).map((embed) => ({
+                    ...embed,
+                    fields: (embed.fields ?? []).map((field) => {
+                        const match = field.value.match(/{{(.*?)}}/);
+                        if (!match) {
+                            return field;
+                        }
+                        const extractedText = match[1];
+                        const replacement = config.guilds[interaction.guild.id].links[extractedText];
+                        return { ...field, value: field.value.replace(new RegExp(`{{${extractedText}}}`, 'g'), replacement) };
+                    }),
+                })),
+            }),
         );
 
-        const objects = messages.map((embeds) => ({ embeds }));
-
-        objects[objects.length - 1].components = buildWelcomeComponents(
+        messages[messages.length - 1].components = buildWelcomeComponents(
             interaction.client,
             interaction,
         );
 
         // eslint-disable-next-line no-restricted-syntax
-        for (const object of objects) {
+        for (const message of messages) {
             if (preview) {
                 // eslint-disable-next-line no-await-in-loop
-                await InteractionHelper.reply(interaction, { ...object, components: [] }, true);
+                await InteractionHelper.reply(interaction, { ...message, components: [] }, true);
             } else {
                 // eslint-disable-next-line no-await-in-loop
-                await interaction.channel.send(object);
+                await interaction.channel.send(message);
             }
         }
 
