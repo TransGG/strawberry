@@ -488,7 +488,7 @@ const production = {
                 verifyLogs: '1275115394021195816',          // CDLF:verify-logs
                 verifyLogsSecondary: '1275115440753872916', // CDLF:verify-kick-logs
                 theoSendLogs: '1381052245319225425',        // CDLF:theo-send-logs
-                welcome: '',
+                welcome: '1275116015466057748',             // CDLF:welcome-wagon
                 general: '928177646502805534',              // CDLF:rules
                 introduce: '949463502798614588',            // CDLF:introduce-yourself
             },
@@ -508,14 +508,18 @@ const production = {
                 ],
                 verifier: '1273080176892313713',
                 verified: '949441336417853520',
-                noImages: '',
+                noImages: '1275118018526973982',
                 place: '',
                 member: '1275122654088527915',
                 newbie: '',
                 greeter: '',
                 inactivityPing: '1275124169016606792',
                 emojiVoid: '1381058808637427732',
-                catagories: {},
+                catagories: {
+                    isTrans: '1296978484198903850',
+                    isQuestioning: '1296978679074914375',
+                    isCis: '1296978602482602045',
+                },
             },
             links: {
                 rules: 'https://discord.com/channels/928175231091236884/1275115292644606005',
