@@ -71,7 +71,7 @@ const GAproxy = {
 const CDLFproxy = {
     name: 'Verification Jenna Proxy',
     displayName: 'Jenna ♡ [She/Her]',
-    avatarUrl: 'https://i.imgur.com/nOm6w6r.png',
+    avatarURL: 'https://i.imgur.com/nOm6w6r.png',
     heartEmoji: '<:LGBTPride1:950991161093423135>',
     welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
     thanksEmoji: ':pray:',
@@ -121,8 +121,8 @@ const development = {
                 rule12: 'https://google.com/1-12',
             },
             invite: 'https://google.com',
-            proxy: TPproxy,
-            rulesMessages: TPRulesMessages,
+            proxy: CDLFproxy,
+            rulesMessages: CDLFRulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
