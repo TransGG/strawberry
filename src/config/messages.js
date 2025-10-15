@@ -1,6 +1,6 @@
 const TPRulesImgEmbed = {
     color: 0xDF585B,
-    image: { url: 'https://i.imgur.com/KGyMpU5.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/tp-server-rules-header.png' },
 };
 
 const TPRulesEmbed = {
@@ -60,14 +60,14 @@ const TPRulesEmbed = {
             value: '[Discord ToS](https://discord.com/terms)\n[Discord Community Guidelines](https://discord.com/guidelines)',
         },
     ],
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 const notesReportEmbed = {
     color: 0xDF585B,
     title: 'Notes / Report to staff',
     description: '**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just to our server staff.*',
-    image: { url: 'https://i.imgur.com/jxEcGvl.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/how-to-report.gif' },
     footer: { text: 'If you are ever unsure if something is allowed, feel free to ask.' },
 };
 
@@ -75,7 +75,7 @@ const mentalHealthEmbed = {
     color: 0xDF585B,
     title: '🔴 IMPORTANT 🔴',
     description: 'We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Because of this, we do not have venting channels. We ask that you seek out appropriate help if you are experiencing a crisis and not depend on this server as an emotional crutch. Please avoid topics that are very heavy emotionally loaded. Thank you for understanding ❤️',
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 const GARulesEmbed1 = {
@@ -119,7 +119,7 @@ const GARulesEmbed1 = {
             value: 'Please do not spam within the server. This includes spam pinging members and roles.',
         },
     ],
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 const GARulesEmbed2 = {
@@ -159,14 +159,14 @@ const GARulesEmbed2 = {
             value: 'If you\'re misbehaving, but it\'s not against any single rule, mods may take any action they see fit, within reason. If you believe a moderator has used this to abuse their power, please #contact-staff.',
         },
     ],
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 const GAMentalHealthEmbed = {
     color: 0xDF585B,
     title: '🔴 IMPORTANT 🔴',
     description: 'We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional advice. Thank you for understanding ❤️',
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 export const TPRulesMessages = [
@@ -180,7 +180,7 @@ export const GARulesMessages = [
 ];
 
 export const CDLFRulesMessages = [
-    { files: ['https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header-image.png'] },
+    { files: ['https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header.png'] },
     {
         content: `
 **RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOP HOLES WILL BE PUNISHED.**
