@@ -512,7 +512,7 @@ const production = {
                 place: '',
                 member: '1275122654088527915',
                 newbie: '',
-                greeter: '',
+                greeter: '1296977654192537650',
                 inactivityPing: '1275124169016606792',
                 emojiVoid: '1275124294749392906',
                 catagories: {
