@@ -514,7 +514,7 @@ const production = {
                 newbie: '',
                 greeter: '',
                 inactivityPing: '1275124169016606792',
-                emojiVoid: '1381058808637427732',
+                emojiVoid: '1275124294749392906',
                 catagories: {
                     isTrans: '1296978484198903850',
                     isQuestioning: '1296978679074914375',
