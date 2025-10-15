@@ -522,7 +522,7 @@ const production = {
                 },
             },
             links: {
-                rules: 'https://discord.com/channels/928175231091236884/1275115292644606005',
+                rules: 'https://discord.com/channels/928175231091236884/1275115292644606005/1428095364333965484',
             },
             invite: 'https://discord.gg/CafeDeLaFemme',
             proxy: CDLFproxy,
