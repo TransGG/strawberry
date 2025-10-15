@@ -48,7 +48,7 @@ const config = {
 const TPproxy = {
     name: 'Verification Kyle Proxy',
     displayName: 'Kyle ♡ [Any Pronouns]',
-    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+    avatarURL: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/proxy-avatar-kyle.png',
     heartEmoji: '<:max_heart:968321960557809674>',
     welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
     thanksEmoji: '<a:TPA_Trans_Heart:960885444285968395>',
@@ -58,7 +58,7 @@ const TPproxy = {
 const GAproxy = {
     name: 'Verification Caitlyn Proxy',
     displayName: 'Caitlyn ♡ [She/Her]',
-    avatarURL: 'https://i.imgur.com/fOJFzGz.png',
+    avatarURL: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/proxy-avatar-caitlyn.png',
     heartEmoji: '<:GayHeart:1135714747803783269>',
     welcomeEmoji: '<:DemonThumbsup:1147951767682818201>',
     thanksEmoji: '<:DemonCelebrate:1147951774683119676>',
@@ -68,7 +68,7 @@ const GAproxy = {
 const CDLFproxy = {
     name: 'Verification Jenna Proxy',
     displayName: 'Jenna ♡ [She/Her]',
-    avatarURL: 'https://i.imgur.com/nOm6w6r.png',
+    avatarURL: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/proxy-avatar-jenna.png',
     heartEmoji: '<:LGBTPride1:950991161093423135>',
     welcomeEmoji: '<a:TPF_GawrGura_Wave:968391057828093952>',
     thanksEmoji: ':pray:',
@@ -206,8 +206,8 @@ const development = {
                 rule12: 'https://google.com/1-12',
             },
             invite: 'https://google.com',
-            proxy: CDLFproxy,
-            rulesMessages: CDLFRulesMessages,
+            proxy: TPproxy,
+            rulesMessages: TPRulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
