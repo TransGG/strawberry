@@ -180,7 +180,7 @@ export const GARulesMessages = [
 ];
 
 export const CDLFRulesMessages = [
-    { files: ['https://i.imgur.com/4MVAf6X.png'] },
+    { files: ['https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header-image.png'] },
     {
         content: `
 **RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOP HOLES WILL BE PUNISHED.**
