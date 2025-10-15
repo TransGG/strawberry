@@ -180,7 +180,7 @@ export const GARulesMessages = [
 ];
 
 export const CDLFRulesMessages = [
-    { files: ['https://media.discordapp.net/attachments/928177646502805534/998425901253541978/Rulespng4.png?ex=68ec6d14&is=68eb1b94&hm=74216ff9b2f1a43792b02b5fd0f8caa3efba2e043e9990506efa278549bf1980&=&format=png&quality=lossless&width=2400&height=600'] },
+    { files: ['https://i.imgur.com/4MVAf6X.png'] },
     {
         content: `
 **RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOP HOLES WILL BE PUNISHED.**
