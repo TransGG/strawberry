@@ -29,10 +29,7 @@ class preStartVerification extends SelectMenu {
      *     API.
      */
     getData() {
-        return new StringSelectMenuBuilder()
-            .setCustomId(this.name)
-            .setPlaceholder('What do you identify as?')
-            .addOptions(buildOptions());
+        throw new Error('do not use this! build the component manually');
     }
 
     /**

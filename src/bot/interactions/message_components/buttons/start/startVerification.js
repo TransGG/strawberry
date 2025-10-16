@@ -110,7 +110,7 @@ class StartVerification extends Button {
         if (!verified) {
             interaction.reply({
                 content: 'Please select one of the following you best identify with, choosing one option over another will not affect your verification in any way, rather will only slightly change the questions to best fit your identity.',
-                components: buildPromptSelectComponents(interaction.client),
+                components: buildPromptSelectComponents(interaction.guild.id),
                 ephemeral: true,
             });
         }
