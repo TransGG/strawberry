@@ -34,17 +34,17 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
 
 /**
  * Creates the components for selecting a verification prompt
- * @param {string} guild ID of the guild
+ * @param {string} guildId ID of the guild
  * @returns {ActionRowBuilder[]} An array of action rows containing the components
  */
-function buildPromptSelectComponents(guild) {
+function buildPromptSelectComponents(guildId) {
     return [
         new ActionRowBuilder()
             .addComponents(
                 new StringSelectMenuBuilder()
                     .setCustomId('preStartVerification')
                     .setPlaceholder('What do you identify as?')
-                    .addOptions(buildOptions(guild)),
+                    .addOptions(buildOptions(guildId)),
             ),
     ];
 }
