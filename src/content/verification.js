@@ -82,7 +82,7 @@ function buildPromptEmbeds(applicant, type) {
             .setTitle(`Verification Ticket for ${applicant.user.tag}`)
             .setColor(0xB8CCE6)
             .setDescription(`Please answer the following verification questions. There are no right or wrong answers, but thorough answers will help us verify you quickly.\n${questionsSection}\n[Click here to view our server rules.](${config.guilds[applicant.guild.id].links.rules})`)
-            .setImage('https://i.imgur.com/CBbbw0d.png'),
+            .setImage('https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png'),
         new EmbedBuilder()
             .setTitle(applicant.user.tag)
             .setColor(0xE6B8D8)
@@ -97,7 +97,7 @@ function buildPromptEmbeds(applicant, type) {
                     value: buildTimeInfoString(applicant.user.createdAt, now),
                 },
             )
-            .setImage('https://i.imgur.com/CBbbw0d.png'),
+            .setImage('https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png'),
     ];
 }
 
