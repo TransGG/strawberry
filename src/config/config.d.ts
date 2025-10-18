@@ -62,11 +62,6 @@ export interface Guild {
     greeter: Snowflake?;
 
     inactivityPing: Snowflake?;
-    catagories /* [sic] */: {
-      isTrans: Snowflake;
-      isQuestioning: Snowflake;
-      isCis: Snowflake;
-    } | {};
   };
   links: {
     /// A link to somewhere with the rules (commonly a channel or thread)
