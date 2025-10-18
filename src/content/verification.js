@@ -1,7 +1,12 @@
-import { ActionRowBuilder, codeBlock, EmbedBuilder } from 'discord.js';
+import {
+    ActionRowBuilder,
+    codeBlock,
+    EmbedBuilder,
+    StringSelectMenuBuilder,
+} from 'discord.js';
 
 import buildTimeInfoString from '../formatters/stringBuilders.js';
-import { formatQuestions } from './questions.js';
+import { buildOptions, formatQuestions } from './questions.js';
 import config from '../config/config.js';
 
 /**
@@ -29,14 +34,17 @@ function buildMentionVerifiersEmbeds(applicant, client, helpMessage) {
 
 /**
  * Creates the components for selecting a verification prompt
- * @param {Bot} client A client from which components can be retrieved
+ * @param {string} guildId ID of the guild
  * @returns {ActionRowBuilder[]} An array of action rows containing the components
  */
-function buildPromptSelectComponents(client) {
+function buildPromptSelectComponents(guildId) {
     return [
         new ActionRowBuilder()
             .addComponents(
-                client.getSelectMenu('preStartVerification'),
+                new StringSelectMenuBuilder()
+                    .setCustomId('preStartVerification')
+                    .setPlaceholder('What do you identify as?')
+                    .addOptions(buildOptions(guildId)),
             ),
     ];
 }
@@ -66,7 +74,7 @@ function buildPromptComponents(client, mentionVerifiersDisabled = false) {
  * @returns {EmbedBuilder[]} The embeds for a prompt
  */
 function buildPromptEmbeds(applicant, type) {
-    const questionsSection = codeBlock('markdown', formatQuestions(type).join('\n\n'));
+    const questionsSection = codeBlock('markdown', formatQuestions(applicant.guild.id, type).join('\n\n'));
 
     const now = Date.now();
     return [

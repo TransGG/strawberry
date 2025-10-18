@@ -25,10 +25,7 @@ import { TPRulesMessages, GARulesMessages, CDLFRulesMessages } from './messages.
  * @property {Snowflake} guild.roles.verifier - Verifier: the chief agents of the verification process
  * @property {Snowflake} guild.roles.verified - Verified: the role that is awarded to people who get verified
  * @property {Snowflake} guild.roles.greeter  - Greeter: role to be notified of new members
- * @property {Object}    guild.roles.catagories   - Relevant role catagories
- * @property {Snowflake} guild.roles.catagories.isTrans       - Trans: role for trans people
- * @property {Snowflake} guild.roles.catagories.isQuestioning - Questioning: role for trans questioning people
- * @property {Snowflake} guild.roles.catagories.isCis         - Cis: role for cisgender people
+ * @property {any[]}     guild.questions      - Question categories
  * @property {Object}    guild.links   - Links for templating the rules embeds
  * @property {Object}    guild.invite  - The guild's invite link
  * @property {Object}    guild.proxy   - Configuration for the proxy that sends reminders/follow-up messages
@@ -78,6 +75,82 @@ const CDLFproxy = {
     bumpEmoji: ':eyes:',
 };
 
+const defaultQuestions = [
+    {
+        id: 'trans',
+        title: 'Transgender / Genderfluid / Nonbinary',
+        description: 'If you identify as part of the transgender/genderfluid/nonbinary umbrella',
+        questions: [
+            'What is your favorite rule from our server rules?',
+            'What do E and T mean in trans contexts?',
+            'What does the word Transgender mean to you?',
+            'How did you figure out your gender identity?',
+        ],
+    },
+    {
+        id: 'questioning',
+        title: 'Transgender Questioning',
+        description: 'If you are questioning whether you are transgender/genderfluid/nonbinary',
+        questions: [
+            'What is your favorite rule from our server rules?',
+            'If you could change three things about yourself right now, what would they be?',
+            'What does the word Transgender mean to you?',
+            'What made you begin questioning your gender identity?',
+        ],
+    },
+    {
+        id: 'cis',
+        title: 'Cisgender / Other LGBTQ+',
+        description: 'If you are cisgender, regardless of whether you are otherwise LGBTQ+',
+        questions: [
+            'What is your favorite rule from our server rules?',
+            'What about this server being trans-focused made you want to join?',
+            'What would you do as/being an ally in this server?',
+            'What does the word Transgender mean to you?',
+        ],
+    },
+];
+
+const cdlfQuestions = [
+    {
+        id: 'trans',
+        title: 'Transgender / Genderfluid / Nonbinary',
+        description: 'Select if you know you\'re trans.',
+        questions: [
+            'What is your favourite rule from our server rules?',
+            'What about this server being trans-focused made you want to join?',
+            'Do you fall under the femme / trans-femme umbrella? If so, how?',
+            'How did you figure out your gender identity?',
+            'What pronouns do you use?',
+        ],
+    },
+    {
+        id: 'cis',
+        title: 'Cisgender / Other LGBTQ+',
+        description: 'Select if you\'re cis or another LGBTQ identity.',
+        questions: [
+            'What is your favourite rule from our server rules?',
+            'What about this server being trans-focused made you want to join?',
+            'Do you fall under the femme / trans-femme umbrella? If so, how?',
+            'How did you figure out your gender identity?',
+            'What would you do as an ally in this server?',
+            'What pronouns do you use?',
+        ],
+    },
+    {
+        id: 'questioning',
+        title: 'Transgender Questioning',
+        description: 'Select if you think you might be trans, but aren\'t sure.',
+        questions: [
+            'What is your favourite rule from our server rules?',
+            'What about this server being trans-focused made you want to join?',
+            'Do you fall under the femme / trans-femme umbrella? If so, how?',
+            'What does the word Transgender mean to you?',
+            'What pronouns do you use?',
+        ],
+    },
+];
+
 const development = {
     debugOut: console.debug,
     verboseOut: console.info,
@@ -108,8 +181,20 @@ const development = {
                 place: '1121666104390058115',
                 member: '1105354354501881866',
                 greeter: '1097204070252548097',
-                catagories: {},
             },
+            questions: [
+                ...cdlfQuestions,
+                {
+                    id: ':3',
+                    title: 'Secret Third Thing',
+                    description: 'Secret third thing that is neither transgender nor cisgender',
+                    questions: [
+                        ':3',
+                        ':3',
+                        ':3',
+                    ],
+                },
+            ],
             links: {
                 rules: 'https://google.com/1-rules',
                 rule1: 'https://google.com/1-1',
@@ -150,12 +235,8 @@ const development = {
                 greeter: '1085625570144043039',
                 inactivityPing: '1101453059860746270',
                 emojiVoid: '1101452907490062358',
-                catagories: {
-                    isTrans: '1255575077865525258',
-                    isQuestioning: '1255575092847443988',
-                    isCis: '1255575108601249815',
-                },
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://google.com/2-rules',
                 rule1: 'https://google.com/2-1',
@@ -221,12 +302,8 @@ const production = {
                 greeter: '978861945253945394',
                 inactivityPing: '1097289190682660884',
                 emojiVoid: '1093196851169218560',
-                catagories: {
-                    isTrans: '1105349250335907870',
-                    isQuestioning: '1105349324688338964',
-                    isCis: '1105349438953762837',
-                },
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1379598680251699330',
                 rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
@@ -283,12 +360,8 @@ const production = {
                 greeter: '1087014898241896476',
                 inactivityPing: '1255542262117568555',
                 emojiVoid: '1255542308204711988',
-                catagories: {
-                    isTrans: '1168292211461472267',
-                    isQuestioning: '1168292329900212326',
-                    isCis: '1168292229283061760',
-                },
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://canary.discord.com/channels/1087014898199969873/1255540593451335770/1258439336462909492',
                 rule1: 'https://canary.discord.com/channels/1087014898199969873/1258432882804785172/1258433967183630500',
@@ -344,12 +417,8 @@ const production = {
                 greeter: '1109912498469077252',
                 inactivityPing: '1255545148247507016',
                 emojiVoid: '1255545384995127423',
-                catagories: {
-                    isTrans: '1109912826866323607',
-                    isQuestioning: '1109912874459078867',
-                    isCis: '1109912938929737909',
-                },
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://canary.discord.com/channels/638480381552754730/1255543769835769999/1379578773745434725',
                 rule1: 'https://canary.discord.com/channels/638480381552754730/1378842074467794954/1378846359737602151',
@@ -386,8 +455,8 @@ const production = {
                 ],
                 verifier: '1116668288638914641', // Blåholder
                 verified: '1116673143013122068', // Adventurer
-                catagories: {},
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1151892231091925163',
                 rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
@@ -441,30 +510,8 @@ const production = {
                 greeter: '',
                 inactivityPing: '1244425552010678313',
                 emojiVoid: '',
-                catagories: {
-                    isTrans: [
-                        '1135590332021624854', // Trans
-                        '1135590440310145054', // Transfem
-                        '1135590493791731722', // Transmasc
-                        '1135590532320595988', // Nonbinary
-                        '1149046767783006279', // Agender
-                        '1152386445332459540', // Pangender
-                        '1150941011250516058', // Genderfluid
-                        '1211388591725346927', // Two Spirited
-                        '1152386602836951083', // Demiboy
-                        '1152386528979464213', // Demigrl
-                        '1152386678086979655', // Demiqueer
-                    ],
-                    isQuestioning: [
-                        '1146451104763228182', // Questioning
-                    ],
-                    isCis: [
-                        '1135590367148908625', // Cis
-                        '1135590615095189625', // Queer
-                        '1135590584468385792', // Unlabeled
-                    ],
-                },
             },
+            questions: defaultQuestions,
             links: {
                 rules: 'https://discord.com/channels/1135300957572431902/1244418752217485364/1423702859312140418',
                 rule1: 'https://discord.com/channels/1135300957572431902/1246846234023428146',
@@ -515,12 +562,8 @@ const production = {
                 greeter: '1296977654192537650',
                 inactivityPing: '1275124169016606792',
                 emojiVoid: '1275124294749392906',
-                catagories: {
-                    isTrans: '1296978484198903850',
-                    isQuestioning: '1296978679074914375',
-                    isCis: '1296978602482602045',
-                },
             },
+            questions: cdlfQuestions,
             links: {
                 rules: 'https://discord.com/channels/928175231091236884/1275115292644606005/1428095364333965484',
             },
