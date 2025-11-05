@@ -83,7 +83,7 @@ const GARulesEmbed1 = {
     title: 'Rules',
     fields: [
         {
-            name: '`1.` Be civil and respectful.',
+            name: '`1.` Hate Has No Home Here.',
             value: '> Treat others with kindness and respect at all times. Avoid offensive behavior, personal attacks, and disrespectful language. Bigotry, slurs, harassment, hateful politics, or any other form of hate are not tolerated.',
         },
         {
