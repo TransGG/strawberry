@@ -206,8 +206,8 @@ const development = {
                 rule12: 'https://google.com/1-12',
             },
             invite: 'https://google.com',
-            proxy: TPproxy,
-            rulesMessages: TPRulesMessages,
+            proxy: GAproxy,
+            rulesMessages: GARulesMessages,
         },
         '981615050664075404': {
             // TPSupporters

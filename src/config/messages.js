@@ -65,7 +65,7 @@ const TPRulesEmbed = {
 
 const notesReportEmbed = {
     color: 0xDF585B,
-    title: 'Notes / Report to staff',
+    title: 'Notes / Report to Staff',
     description: '**Please be the bigger person**—if you see someone trying to start a fight, don\'t fight back; DM staff. Similarly, if you see anything that may cause issues or someone possibly willingly causing them, don’t try to argue them into submission. *Don’t feed the trolls, nor your own trauma responses*.\n\nIf you see something against the rules or something that makes you feel unsafe, let staff know. We want this space to be as inclusive and safe as possible. \n\n**To do this:**\n`Right-Click A Message > Apps > Report Message`\n\n***This directly reports the message to our server staff for us to best handle the situation as fast as possible <3 ***\n\n> *This does not report the message to discord, just to our server staff.*',
     image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/how-to-report.gif' },
     footer: { text: 'If you are ever unsure if something is allowed, feel free to ask.' },
@@ -100,15 +100,15 @@ const GARulesEmbed1 = {
         },
         {
             name: '`5.` No Breaking Discord TOS or Community Guidelines.',
-            value: '> Being under 13 is [not allowed](https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday). Furthermore, discussions or sharing of any illegal content, including but not limited to malicious software, illegal drugs, or any other illicit activities, are also not allowed in the server. [Discord TOS](https://dis.gd/tos) and [Community Guidelines](https://dis.gd/guidelines).',
+            value: '> Being under 13 is [not allowed](https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday). Furthermore discussions or sharing of any illegal content, including but not limited to malicious software, illegal drugs, or any other illicit activities, are also not allowed in the server.\n[Discord TOS](https://dis.gd/tos) and [Community Guidelines](https://dis.gd/guidelines).',
         },
         {
             name: '`6.` Respect plural members.',
             value: '> Respect plural members, and only use PK for our allowed use cases. If you see users talking with the bot tag, they\'re talking through PluralKit. Due to Discord limitations, these messages will show up with the [BOT] tag - however, they are not from bots, they are from users. Additionally, PluralKit is not for any form of roleplay. Any form of discrimination or hate against alters will be met with a ban. all forms and origins of plurality are accepted here. ***All users of an account are responsible for its conduct. This includes plural users. It is up to the collective users of an account to be responsible for what happens on their account.***',
         },
         {
-            name: '`7.` Do not bypass auto-mod.',
-            value: 'This server uses auto-mod to block messages deemed NSFW, violent, or triggering. Do not attempt to circumvent the auto-mod.',
+            name: '`7.` Do not attempt to bypass the Automod.',
+            value: '> This server uses auto-mod to block messages deemed NSFW, violent, or triggering. Do not attempt to circumvent the Automod.',
         },
         {
             name: '`8.` Age-Appropriate Content Only.',
@@ -119,18 +119,17 @@ const GARulesEmbed1 = {
             value: '> Please keep topics in a channel within the general theme of the channel. This includes venting staying within the venting channels. Topics about ||eating disorders, suicide, and self harm,|| and the like are strictly prohibited for the safety of members.',
         },
         {
-            name: '`10.` No mini-modding.',
+            name: '`10.` Avoid mini-modding.',
             value: '> If you see rules being broken, please use our custom report `[Example Below]` feature or open a support ticket instead of taking matters into your own hands. Our staff team volunteer their time to ensure a positive environment, and their decisions are always made with the community\'s best interests at heart. If you ever have concerns regarding a decision we\'ve made, we welcome you to open a ticket.',
         },
         {
             name: '`11.` Keep all conversations in English.',
-            value: 'Short phrases or jokes in another language are allowed, but we cannot effectively moderate non-English extensive discussions.',
+            value: '> Short phrases or jokes in another language are allowed, but we cannot effectively moderate non-English extensive discussions.',
         },
         {
             name: '`12.` Moderator Discretion',
             value: '> Our staff has the discretion to do what they find necessary to ensure a safe server for all. Remember to follow the spirit of these rules, not just the letter.',
         },
-
     ],
     image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
@@ -148,8 +147,7 @@ export const TPRulesMessages = [
 ];
 
 export const GARulesMessages = [
-    { embeds: [GARulesEmbed1] },
-    { embeds: [notesReportEmbed, GAMentalHealthEmbed] },
+    { embeds: [GARulesEmbed1, notesReportEmbed, GAMentalHealthEmbed] },
 ];
 
 export const CDLFRulesMessages = [
