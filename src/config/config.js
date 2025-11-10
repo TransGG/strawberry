@@ -513,7 +513,7 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
-                rules: 'https://discord.com/channels/1135300957572431902/1244418752217485364/1423702859312140418',
+                rules: 'https://discord.com/channels/1135300957572431902/1244418752217485364/1437254490821496853',
                 rule1: 'https://discord.com/channels/1135300957572431902/1246846234023428146',
                 rule6: 'https://discord.com/channels/1135300957572431902/1246846166822551563',
                 rule8: 'https://discord.com/channels/1135300957572431902/1246846100933968045',
