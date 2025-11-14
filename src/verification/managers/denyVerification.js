@@ -69,6 +69,9 @@ async function denyVerification(
             throw new VerificationError('Unable to resolve user');
         }
 
+        const { banAppealForm } = config.guilds[guild.id].links;
+        const appealMessage = banAppealForm === null ? '' : `\nIf you wish to appeal this ban, please use [this google form](<${banAppealForm}>).`
+
         await ban(
             { reason: 'Member was banned during verification' },
             {
@@ -76,7 +79,7 @@ async function denyVerification(
                 verifier,
                 userReason,
                 logReason,
-                dmMessage: `Your verification ticket within ${bold(guild.name)} has been denied for the following reason:\n${codeBlock(userReason)}\nIf you wish to appeal this ban, please use [this google form](<https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform>).`,
+                dmMessage: `Your verification ticket within ${bold(guild.name)} has been denied for the following reason:\n${codeBlock(userReason)}${appealMessage}`,
                 ticket,
             },
         );
