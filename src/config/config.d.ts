@@ -78,6 +78,9 @@ export interface Guild {
     rule7: string;
     rule9: string;
     rule12: string;
+
+    // ban appeal form link
+    banAppealForm: string | null;
   };
 
   /// Used in the original DM sent to members
