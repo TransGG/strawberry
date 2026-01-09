@@ -154,36 +154,33 @@ export const CDLFRulesMessages = [
     { files: ['https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header.png'] },
     {
         content: `
-**RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOP HOLES WILL BE PUNISHED.**
+**RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOPHOLES WILL BE PUNISHED.**
 
-1️⃣ Must follow Discord ToS & Community Guidelines.
+1️⃣ All users must follow Discord ToS & Community Guidelines.
 ・https://discord.com/terms
 ・https://discord.com/guidelines
-> In compliance with Discord ToS "Do not post sexually explicit content in user avatars, custom statuses or bios, server banners, server icons, invite splashes, emoji, stickers, or any other space that cannot be age-restricted"
+> In compliance with Discord ToS, do not post sexually explicit content in user avatars, custom statuses or bios, server banners, server icons, invite splashes, emoji, stickers, or any other space that cannot be age-restricted.
 
-2️⃣ Be respectful to your fellow server members, in or out of DMs. If both parties agree to a dramatic conversation of some kind (such as arguments, politics, etc.) Take it to the Dms.
+2️⃣ Be respectful to your fellow server members, in or out of DMs. If both parties agree to a dramatic conversation of some kind (such as arguments, politics, etc.), take it to DMs.
 
-3️⃣ No discrimination based on race, gender, sexuality, nationality, or any other category that one may not have control over.
+3️⃣ No discrimination based on race, gender, sexuality, nationality, or any other category that one may not have control over will be tolerated.
 
-4️⃣ Absolutely ZERO NSFW content, subject matter, or discussions in SFW channels. This includes channels marked SFW and any channel outside of the 18+ NSFW area. 
+4️⃣ Absolutely ZERO NSFW content, subject matter, or discussions will be permitted on this server.
 
- For 18+ NSFW content access, please read: <#949909003226476584>
+5️⃣ No spamming, raiding, threats, jokes of threats/ violence, or gore. This also includes wishing death on ANYONE.
 
+6️⃣ No political discussion or discussion about other sensitive/triggering matters. This includes discussion about groups of people who have harmed others, even if it is not condemning or condoning.
 
-5️⃣ No spamming, raiding, threats, jokes of threats/ violence, or gore. This also includes wishing death on ANYONE. 
+7️⃣ Keep any and all mental health related topics such as anxiety, depression, suicidal thoughts, etc. in the specified mental health channels: <#950153059303051344>, <#928175714442821712>, <#949436159820431390>, <#1054127049905819658>, and <#949448500469436456>. \(18-support, emotional-support, no-reply-vent, anonymous-support, and vent-general, respectively.\)
 
-6️⃣ No political discussion or discussion about other sensitive/triggering matters. Including: discussion about groups of people who have harmed others, even if it is not condemning or condoning. 
-
-7️⃣ Keep any and all mental health related topics such as anxiety, depression, suicidal thoughts, etc. in the specified mental health channels <#950153059303051344> <#928175714442821712> <#949436159820431390> <#1054127049905819658> <#949448500469436456> 
-
-8️⃣ USE COMMON SENSE Disruptive, purposefully obnoxious, or taunting behaviors are not acceptable in the server. It is your responsibility to follow these rules as well as any actions that fall under common sense or basic online etiquette.
+8️⃣ USE COMMON SENSE. Disruptive, purposefully obnoxious, or taunting behaviors are not acceptable in the server. It is your responsibility to follow these rules as well as any actions that fall under common sense or basic online etiquette.
 `.trim(),
     },
     {
         content: `
-**This server utilizes <@&972632927160655875> a bot that allows one profile to present as multiple. Due to <@466378653216014359>'s limitations, users may appear with a 'bot' tag beside their name—these are not sentient bots, these are real people. Systems using <@&972632927160655875> will need to abide by the following rules.**
+**This server utilizes <@&972632927160655875> a bot that allows one profile to present as multiple. Due to <@466378653216014359>'s limitations, users may appear with a 'bot' tag beside their name—these are not sentient bots, these are real people. Systems using <@&972632927160655875> will need to abide by the following rules:**
 
-Want to learn about plurality? Visit this site—<https://morethanone.info/>
+> Want to learn about plurality? Visit this site—<https://morethanone.info/>
 
 1️⃣ System responsibility: Any punishments will fall on the entire system.
 
@@ -191,18 +188,16 @@ Want to learn about plurality? Visit this site—<https://morethanone.info/>
 
 3️⃣ Keep under 13 alters/littles/headmates out of the server.
 
-4️⃣ Systems with alters under 18 will not be granted NSFW Verification. 
 
-
-**As a member of the server, you are expected to be aware and up to date on these rules! Ignorance or lack of focus is not an excuse and does not pardon you from any moderator actions.**
+**As a member of the server, you are expected to be aware and up to date on these rules. Ignorance or lack of focus is not an excuse and does not pardon you from any moderator actions.**
 
 **Users who act as bystanders or provoke users may be punished as moderators see fit. This includes instances of DMing members including chasers, scammers, trolls, etc. Moderators do not have to justify their actions to anyone other than administration.**
 
-**If you have any questions relating to the rules, feel free to ask the mods in ?#ask-a-mod **
+**If you have any questions relating to the rules, feel free to ask the mods in <#949749180295958608> (ask-a-mod).**
 
-**If you see an intentional rule break, ping staff asap with the <@&949479574373298287> tag**
+**If you see an intentional rule break, ping staff ASAP with the <@&949479574373298287> tag.**
 
-**If you see a concerning user or wanna report a user anonymously, DM an online staff member immediately**
+**If you see a concerning user or want to report a user anonymously, DM an online staff member immediately.**
         `.trim(),
     },
 ];
