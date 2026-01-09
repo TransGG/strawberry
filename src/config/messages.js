@@ -138,7 +138,7 @@ const GAMentalHealthEmbed = {
     color: 0xDF585B,
     title: '🔴 IMPORTANT 🔴',
     description: 'We are not mental health professionals. As much as we would like to be able to render assistance in every way possible, we as staff do not have the capacity or the professional qualifications necessary to render proper assistance with mental health issues, nor are we able to give professional, medical, or legal advice. Thank you for understanding ❤️',
-    image: { url: 'https://i.imgur.com/CBbbw0d.png' },
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
 };
 
 export const TPRulesMessages = [
