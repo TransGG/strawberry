@@ -150,54 +150,85 @@ export const GARulesMessages = [
     { embeds: [GARulesEmbed1, notesReportEmbed, GAMentalHealthEmbed] },
 ];
 
+export const CDLFRulesImgEmbed = {
+    color: 0xFF52F3,
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header.png' },
+};
+    
+export const CDLFRulesEmbed = {
+    color: 0xFF52F3,
+    title: 'Rules',
+    fields: [ 
+        { 
+            name: '`0.` Rule Zero:',
+            value: '> Rules are the foundation of a healthy server. Any attempt to create loopholes in these rules will be addressed.',
+        },
+        {
+            name: '`1.` All users must follow Discord ToS & Community Guidelines.',
+            value: '> In compliance with Discord ToS, do not post sexually explicit content in user avatars, custom statuses or bios, server banners, server icons, invite splashes, emoji, stickers, or any other space that cannot be age-restricted. See https://discord.com/terms and https://discord.com/guidelines for the complete policies.',
+        },
+        {
+            name: '`2.` Be respectful to your fellow server members.',
+            value: '> Don\'t start dramatic or flammable conversations on the server. If all parties agree to such a discussion (politics, arguments, AI, et cetera), take it to DMs.',
+        },
+        {
+            name: '`3.` Hate has no home here.',
+            value: '> No discrimination based on race, gender, sexuality, nationality, or any other category that one may not have control over will be tolerated.',
+        },
+        {
+            name: '`4.` This is a server with minors present.',
+            value: '> Absolutely ZERO NSFW content, subject matter, or discussions shall be permitted on this server.',
+        },
+        {
+            name: '`5.` Don\'t spam the server.',
+            value: '> No spamming, raiding, threats, jokes of threats/ violence, or gore. This also includes wishing death on anyone, even if we don\'t agree with their views.',
+        },
+        {
+            name: '`6.` No politics.',
+            value: '> Political discussions or discussions about other sensitive/triggering matters are not allowed here. These include discussion about groups of people who have harmed others, even if it is not condemning or condoning.',
+        },
+        {
+            name: '`7.` Keep on topic in all channels.',
+            value: '> Specifically, keep any and all mental health related topics such as anxiety, depression, suicidal thoughts, etc. in the specified mental health channels: <#950153059303051344>, <#928175714442821712>, <#949436159820431390>, <#1054127049905819658>, and <#949448500469436456>. (18-support, emotional-support, no-reply-vent, anonymous-support, and vent-general, respectively.)',
+        },
+        {
+            name: '`8.` Use common sense.',
+            value: '> Disruptive, purposefully obnoxious, or taunting behaviors are not acceptable in the server. It is your responsibility to follow these rules as well as any actions that fall under common sense and basic online etiquette.',
+        },
+        {
+            name: 'PluralKit',
+            value: '> This server utilizes <@&972632927160655875>, a bot that allows one profile to present as multiple. Due to <@466378653216014359>\'s limitations, users may appear with a \'bot\' tag beside their name—these are not sentient bots, these are real people. Systems using <@&972632927160655875> will need to abide by the rules below. To learn more about plurality, visit <https://morethanone.info/>',
+        },
+        {
+            name: '`S1.` System Responsibility',
+            value: '> The entire system is accountable for all infractions.',
+        },
+        {
+            name: '`S2.` System Clarity',
+            value: '> All systems must use a system tag for all messages on the server.',
+        },
+        {
+            name: '`S3.` Age',
+            value: '> Keep under 13 alters/littles/headmates out of the server.',
+        },
+    ], 
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
+}
+
+export const CDLFSupplementalEmbed = {
+    color: 0xFF52F3,
+    title: 'Additional Information',
+    description: [
+        '**As a member of the server, you are expected to be aware and up to date on these rules. Ignorance or lack of focus is not an excuse and does not pardon you from any moderator actions.**',
+        '**Users who act as bystanders or provoke users may be punished as moderators see fit. This includes instances of DMing members including chasers, scammers, trolls, etc. Moderators do not have to justify their actions to anyone other than administration.**',
+        '**If you have any questions relating to the rules, feel free to ask the mods in <#949749180295958608> (ask-a-mod).**',
+        '**If you see an intentional rule break, ping staff ASAP with the <@&949479574373298287> tag.**',
+        '**If you see a concerning user or want to report a user anonymously, DM an online staff member immediately.**',
+    ].join('\n\n'),
+    image: { url: 'https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/embed-sizer.png' },
+}
+
 export const CDLFRulesMessages = [
-    { files: ['https://raw.githubusercontent.com/TransGG/assets/refs/heads/main/cdlf-rules-header.png'] },
-    {
-        content: `
-**RULE ZERO: RULES ARE THE FOUNDATION OF A HEALTHY SERVER, ANY ATTEMPT TO INTENTIONALLY BEND OR CREATE LOOPHOLES WILL BE PUNISHED.**
-
-1️⃣ All users must follow Discord ToS & Community Guidelines.
-・https://discord.com/terms
-・https://discord.com/guidelines
-> In compliance with Discord ToS, do not post sexually explicit content in user avatars, custom statuses or bios, server banners, server icons, invite splashes, emoji, stickers, or any other space that cannot be age-restricted.
-
-2️⃣ Be respectful to your fellow server members, in or out of DMs. If both parties agree to a dramatic conversation of some kind (such as arguments, politics, etc.), take it to DMs.
-
-3️⃣ No discrimination based on race, gender, sexuality, nationality, or any other category that one may not have control over will be tolerated.
-
-4️⃣ Absolutely ZERO NSFW content, subject matter, or discussions will be permitted on this server.
-
-5️⃣ No spamming, raiding, threats, jokes of threats/ violence, or gore. This also includes wishing death on ANYONE.
-
-6️⃣ No political discussion or discussion about other sensitive/triggering matters. This includes discussion about groups of people who have harmed others, even if it is not condemning or condoning.
-
-7️⃣ Keep any and all mental health related topics such as anxiety, depression, suicidal thoughts, etc. in the specified mental health channels: <#950153059303051344>, <#928175714442821712>, <#949436159820431390>, <#1054127049905819658>, and <#949448500469436456>. \(18-support, emotional-support, no-reply-vent, anonymous-support, and vent-general, respectively.\)
-
-8️⃣ USE COMMON SENSE. Disruptive, purposefully obnoxious, or taunting behaviors are not acceptable in the server. It is your responsibility to follow these rules as well as any actions that fall under common sense or basic online etiquette.
-`.trim(),
-    },
-    {
-        content: `
-**This server utilizes <@&972632927160655875> a bot that allows one profile to present as multiple. Due to <@466378653216014359>'s limitations, users may appear with a 'bot' tag beside their name—these are not sentient bots, these are real people. Systems using <@&972632927160655875> will need to abide by the following rules:**
-
-> Want to learn about plurality? Visit this site—<https://morethanone.info/>
-
-1️⃣ System responsibility: Any punishments will fall on the entire system.
-
-2️⃣ Tag your system.
-
-3️⃣ Keep under 13 alters/littles/headmates out of the server.
-
-
-**As a member of the server, you are expected to be aware and up to date on these rules. Ignorance or lack of focus is not an excuse and does not pardon you from any moderator actions.**
-
-**Users who act as bystanders or provoke users may be punished as moderators see fit. This includes instances of DMing members including chasers, scammers, trolls, etc. Moderators do not have to justify their actions to anyone other than administration.**
-
-**If you have any questions relating to the rules, feel free to ask the mods in <#949749180295958608> (ask-a-mod).**
-
-**If you see an intentional rule break, ping staff ASAP with the <@&949479574373298287> tag.**
-
-**If you see a concerning user or want to report a user anonymously, DM an online staff member immediately.**
-        `.trim(),
-    },
-];
+    { embeds: [CDLFRulesImgEmbed, CDLFRulesEmbed, CDLFSupplementalEmbed] },
+]
+    
