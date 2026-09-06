@@ -4,10 +4,14 @@ import {
     roleMention,
     ThreadChannel,
     userMention,
-} from 'discord.js';
-import config from '../../config/config.js';
-import { buildMentionVerifiersEmbeds, buildPromptComponents, buildPromptEmbeds } from '../../content/verification.js';
-import { matchTrailingSnowflake } from '../../formatters/snowflake.js';
+} from "discord.js";
+import config from "../../config/config.js";
+import {
+    buildMentionVerifiersEmbeds,
+    buildPromptComponents,
+    buildPromptEmbeds,
+} from "../../content/verification.js";
+import { matchTrailingSnowflake } from "../../formatters/snowflake.js";
 
 /**
  * Archives a ticket
@@ -70,13 +74,16 @@ async function phantomPing(channel, recipient) {
  * @returns {?Snowflake} The ID of the user who the ticket belongs to, or null if no ID was found
  */
 function parseApplicantId(ticket) {
-    if (ticket instanceof ThreadChannel || ticket instanceof BaseGuildTextChannel) {
+    if (
+        ticket instanceof ThreadChannel ||
+        ticket instanceof BaseGuildTextChannel
+    ) {
         return parseApplicantId(ticket.name);
     }
-    if (typeof ticket === 'string' || ticket instanceof String) {
+    if (typeof ticket === "string" || ticket instanceof String) {
         return matchTrailingSnowflake(ticket)?.at(-1) ?? null;
     }
-    throw new TypeError('Invalid type for ticket', { cause: { ticket } });
+    throw new TypeError("Invalid type for ticket", { cause: { ticket } });
 }
 
 /**
@@ -90,8 +97,10 @@ async function fetchApplicant(ticket) {
         return await ticket.guild.members.fetch(parseApplicantId(ticket));
     } catch (error) {
         // catch DiscordApiError Unknown Member and Unknown User (will occur when user not found)
-        if (error.code === RESTJSONErrorCodes.UnknownMember
-            || error.code === RESTJSONErrorCodes.UnknownUser) {
+        if (
+            error.code === RESTJSONErrorCodes.UnknownMember ||
+            error.code === RESTJSONErrorCodes.UnknownUser
+        ) {
             return null;
         }
         throw new Error(error.message, { cause: error });
@@ -124,9 +133,11 @@ function isBelongsToMember(ticket, member) {
  * @returns {boolean} True if the candidate is a ticket, false otherwise
  */
 function isTicket(candidate) {
-    return candidate instanceof ThreadChannel
-        && parseApplicantId(candidate)
-        && candidate.parentId === config.guilds[candidate.guild.id].channels.lobby;
+    return (
+        candidate instanceof ThreadChannel &&
+        parseApplicantId(candidate) &&
+        candidate.parentId === config.guilds[candidate.guild.id].channels.lobby
+    );
 }
 
 /**
@@ -149,7 +160,7 @@ async function sendRefreshMessage(ticket, member) {
 async function refreshTicket(ticket, member) {
     const { archived } = ticket;
     if (archived) {
-        await unarchiveTicket(ticket, 'Unarchive by user');
+        await unarchiveTicket(ticket, "Unarchive by user");
     }
     await sendRefreshMessage(ticket, member);
     return archived;
@@ -179,7 +190,9 @@ function sendPrompt(ticket, applicant, promptCategory) {
  * @returns {Promise<Message>} The message that was sent
  */
 function sendMentionVerifiers(ticket, applicant, client, helpMessage) {
-    const message = roleMention(config.guilds[applicant.guild.id].roles.verifier);
+    const message = roleMention(
+        config.guilds[applicant.guild.id].roles.verifier,
+    );
     const embeds = buildMentionVerifiersEmbeds(applicant, client, helpMessage);
     return ticket.send({
         content: message,
@@ -205,43 +218,13 @@ async function fetchApplicantMessages(ticket) {
 }
 
 /**
- * Gets the total character count of all messages sent by the applicant of a ticket
+ * Determines if a ticket has been responded to by an applicant
  * @param {TextBasedChannel} ticket A verification ticket
- * @returns {Promise<number>} The total character count of all messages sent by the applicant
+ * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
  */
-async function getApplicantMessagesLength(ticket) {
-    // get applicant messages
+async function hasApplicantResponded(ticket) {
     const applicantMessages = await fetchApplicantMessages(ticket);
-
-    // sum the character count of the applicant's messages
-    let total = 0;
-    applicantMessages.forEach((message) => {
-        total += message.content.length;
-    });
-
-    return total;
-}
-
-/**
- * Determines if a ticket has been answered by an applicant
- * @param {TextBasedChannel} ticket A verification ticket
- * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
- */
-async function hasApplicantAnswered(ticket) {
-    const messageCharacterCountRequirement = 15;
-
-    return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
-}
-
-/**
- * Determines if a ticket has had its applicant ask for help
- * @param {TextBasedChannel} ticket A verification ticket
- * @returns {Promise<boolean>} True if the ticket has answers from the applicant, false otherwise
- */
-async function hasApplicantAskedForHelp(ticket) {
-    const messageCharacterCountRequirement = 10; // 'i need help'.length
-
-    return await getApplicantMessagesLength(ticket) >= messageCharacterCountRequirement;
+    return applicantMessages.size > 0;
 }
 
 export {
@@ -256,6 +239,5 @@ export {
     refreshTicket,
     sendPrompt,
     sendMentionVerifiers,
-    hasApplicantAnswered,
-    hasApplicantAskedForHelp,
+    hasApplicantResponded,
 };

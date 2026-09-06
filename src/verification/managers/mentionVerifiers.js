@@ -1,10 +1,5 @@
 import { buildPromptComponents } from '../../content/verification.js';
-import {
-    hasApplicantAnswered,
-    hasApplicantAskedForHelp,
-    isBelongsToMember,
-    sendMentionVerifiers,
-} from '../controllers/ticket.js';
+import { hasApplicantResponded, isBelongsToMember, sendMentionVerifiers } from '../controllers/ticket.js';
 
 /**
  * Mentions the verifiers in a ticket.
@@ -24,14 +19,14 @@ async function mentionVerifiers(ticket, user, client, type, resolve, reject) {
 
     let helpMessage;
     if (`${type}` === '1') {
-        if (!await hasApplicantAskedForHelp(ticket)) {
+        if (!await hasApplicantResponded(ticket)) {
             await reject('Please ask a question before clicking "I Need Help Please." or answer the questions in the message above before clicking "Finished Answering!"\nThank you ❤️');
             return;
         }
 
         helpMessage = 'Please help the user';
     } else if (`${type}` === '2') {
-        if (!await hasApplicantAnswered(ticket)) {
+        if (!await hasApplicantResponded(ticket)) {
             await reject('It looks like you haven\'t sent enough to give a complete answer to the questions. Please answer the questions in the message above before clicking "Finished Answering!" or ask a question before clicking "I Need Help Please."\nThank you ❤️');
             return;
         }
