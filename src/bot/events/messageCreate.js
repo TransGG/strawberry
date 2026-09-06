@@ -42,10 +42,11 @@ class MessageCreate extends Event {
 
                 const thread = await message.channel.parent.threads.fetch(message.channel);
                 if (thread && !thread.archived) {
-                    const messages = await message.channel.messages.fetch({ limit: 50 });
+                    const messages = await message.channel.messages.fetch({ limit: 100 });
 
-                    // Check if there is a reminder message
-                    if (messages.some((m) => m.webhookId && m.content.includes('[Reminder]'))) {
+                    if (messages.some((m) => m.mentions.roles.has(
+                        config.guilds[message.guild.id].roles.verifier,
+                    ))) {
                         return;
                     }
 
@@ -54,7 +55,7 @@ class MessageCreate extends Event {
 
                     if (components.size > 0
                         && !components
-                            .every((m) => m.components[0].components
+                            .some((m) => m.components[0].components
                                 .some((c) => c.data.disabled === true))) {
                         const webhook = await getWebhook(message.channel.parent);
 
