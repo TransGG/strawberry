@@ -59,10 +59,10 @@ class SendWelcome extends SlashCommand {
         );
 
         if (messages[messages.length - 1].components) {
-            messages[messages.length - 1].components.push(...buildWelcomeComponents(
-                interaction.client,
-                interaction,
-            ));
+            messages[messages.length - 1].components = [
+                ...messages[messages.length - 1].components,
+                ...buildWelcomeComponents(interaction.client, interaction),
+            ];
         } else {
             messages[messages.length - 1].components = buildWelcomeComponents(
                 interaction.client,
