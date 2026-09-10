@@ -1,7 +1,14 @@
 import { ChannelType, ThreadAutoArchiveDuration } from 'discord.js';
 import 'dotenv/config';
 import { FatalError } from '../bot/utils/errors.js';
-import { TPRulesMessages, GARulesMessages, CDLFRulesMessages } from './messages.js';
+import {
+    CDLFRulesMessages,
+    EPRulesMessages,
+    GARulesMessages,
+    TPRulesMessages,
+    TPRulesMessagesObsolete,
+    TSORulesMessages,
+} from './messages.js';
 
 // for easier reading
 /* eslint-disable max-len */
@@ -208,10 +215,7 @@ const development = {
             },
             invite: 'https://google.com',
             proxy: GAproxy,
-            rulesMessages: TPRulesMessages({
-                disallowSelfies: true,
-                selfiesChannelId: '1258669733851562005',
-            }),
+            rulesMessages: TPRulesMessages,
         },
         '981615050664075404': {
             // TPSupporters
@@ -254,9 +258,7 @@ const development = {
             },
             invite: 'https://yahoo.com',
             proxy: TPproxy,
-            rulesMessages: TPRulesMessages({
-                selfiesChannelId: '1494008807276281897',
-            }),
+            rulesMessages: TPRulesMessages,
         },
     },
 };
@@ -312,22 +314,11 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
-                rules: 'https://canary.discord.com/channels/959551566388547676/1057132419150532678/1379598680251699330',
-                rule1: 'https://canary.discord.com/channels/959551566388547676/1151689401643053107/1151694186257600522',
-                rule2: 'https://canary.discord.com/channels/959551566388547676/1151689483977236610/1151694304037838910',
-                rule3: 'https://canary.discord.com/channels/959551566388547676/1151689644052840589/1151694373424218163',
-                rule5: 'https://canary.discord.com/channels/959551566388547676/1151689706912882758/1151694425110609941',
-                rule6: 'https://canary.discord.com/channels/959551566388547676/1378897773243666454/1378898091620700230',
-                rule7: 'https://canary.discord.com/channels/959551566388547676/1151689903319564329/1151690023331172412',
-                rule9: 'https://canary.discord.com/channels/959551566388547676/1151689755537457265/1151694463127793674',
-                rule12: 'https://canary.discord.com/channels/959551566388547676/1151689825687195678/1151694529750106186',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/TransPlace',
             proxy: TPproxy,
-            rulesMessages: TPRulesMessages({
-                selfiesChannelId: '1037517248862101504',
-            }),
+            rulesMessages: TPRulesMessages,
         },
         '1087014898199969873': {
             // EnbyPlace
@@ -373,22 +364,11 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
-                rules: 'https://canary.discord.com/channels/1087014898199969873/1255540593451335770/1258439336462909492',
-                rule1: 'https://canary.discord.com/channels/1087014898199969873/1258432882804785172/1258433967183630500',
-                rule2: 'https://canary.discord.com/channels/1087014898199969873/1258432989994680482/1258434025014431786',
-                rule3: 'https://canary.discord.com/channels/1087014898199969873/1258433032382058496/1258434063040118855',
-                rule5: 'https://canary.discord.com/channels/1087014898199969873/1258433071158395044/1258434101300691084',
-                rule7: 'https://canary.discord.com/channels/1087014898199969873/1258433115601502239/1258434279902412843',
-                rule9: 'https://canary.discord.com/channels/1087014898199969873/1258433158035013682/1258434309749215334',
-                rule12: 'https://canary.discord.com/channels/1087014898199969873/1258433194479583242/1258434330800291930',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/xt8WqnGffb',
             proxy: TPproxy,
-            rulesMessages: TPRulesMessages({
-                disallowSelfies: true,
-                selfiesChannelId: '1376455776993935481',
-            }),
+            rulesMessages: EPRulesMessages,
         },
         '638480381552754730': {
             // Transonance
@@ -434,22 +414,11 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
-                rules: 'https://canary.discord.com/channels/638480381552754730/1255543769835769999/1379578773745434725',
-                rule1: 'https://canary.discord.com/channels/638480381552754730/1378842074467794954/1378846359737602151',
-                rule2: 'https://canary.discord.com/channels/638480381552754730/1378844409222660126/1378845977842290858',
-                rule3: 'https://canary.discord.com/channels/638480381552754730/1378862066320015510/1378862385959272509',
-                rule5: 'https://canary.discord.com/channels/638480381552754730/1379266377700872343/1379266503727386699',
-                rule6: 'https://canary.discord.com/channels/638480381552754730/1379267116041244844/1379267267896021044',
-                rule7: 'https://canary.discord.com/channels/638480381552754730/1379268480083431484/1379269108142444556',
-                rule9: 'https://canary.discord.com/channels/638480381552754730/1379294404942102588/1379294558692573277',
-                rule12: 'https://canary.discord.com/channels/638480381552754730/1379295048063123486/1379295357514682508',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/QhTDQsyeD6',
             proxy: TPproxy,
-            rulesMessages: TPRulesMessages({
-                selfiesChannelId: null,
-            }),
+            rulesMessages: TSORulesMessages,
         },
         '1116634030834733077': {
             // TransDice!
@@ -487,7 +456,7 @@ const production = {
             },
             invite: 'https://discord.gg/YUJM2Qg55q',
             proxy: TPproxy,
-            rulesMessages: TPRulesMessages({
+            rulesMessages: TPRulesMessagesObsolete({
                 selfiesChannelId: null,
             }),
         },
