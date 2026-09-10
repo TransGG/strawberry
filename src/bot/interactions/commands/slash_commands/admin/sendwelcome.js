@@ -50,7 +50,8 @@ class SendWelcome extends SlashCommand {
                             return field;
                         }
                         const extractedText = match[1];
-                        const replacement = config.guilds[interaction.guild.id].links[extractedText];
+                        const replacement = config.guilds[interaction.guild.id]
+                            .links[extractedText];
                         return { ...field, value: field.value.replace(new RegExp(`{{${extractedText}}}`, 'g'), replacement) };
                     }),
                 })),
@@ -73,7 +74,7 @@ class SendWelcome extends SlashCommand {
         for (const message of messages) {
             if (preview) {
                 // eslint-disable-next-line no-await-in-loop
-                await InteractionHelper.reply(interaction, { ...message, components: [] }, true);
+                await InteractionHelper.reply(interaction, { ...message }, true);
             } else {
                 // eslint-disable-next-line no-await-in-loop
                 await interaction.channel.send(message);
