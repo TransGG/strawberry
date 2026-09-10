@@ -501,7 +501,7 @@ const production = {
                 verifyLogs: '1244422429468655706',          // Gender Anarchy:verify-logs
                 verifyLogsSecondary: '1244422507776446514', // Gender Anarchy:verify-kick-logs
                 theoSendLogs: '1364040328298106910',        // Gender Anarchy:theo-send-logs
-                welcome: '',
+                welcome: '1380069370075807814',             // Gender Anarchy:welcome
                 general: '1135631066871378010',             // Gender Anarchy:rules
                 introduce: '1137568440622780507',           // Gender Anarchy:introductions
             },
