@@ -314,6 +314,7 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
+                rules: 'https://discord.com/channels/959551566388547676/1057132419150532678/1547623990854688790',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/TransPlace',
@@ -364,6 +365,7 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
+                rules: 'https://discord.com/channels/1087014898199969873/1255540593451335770/1547624099164070028',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/xt8WqnGffb',
@@ -414,6 +416,7 @@ const production = {
             },
             questions: defaultQuestions,
             links: {
+                rules: 'https://discord.com/channels/638480381552754730/1255543769835769999/1547624163076866148',
                 banAppealForm: 'https://docs.google.com/forms/d/e/1FAIpQLSdDGRf6T5_8Dckf_c-8TIJFOLrqALQ6k5zc6EjGpMRJs-Q7pw/viewform',
             },
             invite: 'https://discord.gg/QhTDQsyeD6',
